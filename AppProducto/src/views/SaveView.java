@@ -11,18 +11,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
 import models.Producto;
 import models.Usuario;
 import services.Conexion;
-import services.ProductsService;
+import services.ObjectService;
 
 public class SaveView extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtNombre;
 	private JTextField txtPrecio;
-	private final ProductsService services = new ProductsService();
+	private final ObjectService services = new ObjectService();
 	private final Producto product;
 	private final Usuario user;
 	/**
@@ -78,7 +77,7 @@ public class SaveView extends JFrame {
 				product.setNombre(nombre);
 				product.setPrecio(precio);
 				try {
-					services.save(Conexion.obtener(), product, user);
+					services.saveProducto(Conexion.obtener(), product, user);
 					SaveView.this.dispose();
 					ListView vista = new ListView();
 					vista.setVisible(true);

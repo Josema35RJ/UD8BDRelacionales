@@ -17,13 +17,13 @@ import javax.swing.table.DefaultTableModel;
 import models.Producto;
 import models.Usuario;
 import services.Conexion;
-import services.ProductsService;
+import services.ObjectService;
 
 public class ListView extends JFrame {
 
 	private JPanel contentPane;
 	private JTable jtableP;
-	private final ProductsService services = new ProductsService();
+	private final ObjectService services = new ObjectService();
 	private List<Producto> products;
 	private List<Usuario> users;
 
@@ -75,7 +75,7 @@ public class ListView extends JFrame {
 							"Advertencia", JOptionPane.YES_NO_OPTION);
 					if (decision == 0) {
 						try {
-							services.remove(Conexion.obtener(), products.get(fila_seleccionada));
+							services.removeProducto(Conexion.obtener(), products.get(fila_seleccionada));
 							showProducts();
 						} catch (SQLException ex) {
 							System.out.println(ex.getMessage());
