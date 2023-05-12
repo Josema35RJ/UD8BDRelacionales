@@ -14,6 +14,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import models.Proveedor;
 import models.Usuario;
 import services.Conexion;
 import services.ObjectService;
@@ -91,10 +92,22 @@ public class InterfazLogin extends JFrame {
 								if(u.isEs_Admin()) {
 									//interfaz admin
 								}else {
-									//interfaz usuario
+									InterfazCliente ic=new InterfazCliente();
+									ic.setVisible(true);
+									dispose();
+									//interfaz cliente
+									//poder editar perfil
+									//comprar producto
+									//historico de compras
+									//buscar producto por catgorias
 								}
 							}
-								
+						}
+						for (Proveedor p : os.getAllProveedor(Conexion.obtener())) {
+							if(p.getNombre().equals(Nombretext.getText()) && p.getContrasena().equals(String.valueOf(Id_Usuariotext.getPassword()))) {
+								entra=true;
+								//interfaz proveedor
+							}
 						}
 						if(!entra) {
 							JOptionPane.showMessageDialog(InterfazLogin.this, "Usuario o contraseña erroneos","Error",JOptionPane.ERROR_MESSAGE);
@@ -111,6 +124,15 @@ public class InterfazLogin extends JFrame {
 					e1.printStackTrace();
 				}
 				
+			}
+		});
+		
+		Cancelar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				JOptionPane.showMessageDialog(InterfazLogin.this, "Cerrando Programa");
 			}
 		});
 		

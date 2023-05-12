@@ -7,7 +7,7 @@ public class Test {
 
 	public static void main(String[] args) {
 
-		ListView listViewAntiguo = new ListView();
+		InterfazLogin listViewAntiguo = new InterfazLogin();
 		listViewAntiguo.setLocationRelativeTo(null);
 		listViewAntiguo.setVisible(true);
 	

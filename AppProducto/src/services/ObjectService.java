@@ -100,15 +100,17 @@ public class ObjectService {
 			PreparedStatement consulta;
 			if (proveedor.getId_Proveedor() == null) {
 				consulta = conexion
-						.prepareStatement("INSERT INTO " + this.tablaProveedor + "(nombre, direccion) VALUES(?, ?)");
+						.prepareStatement("INSERT INTO " + this.tablaProveedor + "(nombre, direccion,contrasena) VALUES(?, ?)");
 				consulta.setString(1, proveedor.getNombre());
 				consulta.setString(2, proveedor.getDireccion());
+				consulta.setString(2, proveedor.getContrasena());
 
 			} else {
 				consulta = conexion.prepareStatement(
-						"UPDATE " + this.tablaProveedor + " SET nombre = ?, direccion = ? WHERE id_proveedor = ?");
+						"UPDATE " + this.tablaProveedor + " SET nombre = ?, direccion = ?, contrasena = ? WHERE id_proveedor = ?");
 				consulta.setString(1, proveedor.getNombre());
 				consulta.setString(2, proveedor.getDireccion());
+				consulta.setString(2, proveedor.getContrasena());
 			}
 			consulta.executeUpdate();
 		} catch (SQLException ex) {
@@ -120,13 +122,13 @@ public class ObjectService {
 		Proveedor proveedor = null;
 		try {
 			PreparedStatement consulta = conexion
-					.prepareStatement("SELECT nombre,imagen,descripcion,precio,cant_stock,id_usuario" + " FROM "
-							+ this.tablaProveedor + " WHERE id_Producto = ?");
+					.prepareStatement("SELECT nombre,direccion,contrasena" + " FROM "
+							+ this.tablaProveedor + " WHERE Id_Proveedor = ?");
 			consulta.setString(1, Id_Proveedor);
 			ResultSet resultado = consulta.executeQuery();
 			while (resultado.next()) {
 				proveedor = new Proveedor(Id_Proveedor, resultado.getString("Nombre"),
-						resultado.getString("Direccion"));
+						resultado.getString("Direccion"),resultado.getString("Contrasena"));
 			}
 		} catch (SQLException ex) {
 			throw new SQLException(ex);
@@ -149,12 +151,12 @@ public class ObjectService {
 		List<Proveedor> ListaProveedor = new ArrayList<>();
 		try {
 			PreparedStatement consulta = conexion
-					.prepareStatement("SELECT Id_Usuario,Nombre,Direccion,Es_Admin "
+					.prepareStatement("SELECT Id_Proveedor,Nombre,Direccion,Contrasena "
 							+ " FROM " + this.tablaProveedor);
 			ResultSet resultado = consulta.executeQuery();
 			while (resultado.next()) {
 				ListaProveedor.add(new Proveedor(resultado.getString("Id_Proveedor"), resultado.getString("Nombre"),
-						resultado.getString("Direccion")));
+						resultado.getString("Direccion"),resultado.getString("contrasena")));
 			}
 		} catch (SQLException ex) {
 			throw new SQLException(ex);

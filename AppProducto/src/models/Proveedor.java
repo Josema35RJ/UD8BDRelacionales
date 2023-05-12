@@ -1,17 +1,18 @@
 package models;
 
 public class Proveedor {
-	private String Id_Proveedor,Nombre,Direccion;
+	private String Id_Proveedor,Nombre,Direccion,contrasena;
 
 	public Proveedor() {
 		super();
 	}
 
-	public Proveedor(String id_Proveedor, String nombre, String direccion) {
+	public Proveedor(String id_Proveedor, String nombre, String direccion, String contrasena) {
 		super();
 		Id_Proveedor = id_Proveedor;
 		Nombre = nombre;
 		Direccion = direccion;
+		this.contrasena = contrasena;
 	}
 
 	public String getId_Proveedor() {
@@ -38,9 +39,18 @@ public class Proveedor {
 		Direccion = direccion;
 	}
 
+	public String getContrasena() {
+		return contrasena;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+
 	@Override
 	public String toString() {
-		return "Proveedor [Id_Proveedor=" + Id_Proveedor + ", Nombre=" + Nombre + ", Direccion=" + Direccion + "]";
+		return "Proveedor [Id_Proveedor=" + Id_Proveedor + ", Nombre=" + Nombre + ", Direccion=" + Direccion
+				+ ", contrasena=" + contrasena + "]";
 	}
 	
 	
