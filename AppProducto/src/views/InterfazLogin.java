@@ -86,7 +86,6 @@ public class InterfazLogin extends JFrame {
 					try {
 						boolean entra=false;
 						for(Usuario u:os.getAllUsuarios(Conexion.obtener())) {
-							System.out.println(u);
 							if(u.getNombre().equals(Nombretext.getText()) && u.getContrasena().equals(String.valueOf(Id_Usuariotext.getPassword()))) {
 								entra=true;
 								if(u.isEs_Admin()) {
