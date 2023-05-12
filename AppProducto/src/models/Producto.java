@@ -2,30 +2,33 @@ package models;
 
 public class Producto {
 
-	private String idProducto, Nombre, Imagen, Descripcion;
+	private String Id_Producto, Nombre, Imagen, Descripcion;
 	private float Precio;
-	private int CantStock;
-
+	private int Cant_Stock;
+	private String Id_Usuario;
+	
 	public Producto() {
 		super();
 	}
 
-	public Producto(String id, String nombre, String imagen, String descripcion, float precio, int cantStock) {
+	public Producto(String id_Producto, String nombre, String imagen, String descripcion, float precio, int cant_Stock,
+			String id_Usuario) {
 		super();
-		idProducto = id;
+		Id_Producto = id_Producto;
 		Nombre = nombre;
 		Imagen = imagen;
 		Descripcion = descripcion;
 		Precio = precio;
-		CantStock = cantStock;
+		Cant_Stock = cant_Stock;
+		Id_Usuario = id_Usuario;
 	}
 
-	public String getId() {
-		return idProducto;
+	public String getId_Producto() {
+		return Id_Producto;
 	}
 
-	public void setId(String id) {
-		idProducto = id;
+	public void setId_Producto(String id_Producto) {
+		Id_Producto = id_Producto;
 	}
 
 	public String getNombre() {
@@ -60,17 +63,28 @@ public class Producto {
 		Precio = precio;
 	}
 
-	public int getCantStock() {
-		return CantStock;
+	public int getCant_Stock() {
+		return Cant_Stock;
 	}
 
-	public void setCantStock(int cantStock) {
-		CantStock = cantStock;
+	public void setCant_Stock(int cant_Stock) {
+		Cant_Stock = cant_Stock;
+	}
+
+	public String getId_Usuario() {
+		return Id_Usuario;
+	}
+
+	public void setId_Usuario(String id_Usuario) {
+		Id_Usuario = id_Usuario;
 	}
 
 	@Override
 	public String toString() {
-		return "Producto [Id=" + idProducto + ", Nombre=" + Nombre + ", Imagen=" + Imagen + ", Descripcion=" + Descripcion
-				+ ", Precio=" + Precio + ", CantStock=" + CantStock + "]";
+		return "Producto [Id_Producto=" + Id_Producto + ", Nombre=" + Nombre + ", Imagen=" + Imagen + ", Descripcion="
+				+ Descripcion + ", Precio=" + Precio + ", Cant_Stock=" + Cant_Stock + ", Id_Usuario=" + Id_Usuario
+				+ "]";
 	}
+
+	
 }

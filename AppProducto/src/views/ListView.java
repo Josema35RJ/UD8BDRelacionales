@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import models.Producto;
+import models.Usuario;
 import services.Conexion;
 import services.ProductsService;
 
@@ -24,6 +25,7 @@ public class ListView extends JFrame {
 	private JTable jtableP;
 	private final ProductsService services = new ProductsService();
 	private List<Producto> products;
+	private List<Usuario> users;
 
 	public ListView() {
 		setTitle("Management Products");
@@ -53,7 +55,7 @@ public class ListView extends JFrame {
 				int fila_seleccionada = jtableP.getSelectedRow();
 				if (fila_seleccionada >= 0) {
 					ListView.this.dispose();
-					SaveView vista = new SaveView(products.get(fila_seleccionada));
+					SaveView vista = new SaveView(products.get(fila_seleccionada), users.get(fila_seleccionada));
 					vista.setVisible(true);
 					vista.setLocationRelativeTo(null);
 				} else {
