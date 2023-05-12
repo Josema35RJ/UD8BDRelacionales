@@ -3,17 +3,19 @@ package models;
 public class Usuario {
 	private String Id_Usuario,Nombre,Direccion;
 	private boolean Es_Admin;
+	private String contrasena;
 	
 	public Usuario() {
 		super();
 	}
 
-	public Usuario(String id_Usuario, String nombre, String direccion, boolean es_Admin) {
+	public Usuario(String id_Usuario, String nombre, String direccion, boolean es_Admin, String contrasena) {
 		super();
 		Id_Usuario = id_Usuario;
 		Nombre = nombre;
 		Direccion = direccion;
 		Es_Admin = es_Admin;
+		this.contrasena = contrasena;
 	}
 
 	public String getId_Usuario() {
@@ -48,11 +50,20 @@ public class Usuario {
 		Es_Admin = es_Admin;
 	}
 
+	public String getContrasena() {
+		return contrasena;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+
 	@Override
 	public String toString() {
 		return "Usuario [Id_Usuario=" + Id_Usuario + ", Nombre=" + Nombre + ", Direccion=" + Direccion + ", Es_Admin="
-				+ Es_Admin + "]";
+				+ Es_Admin + ", contrasena=" + contrasena + "]";
 	}
+
 	
 	
 }

@@ -168,17 +168,19 @@ public class ObjectService {
 			PreparedStatement consulta;
 			if (usuario.getId_Usuario()== null) {
 				consulta = conexion
-						.prepareStatement("INSERT INTO " + this.tablaUsuario + "(nombre, direccion,es_admin) VALUES(?, ?)");
+						.prepareStatement("INSERT INTO " + this.tablaUsuario + "(nombre, direccion,es_admin,contrasena) VALUES(?, ?)");
 				consulta.setString(1, usuario.getNombre());
 				consulta.setString(2, usuario.getDireccion());
 				consulta.setBoolean(3, usuario.isEs_Admin());
+				consulta.setString(4, usuario.getContrasena());
 
 			} else {
 				consulta = conexion.prepareStatement(
-						"UPDATE " + this.tablaUsuario + " SET nombre = ?, direccion = ?, es_admin = ? WHERE id_usuario = ?");
+						"UPDATE " + this.tablaUsuario + " SET nombre = ?, direccion = ?, es_admin = ?, contrasena = ? WHERE id_usuario = ?");
 				consulta.setString(1, usuario.getNombre());
 				consulta.setString(2, usuario.getDireccion());
 				consulta.setBoolean(3, usuario.isEs_Admin());
+				consulta.setString(4, usuario.getContrasena());
 			}
 			consulta.executeUpdate();
 		} catch (SQLException ex) {
@@ -190,13 +192,13 @@ public class ObjectService {
 		Usuario usuario = null;
 		try {
 			PreparedStatement consulta = conexion
-					.prepareStatement("SELECT nombre,direccion,es_admin" + " FROM "
+					.prepareStatement("SELECT nombre,direccion,es_admin,contrasena" + " FROM "
 							+ this.tablaUsuario + " WHERE Id_Usuario = ?");
 			consulta.setString(1, Id_Usuario);
 			ResultSet resultado = consulta.executeQuery();
 			while (resultado.next()) {
 				usuario = new Usuario(Id_Usuario, resultado.getString("Nombre"),
-						resultado.getString("Direccion"), resultado.getBoolean("Es_Admin"));
+						resultado.getString("Direccion"), resultado.getBoolean("Es_Admin"),resultado.getString("Contrasena"));
 			}
 		} catch (SQLException ex) {
 			throw new SQLException(ex);
@@ -219,12 +221,12 @@ public class ObjectService {
 		List<Usuario> ListaUsuarios = new ArrayList<>();
 		try {
 			PreparedStatement consulta = conexion
-					.prepareStatement("SELECT Id_Usuario,Nombre,Direccion,Es_Admin"
+					.prepareStatement("SELECT Id_Usuario,Nombre,Direccion,Es_Admin,Contrasena"
 							+ " FROM " + this.tablaUsuario);
 			ResultSet resultado = consulta.executeQuery();
 			while (resultado.next()) {
 				ListaUsuarios.add(new Usuario(resultado.getString("Id_Usuario"), resultado.getString("Nombre"), resultado.getString("Direccion")
-						,resultado.getBoolean("Es_Admin")));
+						,resultado.getBoolean("Es_Admin"),resultado.getString("contrasena")));
 			}
 		} catch (SQLException ex) {
 			throw new SQLException(ex);

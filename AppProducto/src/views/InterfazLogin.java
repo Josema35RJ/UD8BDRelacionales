@@ -2,14 +2,21 @@ package views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import models.Usuario;
+import services.Conexion;
+import services.ObjectService;
 
 public class InterfazLogin extends JFrame {
 	
@@ -22,7 +29,7 @@ public class InterfazLogin extends JFrame {
 		super("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(420,220);
-		setLocation(null);
+		//setLocation(null);
 		
 		Nombre = new JLabel ("Nombre");
 		Id_Usuario = new JLabel ("Contrase\u00F1a");
@@ -73,7 +80,36 @@ public class InterfazLogin extends JFrame {
 		Entrar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				ObjectService os=new ObjectService();
+				try {
+					try {
+						boolean entra=false;
+						for(Usuario u:os.getAllUsuarios(Conexion.obtener())) {
+							System.out.println(u);
+							if(u.getNombre().equals(Nombretext.getText()) && u.getContrasena().equals(String.valueOf(Id_Usuariotext.getPassword()))) {
+								entra=true;
+								if(u.isEs_Admin()) {
+									//interfaz admin
+								}else {
+									//interfaz usuario
+								}
+							}
+								
+						}
+						if(!entra) {
+							JOptionPane.showMessageDialog(InterfazLogin.this, "Usuario o contraseña erroneos","Error",JOptionPane.ERROR_MESSAGE);
+							Nombretext.setText("");
+							Id_Usuariotext.setText("");
+						}
+							
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 			}
 		});
