@@ -30,7 +30,7 @@ public class InterfazLogin extends JFrame {
 		super("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(420,220);
-		//setLocation(null);
+		setLocationRelativeTo(null);
 		
 		Nombre = new JLabel ("Nombre");
 		Id_Usuario = new JLabel ("Contrase\u00F1a");

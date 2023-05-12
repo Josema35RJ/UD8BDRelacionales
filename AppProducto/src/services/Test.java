@@ -8,7 +8,6 @@ public class Test {
 	public static void main(String[] args) {
 
 		InterfazLogin listViewAntiguo = new InterfazLogin();
-		listViewAntiguo.setLocationRelativeTo(null);
 		listViewAntiguo.setVisible(true);
 	
 
