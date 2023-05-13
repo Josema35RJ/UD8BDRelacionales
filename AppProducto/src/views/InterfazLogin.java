@@ -91,6 +91,10 @@ public class InterfazLogin extends JFrame {
 								entra=true;
 								if(u.isEs_Admin()) {
 									//interfaz admin
+									dispose();
+									InterfazAdmin ia = new InterfazAdmin ();
+									ia.setLocationRelativeTo(null);
+									ia.setVisible(true);
 								}else {
 									InterfazCliente ic=new InterfazCliente();
 									ic.setVisible(true);
