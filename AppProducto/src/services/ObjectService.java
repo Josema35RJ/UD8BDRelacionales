@@ -50,14 +50,14 @@ public class ObjectService {
 		Producto product = null;
 		try {
 			PreparedStatement consulta = conexion
-					.prepareStatement("SELECT nombre,imagen,descripcion,precio,cant_stock,id_usuario" + " FROM "
+					.prepareStatement("SELECT nombre,imagen,descripcion,precio,cant_stock,id_usuario, id_proveedor" + " FROM "
 							+ this.tablaProducto + " WHERE id_Producto = ?");
 			consulta.setString(1, Id_Producto);
 			ResultSet resultado = consulta.executeQuery();
 			while (resultado.next()) {
 				product = new Producto(Id_Producto, resultado.getString("Nombre"), resultado.getString("Imagen"),
 						resultado.getString("Descripcion"), resultado.getFloat("Precio"),
-						resultado.getInt("Cant_Stock"), resultado.getString("Id_Usuario"));
+						resultado.getInt("Cant_Stock"), resultado.getString("Id_Usuario"), resultado.getString("Id_Proveedor"));
 			}
 		} catch (SQLException ex) {
 			throw new SQLException(ex);
@@ -80,13 +80,13 @@ public class ObjectService {
 		List<Producto> ListaProductos = new ArrayList<>();
 		try {
 			PreparedStatement consulta = conexion
-					.prepareStatement("SELECT Id_Producto,Nombre,Imagen,Descripcion,Precio,Cant_Stock,Id_Usuario "
+					.prepareStatement("SELECT Id_Producto,Nombre,Imagen,Descripcion,Precio,Cant_Stock,Id_Usuario, Id_Proveedor "
 							+ " FROM " + this.tablaProducto);
 			ResultSet resultado = consulta.executeQuery();
 			while (resultado.next()) {
 				ListaProductos.add(new Producto(resultado.getString("Id_Producto"), resultado.getString("Nombre"),
 						resultado.getString("Imagen"), resultado.getString("Descripcion"), resultado.getFloat("Precio"),
-						resultado.getInt("Cant_Stock"), resultado.getString("Id_Usuario")));
+						resultado.getInt("Cant_Stock"), resultado.getString("Id_Usuario"), resultado.getString("Id_Proveedor")));
 			}
 		} catch (SQLException ex) {
 			throw new SQLException(ex);
@@ -242,7 +242,7 @@ public class ObjectService {
 			PreparedStatement consulta;
 			if (compra.getId_Compra()== null) {
 				consulta = conexion
-						.prepareStatement("INSERT INTO " + this.tablaCompra + "(fecha, hora,Id_Usuario,Id_Producto) VALUES(?, ?)");
+						.prepareStatement("INSERT INTO " + this.tablaCompra + "(fecha, hora,Id_Usuario,Id_Producto, Cantidad_pedida) VALUES(?, ?)");
 				consulta.setDate(1, compra.getFecha());
 				consulta.setTime(2, compra.getHora());
 				consulta.setString(3, compra.getId_UsuarioC());
@@ -266,13 +266,13 @@ public class ObjectService {
 		Compra compra = null;
 		try {
 			PreparedStatement consulta = conexion
-					.prepareStatement("SELECT nombre,fecha,hora,Id_Usuario,Id_Producto" + " FROM "
-							+ this.tablaCompra + " WHERE Id_Usuario = ?");
+					.prepareStatement("SELECT Id_Compra, fecha, hora, Id_Usuario, Id_Producto, Cantidad_pedida" + " FROM "
+							+ this.tablaCompra + " WHERE Id_Compra = ?");
 			consulta.setString(1, Id_Compra);
 			ResultSet resultado = consulta.executeQuery();
 			while (resultado.next()) {
 				compra = new Compra(Id_Compra, resultado.getDate("Fecha"),
-						resultado.getTime("Hora"), resultado.getString("Id_Usuario"), resultado.getString("Id_Producto"));
+						resultado.getTime("Hora"), resultado.getString("Id_Usuario"), resultado.getString("Id_Producto"), resultado.getInt("Cantidad_pedida"));
 			}
 		} catch (SQLException ex) {
 			throw new SQLException(ex);
@@ -295,12 +295,12 @@ public class ObjectService {
 		List<Compra> ListaCompras = new ArrayList<>();
 		try {
 			PreparedStatement consulta = conexion
-					.prepareStatement("SELECT Id_Usuario,Nombre,Direccion,Es_Admin"
-							+ " FROM " + this.tablaUsuario);
+					.prepareStatement("SELECT Id_Compra, fecha, hora, Id_UsuarioC, Id_Producto, Cantidad_pedida"
+							+ " FROM " + this.tablaCompra);
 			ResultSet resultado = consulta.executeQuery();
 			while (resultado.next()) {
 				ListaCompras.add(new Compra(resultado.getString("Id_Compra"), resultado.getDate("Fecha"), resultado.getTime("Hora")
-						,resultado.getString("Id_Usuario"), resultado.getString("Id_Producto")));
+						,resultado.getString("Id_UsuarioC"), resultado.getString("Id_Producto"), resultado.getInt("Cantidad_pedida")));
 			}
 		} catch (SQLException ex) {
 			throw new SQLException(ex);

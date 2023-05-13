@@ -6,13 +6,14 @@ public class Producto {
 	private float Precio;
 	private int Cant_Stock;
 	private String Id_Usuario;
+	private String Id_Proveedor;
 	
 	public Producto() {
 		super();
 	}
-
+	
 	public Producto(String id_Producto, String nombre, String imagen, String descripcion, float precio, int cant_Stock,
-			String id_Usuario) {
+			String id_Usuario, String id_Proveedor) {
 		super();
 		Id_Producto = id_Producto;
 		Nombre = nombre;
@@ -21,7 +22,9 @@ public class Producto {
 		Precio = precio;
 		Cant_Stock = cant_Stock;
 		Id_Usuario = id_Usuario;
+		Id_Proveedor = id_Proveedor;
 	}
+
 
 	public String getId_Producto() {
 		return Id_Producto;
@@ -79,12 +82,27 @@ public class Producto {
 		Id_Usuario = id_Usuario;
 	}
 
+	
+	public String getId_Proveedor() {
+		return Id_Proveedor;
+	}
+
+	public void setId_Proveedor(String id_Proveedor) {
+		Id_Proveedor = id_Proveedor;
+	}
+
 	@Override
 	public String toString() {
 		return "Producto [Id_Producto=" + Id_Producto + ", Nombre=" + Nombre + ", Imagen=" + Imagen + ", Descripcion="
 				+ Descripcion + ", Precio=" + Precio + ", Cant_Stock=" + Cant_Stock + ", Id_Usuario=" + Id_Usuario
-				+ "]";
+				+ ", Id_Proveedor=" + Id_Proveedor + "]";
 	}
+	
+	
+
+	
+
+	
 
 	
 }
