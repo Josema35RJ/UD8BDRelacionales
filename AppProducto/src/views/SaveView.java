@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import models.Producto;
+import models.Proveedor;
 import models.Usuario;
 import services.Conexion;
 import services.ObjectService;
@@ -24,6 +25,7 @@ public class SaveView extends JFrame {
 	private final ObjectService services = new ObjectService();
 	private final Producto product;
 	private final Usuario user;
+	private final Proveedor pr;
 	/**
 	 * Create the frame.
 	 */
@@ -34,10 +36,12 @@ public class SaveView extends JFrame {
 		initComponents();
 		txtNombre.setText(this.product.getNombre());
 		txtPrecio.setText(String.valueOf(this.product.getPrecio()));
+		this.pr = new Proveedor();
 	}
 	public SaveView() {
 		this.product=new Producto();
 		this.user=new Usuario();
+		this.pr = new Proveedor();
 		initComponents();
 	}
 	
@@ -77,7 +81,7 @@ public class SaveView extends JFrame {
 				product.setNombre(nombre);
 				product.setPrecio(precio);
 				try {
-					services.saveProducto(Conexion.obtener(), product, user);
+					services.saveProducto(Conexion.obtener(), product, user,pr );
 					SaveView.this.dispose();
 					ListView vista = new ListView();
 					vista.setVisible(true);
