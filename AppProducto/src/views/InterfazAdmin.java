@@ -90,7 +90,7 @@ public class InterfazAdmin extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				InterfazProductoAdmin ipa = new InterfazProductoAdmin();
+				InterfazProductosAdmin ipa = new InterfazProductosAdmin();
 				ipa.setLocationRelativeTo(null);
 				ipa.setVisible(true);
 			}

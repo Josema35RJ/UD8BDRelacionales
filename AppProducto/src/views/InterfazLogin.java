@@ -26,6 +26,7 @@ public class InterfazLogin extends JFrame {
 	private JPasswordField Id_Usuariotext;
 	private JButton Entrar, Cancelar;
 	protected static String idproveedorreg;
+	protected static Usuario User;
 	
 	public InterfazLogin () {
 		super("Login");
@@ -91,6 +92,7 @@ public class InterfazLogin extends JFrame {
 								entra=true;
 								if(u.isEs_Admin()) {
 									//interfaz admin
+									User = u;
 									dispose();
 									InterfazAdmin ia = new InterfazAdmin ();
 									ia.setLocationRelativeTo(null);

@@ -18,27 +18,31 @@ public class ObjectService {
 	private final String tablaUsuario = "Usuario";
 	private final String tablaCompra = "Compra";
 
-	public void saveProducto(Connection conexion, Producto product, Usuario user) throws SQLException {
+	public void saveProducto(Connection conexion, Producto product, Usuario user, Proveedor p) throws SQLException {
 		try {
 			PreparedStatement consulta;
 			if (product.getId_Producto() == null) {
 				consulta = conexion
-						.prepareStatement("INSERT INTO " + this.tablaProducto + "(nombre, precio) VALUES(?, ?)");
-				consulta.setString(1, product.getNombre());
-				consulta.setString(2, product.getImagen());
-				consulta.setString(3, product.getDescripcion());
-				consulta.setFloat(4, product.getPrecio());
-				consulta.setInt(5, product.getCant_Stock());
-				consulta.setString(6, user.getId_Usuario());
+						.prepareStatement("INSERT INTO " + this.tablaProducto + "(nombre, Imagen, Descripcion, Precio, Cant_Stock, Id_Usuario, Id_Proveedor) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+				consulta.setString(1, product.getId_Producto());
+				consulta.setString(2, product.getNombre());
+				consulta.setString(3, product.getImagen());
+				consulta.setString(4, product.getDescripcion());
+				consulta.setFloat(5, product.getPrecio());
+				consulta.setInt(6, product.getCant_Stock());
+				consulta.setString(7, user.getId_Usuario());
+				consulta.setString(8, p.getId_Proveedor());
 			} else {
 				consulta = conexion
-						.prepareStatement("UPDATE " + this.tablaProducto + " SET nombre = ?, precio = ? WHERE id = ?");
-				consulta.setString(1, product.getNombre());
-				consulta.setString(2, product.getImagen());
-				consulta.setString(3, product.getDescripcion());
-				consulta.setFloat(4, product.getPrecio());
-				consulta.setInt(5, product.getCant_Stock());
-				consulta.setString(6, user.getId_Usuario());
+						.prepareStatement("UPDATE " + this.tablaProducto + " SET nombre = ?, Imagen = ?, Descripcion = ?, Precio =?, Cant_Stock = ?, Id_Usuario = ?, Id_Proveedor = ? WHERE id_producto = ?");
+				consulta.setString(1, product.getId_Producto());
+				consulta.setString(2, product.getNombre());
+				consulta.setString(3, product.getImagen());
+				consulta.setString(4, product.getDescripcion());
+				consulta.setFloat(5, product.getPrecio());
+				consulta.setInt(6, product.getCant_Stock());
+				consulta.setString(7, user.getId_Usuario());
+				consulta.setString(8, p.getId_Proveedor());
 			}
 			consulta.executeUpdate();
 		} catch (SQLException ex) {
