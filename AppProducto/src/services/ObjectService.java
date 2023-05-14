@@ -105,16 +105,18 @@ public class ObjectService {
 			if (proveedor.getId_Proveedor() == null) {
 				consulta = conexion
 						.prepareStatement("INSERT INTO " + this.tablaProveedor + "(nombre, direccion,contrasena) VALUES(?, ?)");
+				consulta.setString(0, proveedor.getId_Proveedor());
 				consulta.setString(1, proveedor.getNombre());
 				consulta.setString(2, proveedor.getDireccion());
-				consulta.setString(2, proveedor.getContrasena());
+				consulta.setString(3, proveedor.getContrasena());
 
 			} else {
 				consulta = conexion.prepareStatement(
 						"UPDATE " + this.tablaProveedor + " SET nombre = ?, direccion = ?, contrasena = ? WHERE id_proveedor = ?");
+				consulta.setString(0, proveedor.getId_Proveedor());
 				consulta.setString(1, proveedor.getNombre());
 				consulta.setString(2, proveedor.getDireccion());
-				consulta.setString(2, proveedor.getContrasena());
+				consulta.setString(3, proveedor.getContrasena());
 			}
 			consulta.executeUpdate();
 		} catch (SQLException ex) {

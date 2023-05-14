@@ -40,11 +40,8 @@ public class InterfazClientesAdmin extends JFrame {
 		ActivarDesactivar = new JButton("ActivarDesactivar");
 		ActivarDesactivar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				String id = (String) (model.getValueAt(0, table.getSelectedRow()));
+				String id = (String) (model.getValueAt(table.getSelectedRow(),0 ));
 				for (Usuario u : ListaUsuarios) {
-					System.out.println("ID: " + id);
-					System.out.println("ID U: " + u.getId_Usuario());
 					if (u.getId_Usuario().equals(id)) {
 						if (u.isActivo()) {
 							u.setActivo(false);
@@ -61,6 +58,12 @@ public class InterfazClientesAdmin extends JFrame {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
+					}
+					try {
+						Conexion.cerrar();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 				}
 
@@ -88,14 +91,15 @@ public class InterfazClientesAdmin extends JFrame {
 		Borrar = new JButton("Borrar");
 		Borrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String id = (String) (model.getValueAt(table.getSelectedRow(),0));
+				String id = (String) (model.getValueAt(table.getSelectedRow(), 0));
 				Iterator<Usuario> it = ListaUsuarios.iterator();
 				Usuario u = it.next();
-				while(it.hasNext()) {
+				while (it.hasNext()) {
 					if (u.getId_Usuario().equals(id)) {
-						if(JOptionPane.showConfirmDialog(InterfazClientesAdmin.this, "Esta Seguro de Eliminar al Cliente")==0) {
-						it.remove();
-						model.removeRow(table.getSelectedRow());
+						if (JOptionPane.showConfirmDialog(InterfazClientesAdmin.this,
+								"Esta Seguro de Eliminar al Cliente") == 0) {
+							it.remove();
+							model.removeRow(table.getSelectedRow());
 						}
 						try {
 							os.saveUsuario(Conexion.obtener(), u);
@@ -110,76 +114,75 @@ public class InterfazClientesAdmin extends JFrame {
 					}
 					u = it.next();
 				}
-			}
-		});
-
-		ReestablecerClave = new JButton("ReestablecerClave");
-		ReestablecerClave.addActionListener(new ActionListener() {
-
-	public void actionPerformed(ActionEvent e) {
-		String id = (String) (model.getValueAt(table.getSelectedRow(), 0));
-		for (Usuario u : ListaUsuarios) {
-			if (u.getId_Usuario().equals(id)) {
-				u.setContrasena((String) (model.getValueAt(table.getSelectedRow(), 5)));
 				try {
-					os.saveUsuario(Conexion.obtener(), u);
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					Conexion.cerrar();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
-		}
-	}});
-	
-	 VerCompras = new JButton("VerCompras");
-	VerCompras.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			id = (String) (model.getValueAt(table.getSelectedRow(),0));
-			InterfazVerCompras ivc = new InterfazVerCompras();
-			ivc.setLocationRelativeTo(null);
-			ivc.setVisible(true);
-		}
-	});
+		});
 
-	GroupLayout groupLayout = new GroupLayout(
-			getContentPane());
-	groupLayout.setHorizontalGroup(
-		groupLayout.createParallelGroup(Alignment.LEADING)
-			.addGroup(groupLayout.createSequentialGroup()
-				.addGap(10)
-				.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 731, GroupLayout.PREFERRED_SIZE)
-				.addGap(7))
-			.addGroup(groupLayout.createSequentialGroup()
-				.addGap(45)
-				.addComponent(ActivarDesactivar)
-				.addGap(40)
-				.addComponent(Borrar)
-				.addGap(32)
-				.addComponent(ReestablecerClave)
-				.addGap(52)
-				.addComponent(VerCompras)
-				.addPreferredGap(ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
-				.addComponent(Atras)
-				.addGap(66))
-	);
-	groupLayout.setVerticalGroup(
-		groupLayout.createParallelGroup(Alignment.LEADING)
-			.addGroup(groupLayout.createSequentialGroup()
-				.addGap(11)
-				.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 171, GroupLayout.PREFERRED_SIZE)
-				.addGap(100)
-				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(ActivarDesactivar)
-					.addComponent(Borrar)
-					.addComponent(ReestablecerClave)
-					.addComponent(Atras)
-					.addComponent(VerCompras)))
-	);
+		ReestablecerClave = new JButton("ReestablecerClave");
+		ReestablecerClave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String id = (String) (model.getValueAt(table.getSelectedRow(), 0));
+				for (Usuario u : ListaUsuarios) {
+					if (u.getId_Usuario().equals(id)) {
+						u.setContrasena((String) (model.getValueAt(table.getSelectedRow(), 5)));
+						try {
+							os.saveUsuario(Conexion.obtener(), u);
+						} catch (ClassNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+					
+				}
+				try {
+					Conexion.cerrar();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 
-	getContentPane().setLayout(groupLayout);
+		VerCompras = new JButton("VerCompras");
+		VerCompras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				id = (String) (model.getValueAt(table.getSelectedRow(), 0));
+				InterfazVerCompras ivc = new InterfazVerCompras();
+				ivc.setLocationRelativeTo(null);
+				ivc.setVisible(true);
+			}
+		});
+
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout
+				.setHorizontalGroup(
+						groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup().addGap(10)
+										.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 731,
+												GroupLayout.PREFERRED_SIZE)
+										.addGap(7))
+								.addGroup(groupLayout.createSequentialGroup().addGap(45).addComponent(ActivarDesactivar)
+										.addGap(40).addComponent(Borrar).addGap(32).addComponent(ReestablecerClave)
+										.addGap(52).addComponent(VerCompras)
+										.addPreferredGap(ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+										.addComponent(Atras).addGap(66)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup().addGap(11)
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 171, GroupLayout.PREFERRED_SIZE)
+						.addGap(100)
+						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(ActivarDesactivar)
+								.addComponent(Borrar).addComponent(ReestablecerClave).addComponent(Atras)
+								.addComponent(VerCompras))));
+
+		getContentPane().setLayout(groupLayout);
 
 		model.addColumn("Id_Usuario");
 		model.addColumn("Nombre");
