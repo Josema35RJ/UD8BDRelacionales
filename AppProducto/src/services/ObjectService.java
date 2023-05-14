@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import models.Compra;
 import models.Producto;
 import models.Proveedor;
 import models.Usuario;
+
 
 public class ObjectService {
 	private final String tablaProducto = "Producto";
@@ -23,7 +23,7 @@ public class ObjectService {
 			PreparedStatement consulta;
 			if (product.getId_Producto() == null) {
 				consulta = conexion
-						.prepareStatement("INSERT INTO " + this.tablaProducto + "(nombre, Imagen, Descripcion, Precio, Cant_Stock, Id_Usuario, Id_Proveedor) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+						.prepareStatement("INSERT INTO " + this.tablaProducto + "(nombre, Imagen, Descripcion, Precio, Cant_Stock, Id_Usuario, Id_Proveedor) VALUES(?, ?)");
 				consulta.setString(1, product.getId_Producto());
 				consulta.setString(2, product.getNombre());
 				consulta.setString(3, product.getImagen());
@@ -174,23 +174,26 @@ public class ObjectService {
 			PreparedStatement consulta;
 			if (usuario.getId_Usuario()== null) {
 				consulta = conexion
-						.prepareStatement("INSERT INTO " + this.tablaUsuario + "(nombre, direccion,es_admin,contrasena) VALUES(?, ?)");
-				consulta.setString(1, usuario.getNombre());
-				consulta.setString(2, usuario.getDireccion());
-				consulta.setBoolean(3, usuario.isEs_Admin());
-				consulta.setString(4, usuario.getContrasena());
-
+						.prepareStatement("INSERT INTO " + this.tablaUsuario + "(nombre, direccion,es_admin,activo,contrasena,) VALUES(?, ?)");
+				consulta.setString(1, usuario.getId_Usuario());
+				consulta.setString(2, usuario.getNombre());
+				consulta.setString(3, usuario.getDireccion());
+				consulta.setBoolean(4, usuario.isEs_Admin());
+				consulta.setBoolean(5, usuario.isActivo());
+				consulta.setString(6, usuario.getContrasena());
 			} else {
 				consulta = conexion.prepareStatement(
-						"UPDATE " + this.tablaUsuario + " SET nombre = ?, direccion = ?, es_admin = ?, contrasena = ? WHERE id_usuario = ?");
-				consulta.setString(1, usuario.getNombre());
-				consulta.setString(2, usuario.getDireccion());
-				consulta.setBoolean(3, usuario.isEs_Admin());
-				consulta.setString(4, usuario.getContrasena());
+						"UPDATE " + this.tablaUsuario + " SET nombre = ?, direccion = ?, es_admin = ?, activo = ?, contrasena = ? WHERE id_usuario = ?");
+				consulta.setString(1, usuario.getId_Usuario());
+				consulta.setString(2, usuario.getNombre());
+				consulta.setString(3, usuario.getDireccion());
+				consulta.setBoolean(4, usuario.isEs_Admin());
+				consulta.setBoolean(5, usuario.isActivo());
+				consulta.setString(6, usuario.getContrasena());
 			}
 			consulta.executeUpdate();
 		} catch (SQLException ex) {
-			throw new SQLException(ex);
+			System.out.println(ex);
 		}
 	}
 
@@ -198,13 +201,13 @@ public class ObjectService {
 		Usuario usuario = null;
 		try {
 			PreparedStatement consulta = conexion
-					.prepareStatement("SELECT nombre,direccion,es_admin,contrasena" + " FROM "
+					.prepareStatement("SELECT nombre,direccion,es_admin, activo,contrasena" + " FROM "
 							+ this.tablaUsuario + " WHERE Id_Usuario = ?");
 			consulta.setString(1, Id_Usuario);
 			ResultSet resultado = consulta.executeQuery();
 			while (resultado.next()) {
 				usuario = new Usuario(Id_Usuario, resultado.getString("Nombre"),
-						resultado.getString("Direccion"), resultado.getBoolean("Es_Admin"),resultado.getString("Contrasena"));
+						resultado.getString("Direccion"), resultado.getBoolean("Es_Admin"), resultado.getBoolean("Activo"),resultado.getString("Contrasena"));
 			}
 		} catch (SQLException ex) {
 			throw new SQLException(ex);
@@ -227,12 +230,12 @@ public class ObjectService {
 		List<Usuario> ListaUsuarios = new ArrayList<>();
 		try {
 			PreparedStatement consulta = conexion
-					.prepareStatement("SELECT Id_Usuario,Nombre,Direccion,Es_Admin,Contrasena"
+					.prepareStatement("SELECT Id_Usuario,Nombre,Direccion,Es_Admin,Activo,Contrasena"
 							+ " FROM " + this.tablaUsuario);
 			ResultSet resultado = consulta.executeQuery();
 			while (resultado.next()) {
 				ListaUsuarios.add(new Usuario(resultado.getString("Id_Usuario"), resultado.getString("Nombre"), resultado.getString("Direccion")
-						,resultado.getBoolean("Es_Admin"),resultado.getString("contrasena")));
+						,resultado.getBoolean("Es_Admin"),resultado.getBoolean("Activo"),resultado.getString("contrasena")));
 			}
 		} catch (SQLException ex) {
 			throw new SQLException(ex);

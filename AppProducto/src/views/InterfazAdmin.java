@@ -96,6 +96,27 @@ public class InterfazAdmin extends JFrame {
 			}
 		});
 		
+		Proveedores.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				InterfazProveedoresAdmin ipa = new InterfazProveedoresAdmin();
+				ipa.setLocationRelativeTo(null);
+				ipa.setVisible(true);
+			}
+		});
+		
+		Clientes.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				InterfazClientesAdmin ica = new InterfazClientesAdmin();
+				ica.setLocationRelativeTo(null);
+				ica.setVisible(true);
+			}
+		});
+		
 		Volver.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

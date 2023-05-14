@@ -2,20 +2,29 @@ package models;
 
 public class Usuario {
 	private String Id_Usuario,Nombre,Direccion;
-	private boolean Es_Admin;
+	private boolean Es_Admin, Activo;
 	private String contrasena;
 	
 	public Usuario() {
 		super();
 	}
 
-	public Usuario(String id_Usuario, String nombre, String direccion, boolean es_Admin, String contrasena) {
+	public Usuario(String id_Usuario, String nombre, String direccion, boolean es_Admin, boolean Activo, String contrasena) {
 		super();
 		Id_Usuario = id_Usuario;
 		Nombre = nombre;
 		Direccion = direccion;
 		Es_Admin = es_Admin;
+		this.Activo = Activo;
 		this.contrasena = contrasena;
+	}
+
+	public boolean isActivo() {
+		return Activo;
+	}
+
+	public void setActivo(boolean activo) {
+		Activo = activo;
 	}
 
 	public String getId_Usuario() {
@@ -61,9 +70,6 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario [Id_Usuario=" + Id_Usuario + ", Nombre=" + Nombre + ", Direccion=" + Direccion + ", Es_Admin="
-				+ Es_Admin + ", contrasena=" + contrasena + "]";
+				+ Es_Admin + ", Activo=" + Activo + ", contrasena=" + contrasena + "]";
 	}
-
-	
-	
 }
