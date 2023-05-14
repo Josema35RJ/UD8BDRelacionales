@@ -65,7 +65,6 @@ public class InterfazProveedor extends JFrame {
 		JButton btnNewButton = new JButton("Visualizar pedidos admin");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				productos.clear();
 				arealistado.setText("");
 				idadmin = JOptionPane.showInputDialog(null, "Introduzca id del admin", "Pregunta",
 						JOptionPane.QUESTION_MESSAGE);
@@ -90,6 +89,8 @@ public class InterfazProveedor extends JFrame {
 							}
 						}
 					}
+					productos.clear();
+					compras.clear();
 				} catch (ClassNotFoundException | SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
