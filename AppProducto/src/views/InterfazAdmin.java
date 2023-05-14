@@ -2,7 +2,6 @@ package views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -117,12 +116,21 @@ public class InterfazAdmin extends JFrame {
 			}
 		});
 		
+		Compras.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				InterfazVerPedidos ivp = new InterfazVerPedidos();
+				ivp.setLocationRelativeTo(null);
+				ivp.setVisible(true);
+			}
+		});
+		
 		Volver.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				dispose();
-				InterfazLogin il = new InterfazLogin();
 			}
 		});
 		
