@@ -101,6 +101,7 @@ public class InterfazLogin extends JFrame {
 									InterfazCliente ic=new InterfazCliente();
 									ic.setVisible(true);
 									dispose();
+									User = u;
 									//interfaz cliente
 									//poder editar perfil
 									//comprar producto
