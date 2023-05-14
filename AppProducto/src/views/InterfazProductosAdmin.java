@@ -37,7 +37,7 @@ public class InterfazProductosAdmin extends JFrame {
 	private JTextField Id_Proveedor;
 
 	public InterfazProductosAdmin() {
-		super("MenuProductos");
+		super("Menu Productos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(764, 373);
 		setLocationRelativeTo(null);
@@ -64,7 +64,6 @@ public class InterfazProductosAdmin extends JFrame {
 		Cambiar = new JButton("Update");
 
 		Guardar = new JButton("Save");
-		Atras = new JButton("Atras");
 
 		Actualizar = new JButton("Actualizar");
 		

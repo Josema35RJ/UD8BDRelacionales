@@ -35,7 +35,7 @@ public class InterfazProveedoresAdmin extends JFrame {
 	private JTextField Id_Proveedor;
 
 	public InterfazProveedoresAdmin() {
-		super("MenuProductos");
+		super("Menu Productos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(764, 373);
 		setLocationRelativeTo(null);
@@ -59,16 +59,16 @@ public class InterfazProveedoresAdmin extends JFrame {
 		Cambiar = new JButton("Update");
 
 		Guardar = new JButton("Save");
-		Atras = new JButton("Atras");
 
 		Actualizar = new JButton("Actualizar");
 		
 		Clave = new JTextField();
 		Clave.setColumns(10);
 		
-		JButton btnAtras = new JButton("Atras");
-		btnAtras.addActionListener(new ActionListener() {
+		Atras = new JButton("Atras");
+		Atras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				dispose();
 			}
 		});
 		
@@ -104,7 +104,7 @@ public class InterfazProveedoresAdmin extends JFrame {
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(29)
-									.addComponent(btnAtras, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
+									.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
 									.addGap(32)
 									.addComponent(Actualizar))
 								.addGroup(groupLayout.createSequentialGroup()
@@ -129,7 +129,7 @@ public class InterfazProveedoresAdmin extends JFrame {
 						.addComponent(Eliminar)
 						.addComponent(Insertar)
 						.addComponent(Guardar)
-						.addComponent(btnAtras)
+						.addComponent(Atras)
 						.addComponent(Actualizar))
 					.addContainerGap(21, Short.MAX_VALUE))
 		);

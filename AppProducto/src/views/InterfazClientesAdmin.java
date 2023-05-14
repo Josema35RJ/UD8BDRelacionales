@@ -27,7 +27,8 @@ public class InterfazClientesAdmin extends JFrame {
 	private JTable table;
 	private static DefaultTableModel model;
 	private static InterfazLogin il;
-	private JButton ActivarDesactivar, Atras, Borrar, ReestablecerClave;
+	private JButton ActivarDesactivar, Atras, Borrar, ReestablecerClave, VerCompras;
+	protected static String id;
 
 	public InterfazClientesAdmin() {
 		super("Menu Clientes");
@@ -132,9 +133,51 @@ public class InterfazClientesAdmin extends JFrame {
 			}
 		}
 	}});
+	
+	 VerCompras = new JButton("VerCompras");
+	VerCompras.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			id = (String) (model.getValueAt(table.getSelectedRow(),0));
+			InterfazVerCompras ivc = new InterfazVerCompras();
+			ivc.setLocationRelativeTo(null);
+			ivc.setVisible(true);
+		}
+	});
 
 	GroupLayout groupLayout = new GroupLayout(
-			getContentPane());groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout.createSequentialGroup().addGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout.createSequentialGroup().addGap(10).addComponent(scrollPane,GroupLayout.PREFERRED_SIZE,731,GroupLayout.PREFERRED_SIZE)).addGroup(groupLayout.createSequentialGroup().addGap(104).addComponent(ActivarDesactivar).addGap(84).addComponent(Borrar).addGap(92).addComponent(Atras).addGap(33).addComponent(ReestablecerClave))).addGap(7)));groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout.createSequentialGroup().addGap(11).addComponent(scrollPane,GroupLayout.PREFERRED_SIZE,171,GroupLayout.PREFERRED_SIZE).addGap(100).addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(ActivarDesactivar).addComponent(Atras).addComponent(Borrar).addComponent(ReestablecerClave))));
+			getContentPane());
+	groupLayout.setHorizontalGroup(
+		groupLayout.createParallelGroup(Alignment.LEADING)
+			.addGroup(groupLayout.createSequentialGroup()
+				.addGap(10)
+				.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 731, GroupLayout.PREFERRED_SIZE)
+				.addGap(7))
+			.addGroup(groupLayout.createSequentialGroup()
+				.addGap(45)
+				.addComponent(ActivarDesactivar)
+				.addGap(40)
+				.addComponent(Borrar)
+				.addGap(32)
+				.addComponent(ReestablecerClave)
+				.addGap(52)
+				.addComponent(VerCompras)
+				.addPreferredGap(ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+				.addComponent(Atras)
+				.addGap(66))
+	);
+	groupLayout.setVerticalGroup(
+		groupLayout.createParallelGroup(Alignment.LEADING)
+			.addGroup(groupLayout.createSequentialGroup()
+				.addGap(11)
+				.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 171, GroupLayout.PREFERRED_SIZE)
+				.addGap(100)
+				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(ActivarDesactivar)
+					.addComponent(Borrar)
+					.addComponent(ReestablecerClave)
+					.addComponent(Atras)
+					.addComponent(VerCompras)))
+	);
 
 	getContentPane().setLayout(groupLayout);
 
