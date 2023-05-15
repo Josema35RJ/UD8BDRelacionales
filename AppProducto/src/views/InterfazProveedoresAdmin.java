@@ -249,10 +249,6 @@ public class InterfazProveedoresAdmin extends JFrame {
 		}
 	}
 
-	private static void EscribirBase() {
-
-	}
-
 	private static void LeerBase() throws ClassNotFoundException {
 		try {
 			ListaProveedores = os.getAllProveedor(Conexion.obtener());

@@ -117,12 +117,11 @@ public class ObjectService {
 				consulta.setString(4, proveedor.getContrasena());
                 JOptionPane.showMessageDialog(null, "Proveedor Guardado");
 			} else if(x == 1) {
-				consulta = conexion.prepareStatement(
-						"UPDATE Proveedor SET nombre = ?, direccion = ?, contrasena = ? WHERE id_proveedor = ?");
-				consulta.setString(1, proveedor.getId_Proveedor());
-				consulta.setString(2, proveedor.getNombre());
-				consulta.setString(3, proveedor.getDireccion());
-				consulta.setString(4, proveedor.getContrasena());
+				System.out.println(proveedor);
+				consulta = conexion.prepareStatement("UPDATE Proveedor SET Id_Proveedor= Id_Proveedor, nombre = ?, direccion = ?, contrasena = ? WHERE id_proveedor = " + proveedor.getId_Proveedor());
+				consulta.setString(1, proveedor.getNombre());
+				consulta.setString(2, proveedor.getDireccion());
+				consulta.setString(3, proveedor.getContrasena());
 				JOptionPane.showMessageDialog(null, "Proveedor Actualizado");
 			}
 			consulta.executeUpdate();
@@ -191,15 +190,12 @@ public class ObjectService {
 				consulta.setBoolean(5, usuario.isActivo());
 				consulta.setString(6, usuario.getContrasena());
 			} else {
-				System.out.println("si");
-				consulta = conexion.prepareStatement(
-						"UPDATE Usuario SET nombre = ?, direccion = ?, es_admin = ?, activo = ?, contrasena = ? WHERE id_usuario = ?");
-				consulta.setString(1, usuario.getId_Usuario());
-				consulta.setString(2, usuario.getNombre());
-				consulta.setString(3, usuario.getDireccion());
-				consulta.setBoolean(4, usuario.isEs_Admin());
-				consulta.setBoolean(5, usuario.isActivo());
-				consulta.setString(6, usuario.getContrasena());
+				consulta = conexion.prepareStatement("UPDATE Usuario SET Id_usuario = Id_usuario, nombre = ?, direccion = ?, es_admin = ?, activo = ?, contrasena = ? WHERE Id_Usuario = " + usuario.getId_Usuario());
+				consulta.setString(1, usuario.getNombre());
+				consulta.setString(2, usuario.getDireccion());
+				consulta.setBoolean(3, usuario.isEs_Admin());
+				consulta.setBoolean(4, usuario.isActivo());
+				consulta.setString(5, usuario.getContrasena());
 				JOptionPane.showMessageDialog(null, "¡Datos actualizados con exito!");
 			}
 			consulta.executeUpdate();
