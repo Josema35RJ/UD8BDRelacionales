@@ -11,6 +11,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -27,7 +28,7 @@ public class InterfazProveedoresAdmin extends JFrame {
 	private static ObjectService os = new ObjectService();
 	private static List<Proveedor> ListaProveedores = new ArrayList<>();
 	private JTable table;
-	private JButton Insertar,Eliminar, Cambiar,Guardar, Actualizar, Atras;
+	private JButton Insertar, Eliminar, Cambiar, Actualizar, Atras;
 	private JTextField Nombre, Direccion;
 	private static DefaultTableModel model;
 	private JTextField Clave;
@@ -51,90 +52,70 @@ public class InterfazProveedoresAdmin extends JFrame {
 		Direccion.setColumns(10);
 
 		Eliminar = new JButton("Delete");
-		Eliminar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 
 		Cambiar = new JButton("Update");
 
-		Guardar = new JButton("Save");
-
 		Actualizar = new JButton("Actualizar");
-		
+
 		Clave = new JTextField();
 		Clave.setColumns(10);
-		
+
 		Atras = new JButton("Atras");
 		Atras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		
+
 		Id_Proveedor = new JTextField();
 		Id_Proveedor.setColumns(10);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 731, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(71)
-							.addComponent(Insertar)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-									.addComponent(Eliminar)
-									.addGap(29)
-									.addComponent(Cambiar)
-									.addGap(18))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(Nombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addGap(47)))
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(Direccion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(Guardar))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(29)
-									.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-									.addGap(32)
-									.addComponent(Actualizar))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(66)
-									.addComponent(Clave, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)))))
-					.addContainerGap(7, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 171, GroupLayout.PREFERRED_SIZE)
-					.addGap(70)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(Nombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(Clave, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(Direccion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(Cambiar)
-						.addComponent(Eliminar)
-						.addComponent(Insertar)
-						.addComponent(Guardar)
-						.addComponent(Atras)
-						.addComponent(Actualizar))
-					.addContainerGap(21, Short.MAX_VALUE))
-		);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
+				.createSequentialGroup()
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(scrollPane,
+								GroupLayout.PREFERRED_SIZE, 731, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup().addGap(71).addComponent(Insertar)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+										.addGroup(groupLayout.createSequentialGroup().addComponent(Eliminar).addGap(29)
+												.addComponent(Cambiar).addGap(18))
+										.addGroup(groupLayout.createSequentialGroup()
+												.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE, 86,
+														GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(Nombre, GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+												.addGap(47)))
+								.addComponent(Direccion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addGroup(groupLayout.createSequentialGroup().addGap(29)
+												.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 79,
+														GroupLayout.PREFERRED_SIZE)
+												.addGap(32).addComponent(Actualizar))
+										.addGroup(groupLayout.createSequentialGroup().addGap(66).addComponent(Clave,
+												GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)))))
+				.addContainerGap(7, Short.MAX_VALUE)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
+				.createSequentialGroup().addContainerGap()
+				.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 171, GroupLayout.PREFERRED_SIZE).addGap(70)
+				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(Nombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addComponent(Clave, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addComponent(Direccion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE))
+				.addGap(18)
+				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(Cambiar)
+						.addComponent(Eliminar).addComponent(Insertar).addComponent(Atras).addComponent(Actualizar))
+				.addContainerGap(21, Short.MAX_VALUE)));
 		try {
-				LeerBase();
+			LeerBase();
 		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -162,18 +143,18 @@ public class InterfazProveedoresAdmin extends JFrame {
 				Fila[1] = Nombre.getText();
 				Fila[2] = Direccion.getText();
 				Fila[3] = Clave.getText();
-				model.addRow(Fila);		
-				
-			Proveedor p=new Proveedor(Id_Proveedor.getText(), Nombre.getText(), Direccion.getText(),
-								Clave.getText());
-					
+				model.addRow(Fila);
+
+				Proveedor p = new Proveedor(Id_Proveedor.getText(), Nombre.getText(), Direccion.getText(),
+						Clave.getText());
+
 				try {
-					for (Proveedor pro : os.getAllProveedor(Conexion.obtener())){
-							if(p.getId_Proveedor().equals(Id_Proveedor.getText()))
-					os.saveProveedor(Conexion.obtener(), p );
+					for (Proveedor pro : os.getAllProveedor(Conexion.obtener())) {
+						if (p.getId_Proveedor().equals(Id_Proveedor.getText()))
+							os.saveProveedor(Conexion.obtener(), p,0);
 					}
 				} catch (ClassNotFoundException e1) {
-				// TODO Auto-generated catch block
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -182,41 +163,59 @@ public class InterfazProveedoresAdmin extends JFrame {
 			}
 		});
 		Iterator<Proveedor> it = ListaProveedores.iterator();
-        Eliminar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
-                while(it.hasNext()) {
-                	Proveedor p = it.next();
-                    if (p.getId_Proveedor().equals(model.getValueAt(table.getSelectedRow(), 0).toString()))
-                        it.remove();
-                   
-                }
-                model.removeRow(table.getSelectedRow());
-            }
-        });
+		Eliminar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Proveedor p = it.next();
+				while (it.hasNext()) {
+					if (p.getId_Proveedor().equals(model.getValueAt(table.getSelectedRow(), 0).toString()))
+						try {
+							os.removeProveedor(Conexion.obtener(), p);
+							it.remove();
+							model.removeRow(table.getSelectedRow());
+							JOptionPane.showMessageDialog(InterfazProveedoresAdmin.this, "Proveedor Borrado");
+						} catch (ClassNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+							p = it.next();
+						}
+					p = it.next();
+
+				}
+
+			}
+		});
 
 		Cambiar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				Proveedor pudapte = null ;
+				String id = model.getValueAt(table.getSelectedRow(), 0).toString();
 				for (Proveedor p : ListaProveedores) {
-					if (!p.getNombre().equals(Nombre.getText())) {
-						p.setNombre(Nombre.getText());
-					}
-					if (p.getDireccion().equals(Direccion.getText())) {
-						p.setDireccion(Direccion.getText());
+					if(p.getId_Proveedor().equals(id)) {
+					if (!p.getNombre().equals(Nombre.getText())) 
+						p.setNombre(model.getValueAt(table.getSelectedRow(), 1).toString());
+					if (!p.getDireccion().equals(Direccion.getText()))
+						p.setDireccion(model.getValueAt(table.getSelectedRow(), 2).toString());
+					if (!p.getContrasena().equals(Clave.getText())) 
+						p.setContrasena(model.getValueAt(table.getSelectedRow(), 3).toString());
+					pudapte = p;
 					}
 				}
-				EscribirTabla();
-			}
-		});
-
-		Guardar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				try {
+					os.saveProveedor(Conexion.obtener(), pudapte, 1);
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -256,7 +255,7 @@ public class InterfazProveedoresAdmin extends JFrame {
 
 	private static void LeerBase() throws ClassNotFoundException {
 		try {
-			ListaProveedores =os.getAllProveedor(Conexion.obtener());
+			ListaProveedores = os.getAllProveedor(Conexion.obtener());
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -56,10 +56,6 @@ public class InterfazProductosAdmin extends JFrame {
 		Direccion.setColumns(10);
 
 		Eliminar = new JButton("Delete");
-		Eliminar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 
 		Cambiar = new JButton("Update");
 
@@ -77,11 +73,6 @@ public class InterfazProductosAdmin extends JFrame {
 		Precio.setColumns(10);
 		
 		Atras = new JButton("Atras");
-		Atras.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
 		
 		Id_Proveedor = new JTextField();
 		Id_Proveedor.setColumns(10);
@@ -205,7 +196,7 @@ public class InterfazProductosAdmin extends JFrame {
 					
 				try {
 					for (Proveedor pro : os.getAllProveedor(Conexion.obtener())){
-							if(p.getId_Proveedor().equals(Id_Proveedor.getText()))
+					if(p.getId_Proveedor().equals(Id_Proveedor.getText()))
 					os.saveProducto(Conexion.obtener(), p , il.User, pro);
 					}
 				} catch (ClassNotFoundException e1) {
@@ -217,6 +208,13 @@ public class InterfazProductosAdmin extends JFrame {
 				}
 			}
 		});
+		
+		Atras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		
 		Iterator<Producto> it = ListaProductos.iterator();
         Eliminar.addActionListener(new ActionListener() {
             @Override
@@ -225,10 +223,12 @@ public class InterfazProductosAdmin extends JFrame {
                 while(it.hasNext()) {
                 	Producto p = it.next();
                     if (p.getId_Producto().equals(model.getValueAt(table.getSelectedRow(), 0).toString()))
-                        it.remove();
-                   
+                    	
+                    	it.remove();
+                    	model.removeRow(table.getSelectedRow());
                 }
-                model.removeRow(table.getSelectedRow());
+                
+                
             }
         });
 
@@ -248,23 +248,12 @@ public class InterfazProductosAdmin extends JFrame {
 			}
 		});
 
-		Guardar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-
 		Actualizar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
 					LeerBase();
-					while (model.getRowCount() > 0) {
-						model.removeRow(0);
-					}
 					EscribirTabla();
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
@@ -290,9 +279,6 @@ public class InterfazProductosAdmin extends JFrame {
 		}
 	}
 
-	private static void EscribirBase() {
-
-	}
 
 	private static void LeerBase() throws ClassNotFoundException {
 		try {

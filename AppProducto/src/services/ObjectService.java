@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
+
 import models.Compra;
 import models.Producto;
 import models.Proveedor;
@@ -99,24 +102,25 @@ public class ObjectService {
 	}
 
 	// Proveedor
-	public void saveProveedor(Connection conexion, Proveedor proveedor) throws SQLException {
+	public void saveProveedor(Connection conexion, Proveedor proveedor, int x) throws SQLException {
 		try {
-			PreparedStatement consulta;
-			if (proveedor.getId_Proveedor() == null) {
+			PreparedStatement consulta = null;
+			if (x == 0) {
 				consulta = conexion
-						.prepareStatement("INSERT INTO " + this.tablaProveedor + "(nombre, direccion,contrasena) VALUES(?, ?, ?, ?)");
+						.prepareStatement("INSERT INTO Proveedor (Id_Proveedor, Nombre, Direccion, Contrasena) VALUES (?, ?, ?, ?)");
 				consulta.setString(1, proveedor.getId_Proveedor());
 				consulta.setString(2, proveedor.getNombre());
 				consulta.setString(3, proveedor.getDireccion());
 				consulta.setString(4, proveedor.getContrasena());
-
-			} else {
+                JOptionPane.showMessageDialog(null, "Proveedor Guardado");
+			} else if(x == 1) {
 				consulta = conexion.prepareStatement(
-						"UPDATE " + this.tablaProveedor + " SET nombre = ?, direccion = ?, contrasena = ? WHERE id_proveedor = ?");
+						"UPDATE Proveedor SET nombre = ?, direccion = ?, contrasena = ? WHERE id_proveedor = ?");
 				consulta.setString(1, proveedor.getId_Proveedor());
 				consulta.setString(2, proveedor.getNombre());
 				consulta.setString(3, proveedor.getDireccion());
 				consulta.setString(4, proveedor.getContrasena());
+				JOptionPane.showMessageDialog(null, "Proveedor Actualizado");
 			}
 			consulta.executeUpdate();
 		} catch (SQLException ex) {
@@ -145,7 +149,7 @@ public class ObjectService {
 	public void removeProveedor(Connection conexion, Proveedor proveedor) throws SQLException {
 		try {
 			PreparedStatement consulta = conexion
-					.prepareStatement("DELETE FROM " + this.tablaProveedor + " WHERE id_proveedor = ?");
+					.prepareStatement("DELETE FROM Proveedor WHERE id_proveedor = ?");
 			consulta.setString(1, proveedor.getId_Proveedor());
 			consulta.executeUpdate();
 		} catch (SQLException ex) {
