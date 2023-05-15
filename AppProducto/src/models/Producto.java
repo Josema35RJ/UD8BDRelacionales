@@ -2,7 +2,7 @@ package models;
 
 public class Producto {
 
-	private String Id_Producto, Nombre, Imagen, Descripcion,categoria;
+	private String Id_Producto, Nombre, Imagen, Descripcion,Categoria;
 	private float Precio;
 	private int Cant_Stock;
 	private String Id_Usuario;
@@ -19,7 +19,7 @@ public class Producto {
 		Nombre = nombre;
 		Imagen = imagen;
 		Descripcion = descripcion;
-		this.categoria = categoria;
+		this.Categoria = categoria;
 		Precio = precio;
 		Cant_Stock = cant_Stock;
 		Id_Usuario = id_Usuario;
@@ -93,17 +93,17 @@ public class Producto {
 	}
 
 	public String getCategoria() {
-		return categoria;
+		return Categoria;
 	}
 
 	public void setCategoria(String categoria) {
-		this.categoria = categoria;
+		this.Categoria = categoria;
 	}
 
 	@Override
 	public String toString() {
 		return "Producto [Id_Producto=" + Id_Producto + ", Nombre=" + Nombre + ", Imagen=" + Imagen + ", Descripcion="
-				+ Descripcion + ", categoria=" + categoria + ", Precio=" + Precio + ", Cant_Stock=" + Cant_Stock
+				+ Descripcion + ", categoria=" + Categoria + ", Precio=" + Precio + ", Cant_Stock=" + Cant_Stock
 				+ ", Id_Usuario=" + Id_Usuario + ", Id_Proveedor=" + Id_Proveedor + "]";
 	}
 

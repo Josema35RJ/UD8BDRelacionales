@@ -50,7 +50,7 @@ public class InterfazClientesAdmin extends JFrame {
 						}
 						System.out.println(u);
 						try {
-							os.saveUsuario(Conexion.obtener(), u);
+							os.saveUsuario(Conexion.obtener(), u,1);
 						} catch (ClassNotFoundException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -102,7 +102,7 @@ public class InterfazClientesAdmin extends JFrame {
 							model.removeRow(table.getSelectedRow());
 						}
 						try {
-							os.saveUsuario(Conexion.obtener(), u);
+							os.removeUsuario(Conexion.obtener(), u);
 						} catch (ClassNotFoundException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -131,7 +131,7 @@ public class InterfazClientesAdmin extends JFrame {
 					if (u.getId_Usuario().equals(id)) {
 						u.setContrasena((String) (model.getValueAt(table.getSelectedRow(), 5)));
 						try {
-							os.saveUsuario(Conexion.obtener(), u);
+							os.saveUsuario(Conexion.obtener(), u,1);
 						} catch (ClassNotFoundException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
