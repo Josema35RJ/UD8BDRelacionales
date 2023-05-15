@@ -9,7 +9,6 @@ public class Test {
 
 		InterfazLogin listViewAntiguo = new InterfazLogin();
 		listViewAntiguo.setVisible(true);
-	
 
 	}
 

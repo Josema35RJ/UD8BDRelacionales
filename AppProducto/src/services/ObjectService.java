@@ -13,6 +13,7 @@ import models.Compra;
 import models.Producto;
 import models.Proveedor;
 import models.Usuario;
+import views.InterfazClienteEditar;
 
 
 public class ObjectService {
@@ -26,26 +27,28 @@ public class ObjectService {
 			PreparedStatement consulta;
 			if (product.getId_Producto() == null) {
 				consulta = conexion
-						.prepareStatement("INSERT INTO " + this.tablaProducto + "(nombre, Imagen, Descripcion, Precio, Cant_Stock, Id_Usuario, Id_Proveedor) VALUES(?, ?, ?, ?, ?, ?, ? ,? ,?)");
+						.prepareStatement("INSERT INTO " + this.tablaProducto + "(nombre, Imagen, Descripcion, Categoria, Precio, Cant_Stock, Id_Usuario, Id_Proveedor) VALUES(?, ?, ?, ?, ?, ?, ? ,? ,?)");
 				consulta.setString(1, product.getId_Producto());
 				consulta.setString(2, product.getNombre());
 				consulta.setString(3, product.getImagen());
 				consulta.setString(4, product.getDescripcion());
-				consulta.setFloat(5, product.getPrecio());
-				consulta.setInt(6, product.getCant_Stock());
-				consulta.setString(7, user.getId_Usuario());
-				consulta.setString(8, p.getId_Proveedor());
+				consulta.setString(5, product.getCategoria());
+				consulta.setFloat(6, product.getPrecio());
+				consulta.setInt(7, product.getCant_Stock());
+				consulta.setString(8, user.getId_Usuario());
+				consulta.setString(9, p.getId_Proveedor());
 			} else {
 				consulta = conexion
-						.prepareStatement("UPDATE " + this.tablaProducto + " SET nombre = ?, Imagen = ?, Descripcion = ?, Precio =?, Cant_Stock = ?, Id_Usuario = ?, Id_Proveedor = ? WHERE id_producto = ?");
+						.prepareStatement("UPDATE " + this.tablaProducto + " SET nombre = ?, Imagen = ?, Descripcion = ?, Categoria = ? ,Precio =?, Cant_Stock = ?, Id_Usuario = ?, Id_Proveedor = ? WHERE id_producto = ?");
 				consulta.setString(1, product.getId_Producto());
 				consulta.setString(2, product.getNombre());
 				consulta.setString(3, product.getImagen());
 				consulta.setString(4, product.getDescripcion());
-				consulta.setFloat(5, product.getPrecio());
-				consulta.setInt(6, product.getCant_Stock());
-				consulta.setString(7, user.getId_Usuario());
-				consulta.setString(8, p.getId_Proveedor());
+				consulta.setString(5, product.getCategoria());
+				consulta.setFloat(6, product.getPrecio());
+				consulta.setInt(7, product.getCant_Stock());
+				consulta.setString(8, user.getId_Usuario());
+				consulta.setString(9, p.getId_Proveedor());
 			}
 			consulta.executeUpdate();
 		} catch (SQLException ex) {
@@ -57,13 +60,13 @@ public class ObjectService {
 		Producto product = null;
 		try {
 			PreparedStatement consulta = conexion
-					.prepareStatement("SELECT nombre,imagen,descripcion,precio,cant_stock,id_usuario, id_proveedor" + " FROM "
+					.prepareStatement("SELECT nombre,imagen,descripcion,categoria,precio,cant_stock,id_usuario, id_proveedor" + " FROM "
 							+ this.tablaProducto + " WHERE id_Producto = ?");
 			consulta.setString(1, Id_Producto);
 			ResultSet resultado = consulta.executeQuery();
 			while (resultado.next()) {
 				product = new Producto(Id_Producto, resultado.getString("Nombre"), resultado.getString("Imagen"),
-						resultado.getString("Descripcion"), resultado.getFloat("Precio"),
+						resultado.getString("Descripcion"),resultado.getString("Categoria"), resultado.getFloat("Precio"),
 						resultado.getInt("Cant_Stock"), resultado.getString("Id_Usuario"), resultado.getString("Id_Proveedor"));
 			}
 		} catch (SQLException ex) {
@@ -87,12 +90,12 @@ public class ObjectService {
 		List<Producto> ListaProductos = new ArrayList<>();
 		try {
 			PreparedStatement consulta = conexion
-					.prepareStatement("SELECT Id_Producto,Nombre,Imagen,Descripcion,Precio,Cant_Stock,Id_Usuario, Id_Proveedor "
+					.prepareStatement("SELECT Id_Producto,Nombre,Imagen,Descripcion,Categoria,Precio,Cant_Stock,Id_Usuario, Id_Proveedor "
 							+ " FROM " + this.tablaProducto);
 			ResultSet resultado = consulta.executeQuery();
 			while (resultado.next()) {
 				ListaProductos.add(new Producto(resultado.getString("Id_Producto"), resultado.getString("Nombre"),
-						resultado.getString("Imagen"), resultado.getString("Descripcion"), resultado.getFloat("Precio"),
+						resultado.getString("Imagen"), resultado.getString("Descripcion"),resultado.getString("Categoria"), resultado.getFloat("Precio"),
 						resultado.getInt("Cant_Stock"), resultado.getString("Id_Usuario"), resultado.getString("Id_Proveedor")));
 			}
 		} catch (SQLException ex) {
@@ -175,10 +178,10 @@ public class ObjectService {
 	}
 
 	// Usuario
-	public void saveUsuario(Connection conexion, Usuario usuario) throws SQLException {
+	public void saveUsuario(Connection conexion, Usuario usuario, int x) throws SQLException {
 		try {
 			PreparedStatement consulta;
-			if (usuario.getId_Usuario()== null) {
+			if (x==0) {
 				consulta = conexion
 						.prepareStatement("INSERT INTO " + this.tablaUsuario + "(nombre, direccion,es_admin,activo,contrasena,) VALUES(?, ?)");
 				consulta.setString(1, usuario.getId_Usuario());
@@ -188,14 +191,16 @@ public class ObjectService {
 				consulta.setBoolean(5, usuario.isActivo());
 				consulta.setString(6, usuario.getContrasena());
 			} else {
+				System.out.println("si");
 				consulta = conexion.prepareStatement(
-						"UPDATE " + this.tablaUsuario + " SET nombre = ?, direccion = ?, es_admin = ?, activo = ?, contrasena = ? WHERE id_usuario = ?");
+						"UPDATE Usuario SET nombre = ?, direccion = ?, es_admin = ?, activo = ?, contrasena = ? WHERE id_usuario = ?");
 				consulta.setString(1, usuario.getId_Usuario());
 				consulta.setString(2, usuario.getNombre());
 				consulta.setString(3, usuario.getDireccion());
 				consulta.setBoolean(4, usuario.isEs_Admin());
 				consulta.setBoolean(5, usuario.isActivo());
 				consulta.setString(6, usuario.getContrasena());
+				JOptionPane.showMessageDialog(null, "¡Datos actualizados con exito!");
 			}
 			consulta.executeUpdate();
 		} catch (SQLException ex) {

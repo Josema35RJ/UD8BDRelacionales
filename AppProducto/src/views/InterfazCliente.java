@@ -69,8 +69,8 @@ public class InterfazCliente extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			Object o=e.getSource();
 			if(o==botonEditar) {
-				//clase editar cliente
-				
+				InterfazClienteEditar ice=new InterfazClienteEditar();
+				ice.setVisible(true);
 				dispose();
 			}else if(o==botonHistorial) {
 				InterfazClienteHistorial ich;
@@ -87,9 +87,17 @@ public class InterfazCliente extends JFrame {
 				}
 				
 			}else if(o==botonBuscar) {
-				//clase buscar productos
-				
-				dispose();
+				try {
+					InterfazClienteBuscar icb=new InterfazClienteBuscar();
+					icb.setVisible(true);
+					dispose();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}else if(o==botonCerrar) {
 				//clase buscar productos
 				InterfazLogin il=new InterfazLogin();
