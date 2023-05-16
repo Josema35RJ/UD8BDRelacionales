@@ -43,6 +43,7 @@ public class InterfazClientesAdmin extends JFrame {
 		ActivarDesactivar = new JButton("ActivarDesactivar");
 		ActivarDesactivar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
 				String id = (String) (model.getValueAt(table.getSelectedRow(), 0));
 				for (Usuario u : ListaUsuarios) {
 					if (u.getId_Usuario().equals(id)) {
@@ -71,6 +72,9 @@ public class InterfazClientesAdmin extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				}catch(ArrayIndexOutOfBoundsException ex) {
+					JOptionPane.showMessageDialog(InterfazClientesAdmin.this, "Seleccionado A un Cliente");
+				}
 			}
 		});
 
@@ -95,6 +99,7 @@ public class InterfazClientesAdmin extends JFrame {
 		Borrar = new JButton("Borrar");
 		Borrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
 				String id = (String) (model.getValueAt(table.getSelectedRow(), 0));
 				Iterator<Usuario> it = ListaUsuarios.iterator();
 				while (it.hasNext()) {
@@ -118,12 +123,16 @@ public class InterfazClientesAdmin extends JFrame {
 						}
 					}
 				}
+				}catch(ArrayIndexOutOfBoundsException ex) {
+					JOptionPane.showMessageDialog(InterfazClientesAdmin.this, "Seleccionado A un Cliente");
+				}
 			}
 		});
 
 		ReestablecerClave = new JButton("ReestablecerClave");
 		ReestablecerClave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
 				String id = (String) (model.getValueAt(table.getSelectedRow(), 0));
 				for (Usuario u : ListaUsuarios) {
 					if (u.getId_Usuario().equals(id)) {
@@ -144,16 +153,23 @@ public class InterfazClientesAdmin extends JFrame {
 					}
 
 				}
+				}catch(ArrayIndexOutOfBoundsException ex) {
+					JOptionPane.showMessageDialog(InterfazClientesAdmin.this, "Seleccionado A un Cliente");
+				}
 			}
 		});
 
 		VerCompras = new JButton("VerCompras");
 		VerCompras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
 				id = (String) (model.getValueAt(table.getSelectedRow(), 0));
 				InterfazVerCompras ivc = new InterfazVerCompras();
 				ivc.setLocationRelativeTo(null);
 				ivc.setVisible(true);
+				}catch(ArrayIndexOutOfBoundsException ex) {
+					JOptionPane.showMessageDialog(InterfazClientesAdmin.this, "Seleccionado A un Cliente");
+				}
 			}
 		});
 

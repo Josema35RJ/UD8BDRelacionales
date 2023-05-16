@@ -284,6 +284,7 @@ public class InterfazProductosAdmin extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				Producto p = null;
 				Object[] Fila = new Object[model.getColumnCount()];
 				Fila[0] = Id_Producto.getText();
 				Fila[1] = Nombre.getText();
@@ -292,28 +293,27 @@ public class InterfazProductosAdmin extends JFrame {
 				Fila[4] = Precio.getText();
 				Fila[5] = Cant_Stock.getText();
 				Fila[6] = Precio.getText();
-				model.addRow(Fila);
-
-				Producto p = new Producto(Id_Producto.getText(), Nombre.getText(), " ", Descripcion.getText(),
-						Categoria.getText(), Float.valueOf(Precio.getText()), Integer.valueOf(Cant_Stock.getText()),
-						 String.valueOf(Id_Proveedor.getText()));
-
-				try {
-					for (Proveedor pro : os.getAllProveedor(Conexion.obtener())) {
-						if (p.getId_Proveedor().equals(Id_Proveedor.getText()))
-							try {
-							os.saveProducto(Conexion.obtener(), p, il.User, Id_Proveedor.getText(), 0);
-							} catch (SQLIntegrityConstraintViolationException ex) {
-								
-							}
-					}
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				
+                if(Id_Producto.getText().length()>0 && Nombre.getText().length()>0 && ListaImagenes.getSelectedItem().toString().length()>0 && Descripcion.getText().length()>0 
+                		&& Categoria.getText().length()>0 && Precio.getText().length()>0 && Cant_Stock.getText().length()>0 
+                		&& Id_Proveedor.getText().length()>0 ) {
+                	p = new Producto(Id_Producto.getText(), Nombre.getText(), ListaImagenes.getSelectedItem().toString(), Descripcion.getText(),
+    						Categoria.getText(), Float.valueOf(Precio.getText()), Integer.valueOf(Cant_Stock.getText()),
+    						 String.valueOf(Id_Proveedor.getText()));
+                	try {
+    					for (Proveedor pro : os.getAllProveedor(Conexion.obtener())) {
+    						if (p.getId_Proveedor().equals(Id_Proveedor.getText()))
+    							os.saveProducto(Conexion.obtener(), p, il.User, Id_Proveedor.getText(), 0);
+    							model.addRow(Fila);
+    					}
+    				} catch (ClassNotFoundException e1) {
+    					// TODO Auto-generated catch block
+    				} catch (SQLException e1) {
+    					// TODO Auto-generated catch block
+    				}
+                }else {
+                	JOptionPane.showMessageDialog(InterfazProductosAdmin.this, "Rellena Todos Los Campos");
+                }
 			}
 		});
 
@@ -328,6 +328,7 @@ public class InterfazProductosAdmin extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				try {
 				while (it.hasNext()) {
 					Producto p = it.next();
 					if (p.getId_Producto().equals(model.getValueAt(table.getSelectedRow(), 0).toString()))
@@ -336,6 +337,9 @@ public class InterfazProductosAdmin extends JFrame {
 					model.removeRow(table.getSelectedRow());
 				}
 
+				}catch (ArrayIndexOutOfBoundsException ex) {
+					JOptionPane.showMessageDialog(InterfazProductosAdmin.this, "Selecciona Algun Producto");
+				}
 			}
 		});
 
@@ -343,9 +347,13 @@ public class InterfazProductosAdmin extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				try {
 				Producto pupdate = null;
-				String id = (String) (model.getValueAt(table.getSelectedRow(), 0));
+				String id = null ;
+				try {
+				id = (String) (model.getValueAt(table.getSelectedRow(), 0));
+				}catch(ArrayIndexOutOfBoundsException ex) {
+					JOptionPane.showMessageDialog(InterfazProductosAdmin.this, "No Hay Ningun Producto Seleccionado");
+				}
 				for (Producto p : ListaProductos) {
 					if (p.getId_Producto().equals(id)) {
 						if (!p.getNombre().equals((String) (model.getValueAt(table.getSelectedRow(), 1)))) {
@@ -383,24 +391,21 @@ public class InterfazProductosAdmin extends JFrame {
 								pupdate = p;
 							}
 						}
-						if (!(p.getId_Proveedor().equals((String) (model.getValueAt(table.getSelectedRow(), 8))))) {
-							p.setId_Proveedor((String) (model.getValueAt(table.getSelectedRow(), 8)));
+						if (!(p.getId_Proveedor().equals((String) (model.getValueAt(table.getSelectedRow(), 7))))) {
+							p.setId_Proveedor((String) (model.getValueAt(table.getSelectedRow(), 7)));
 							pupdate = p;
 						}
 					}
 				}
-				try {
-					os.saveProducto(Conexion.obtener(), pupdate, il.User, pupdate.getId_Proveedor(), 1);
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				}catch(ArrayIndexOutOfBoundsException ex) {
-					JOptionPane.showMessageDialog(InterfazProductosAdmin.this, "No Hay Ningun Producto Seleccionado");
-				}
+					try {
+						os.saveProducto(Conexion.obtener(), pupdate, il.User, pupdate.getId_Proveedor(), 1);
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 			}
 		});
 

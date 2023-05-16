@@ -12,7 +12,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class InterfazAdmin extends JFrame {
 	
-	private JButton Productos, Proveedores, Clientes, Pedidos, Compras, Volver, Salir;
+	private JButton Productos, Proveedores, Clientes, Pedidos, Compras, CerrarSesion, Salir;
 	private ImageIcon Clienteimagen, ProveedorImagen, ProductoImagen, PedidosImagen, ComprasImagen, SalirImagen, VolverImagen;
 
 	public InterfazAdmin () {
@@ -25,7 +25,7 @@ public class InterfazAdmin extends JFrame {
 	    Clientes = new JButton ("Clientes");
 		Pedidos = new JButton ("Pedidos");
 		Compras = new JButton ("Compras");
-		Volver = new JButton ("Volver");
+		CerrarSesion = new JButton ("Cerrar Sesion");
 		Salir = new JButton ("Salir");
 		Clienteimagen = new ImageIcon ("Icon/Cliente.png");
 		Clientes.setIcon(Clienteimagen);
@@ -40,14 +40,14 @@ public class InterfazAdmin extends JFrame {
 		SalirImagen = new ImageIcon ("Icon/Salir.png");
 		Salir.setIcon(SalirImagen);
 		VolverImagen = new ImageIcon ("Icon/Volver.png");
-		Volver.setIcon(VolverImagen);
+		CerrarSesion.setIcon(VolverImagen);
 		getContentPane().add(Pedidos);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(60)
-					.addComponent(Volver, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
+					.addComponent(CerrarSesion, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
 					.addComponent(Salir, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
 					.addGap(59))
@@ -80,7 +80,7 @@ public class InterfazAdmin extends JFrame {
 						.addComponent(Pedidos, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(Volver, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+						.addComponent(CerrarSesion, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
 						.addComponent(Salir, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)))
 		);
 		getContentPane().setLayout(groupLayout);
@@ -126,13 +126,15 @@ public class InterfazAdmin extends JFrame {
 			}
 		});
 		
-		Volver.addActionListener(new ActionListener() {
+		CerrarSesion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				if(JOptionPane.showConfirmDialog(InterfazAdmin.this, "Quieres Cerrrar Sesion?")==0) {
 				InterfazLogin il=new InterfazLogin();
 				il.setVisible(true);
 				dispose();
+				}
 			}
 		});
 		
