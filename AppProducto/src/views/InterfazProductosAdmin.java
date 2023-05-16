@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -39,10 +40,10 @@ public class InterfazProductosAdmin extends JFrame {
 	private static List<Producto> ListaProductos = new ArrayList<>();
 	private JTable table;
 	private JButton Insertar, Eliminar, Cambiar, Actualizar, Atras, Ver_Imagen;
-	private JTextField Id_Producto, Nombre, Descripcion, Clave, Cant_Stock, Precio, Id_Proveedor, Categoria;
+	private JTextField Id_Producto, Nombre, Descripcion, Precio, Cant_Stock, Id_Proveedor, Categoria;
 	private static DefaultTableModel model;
 	private static InterfazLogin il;
-	private JLabel lblNombre, lblDescripcion, lblCategoria, lblClave, lblPrecio, ID_1, lbCant_Stock, lbId_Proveedor;
+	private JLabel lblNombre, lblDescripcion, lblCategoria, lblPrecio, ID_1, lbCant_Stock, lbId_Proveedor;
 	private JComboBox ListaImagenes;
 	private String[]RutasImagenes ;
 	private static ImageIcon Ver ;
@@ -76,14 +77,11 @@ public class InterfazProductosAdmin extends JFrame {
 
 		Actualizar = new JButton("Actualizar");
 
-		Clave = new JTextField();
-		Clave.setColumns(10);
+		Precio = new JTextField();
+		Precio.setColumns(10);
 
 		Cant_Stock = new JTextField();
 		Cant_Stock.setColumns(10);
-
-		Precio = new JTextField();
-		Precio.setColumns(10);
 
 		Atras = new JButton("Atras");
 
@@ -100,8 +98,6 @@ public class InterfazProductosAdmin extends JFrame {
 		lblDescripcion = new JLabel("DESCRIPCION");
 
 		lblCategoria = new JLabel("CATEGORIA");
-
-		lblClave = new JLabel("ID_Usuario");
 
 		lblPrecio = new JLabel("PRECIO");
 
@@ -163,7 +159,19 @@ public class InterfazProductosAdmin extends JFrame {
 											.addComponent(ListaImagenes, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE)
 											.addContainerGap())))))))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(31)
+					.addGap(229)
+					.addComponent(Actualizar)
+					.addGap(18)
+					.addComponent(Insertar)
+					.addGap(10)
+					.addComponent(Cambiar)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(Eliminar)
+					.addGap(16)
+					.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(292, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addGap(92)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(Id_Producto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(ID))
@@ -181,33 +189,17 @@ public class InterfazProductosAdmin extends JFrame {
 						.addComponent(lblCategoria, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(Clave, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblPrecio, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(Precio, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblClave))
+						.addComponent(lblPrecio, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(Cant_Stock, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lbCant_Stock))
 					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(lbId_Proveedor, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(107, Short.MAX_VALUE))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(203)
-					.addComponent(Actualizar)
-					.addGap(36)
-					.addComponent(Insertar)
-					.addGap(18)
-					.addComponent(Cambiar)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(Eliminar)
-					.addGap(16)
-					.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(292, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lbId_Proveedor, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -226,7 +218,7 @@ public class InterfazProductosAdmin extends JFrame {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(InsertarFoto, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)))
 					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(ID)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -245,27 +237,23 @@ public class InterfazProductosAdmin extends JFrame {
 							.addComponent(Nombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblPrecio)
-								.addComponent(lblClave))
+								.addComponent(lbCant_Stock)
+								.addComponent(lblPrecio))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(Clave, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(Cant_Stock, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(Precio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lbCant_Stock)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(Cant_Stock, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(lbId_Proveedor)
-							.addPreferredGap(ComponentPlacement.RELATED)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(Eliminar)
 						.addComponent(Atras)
 						.addComponent(Cambiar)
-						.addComponent(Insertar)
-						.addComponent(Actualizar))
+						.addComponent(Actualizar)
+						.addComponent(Insertar))
 					.addContainerGap(21, Short.MAX_VALUE))
 		);
 		try {
@@ -288,7 +276,6 @@ public class InterfazProductosAdmin extends JFrame {
 		model.addColumn("Categoria");
 		model.addColumn("Precio");
 		model.addColumn("Cant_Stock");
-		model.addColumn("Id_Usuario");
 		model.addColumn("Id_Proveedor");
 
 		EscribirTabla();
@@ -302,19 +289,23 @@ public class InterfazProductosAdmin extends JFrame {
 				Fila[1] = Nombre.getText();
 				Fila[2] = Descripcion.getText();
 				Fila[3] = Categoria.getText();
-				Fila[4] = Clave.getText();
+				Fila[4] = Precio.getText();
 				Fila[5] = Cant_Stock.getText();
 				Fila[6] = Precio.getText();
 				model.addRow(Fila);
 
 				Producto p = new Producto(Id_Producto.getText(), Nombre.getText(), " ", Descripcion.getText(),
 						Categoria.getText(), Float.valueOf(Precio.getText()), Integer.valueOf(Cant_Stock.getText()),
-						String.valueOf(1), String.valueOf(Id_Proveedor.getText()));
+						 String.valueOf(Id_Proveedor.getText()));
 
 				try {
 					for (Proveedor pro : os.getAllProveedor(Conexion.obtener())) {
 						if (p.getId_Proveedor().equals(Id_Proveedor.getText()))
+							try {
 							os.saveProducto(Conexion.obtener(), p, il.User, Id_Proveedor.getText(), 0);
+							} catch (SQLIntegrityConstraintViolationException ex) {
+								
+							}
 					}
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
@@ -464,8 +455,7 @@ public class InterfazProductosAdmin extends JFrame {
 			Fila[4] = p.getCategoria();
 			Fila[5] = p.getPrecio();
 			Fila[6] = p.getCant_Stock();
-			Fila[7] = p.getId_Usuario();
-			Fila[8] = p.getId_Proveedor();
+			Fila[7] = p.getId_Proveedor();
 			model.addRow(Fila);
 		}
 	}
