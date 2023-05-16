@@ -116,7 +116,6 @@ public class ObjectService {
 				consulta.setString(4, proveedor.getContrasena());
                 JOptionPane.showMessageDialog(null, "Proveedor Guardado");
 			} else if(x == 1) {
-				System.out.println(proveedor);
 				consulta = conexion.prepareStatement("UPDATE Proveedor SET Id_Proveedor= Id_Proveedor, nombre = ?, direccion = ?, contrasena = ? WHERE id_proveedor = " + proveedor.getId_Proveedor());
 				consulta.setString(1, proveedor.getNombre());
 				consulta.setString(2, proveedor.getDireccion());
