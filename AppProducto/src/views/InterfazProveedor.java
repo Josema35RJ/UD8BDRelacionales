@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,6 +34,7 @@ public class InterfazProveedor extends JFrame {
 	private JScrollPane jscrollpane;
 	private JTextField txtPedidosTotales;
 	private String idadmin;
+	private ImageIcon imagenproveedores;
 
 	/**
 	 * Launch the application.
@@ -62,7 +64,9 @@ public class InterfazProveedor extends JFrame {
 
 		setContentPane(contentPane);
 		ObjectService os = new ObjectService();
+		imagenproveedores = new ImageIcon ("Icon/ListaAdmin.png");
 		JButton btnNewButton = new JButton("Visualizar pedidos admin");
+		btnNewButton.setIcon(imagenproveedores);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				arealistado.setText("");
@@ -108,21 +112,21 @@ public class InterfazProveedor extends JFrame {
 		txtPedidosTotales.setColumns(10);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(180)
-					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(32, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
 					.addContainerGap(34, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(txtPedidosTotales, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(jscrollpane, GroupLayout.PREFERRED_SIZE, 521, GroupLayout.PREFERRED_SIZE))
 					.addGap(32))
+				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+					.addGap(163)
+					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(164, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 13, Short.MAX_VALUE)

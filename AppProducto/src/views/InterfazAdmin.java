@@ -31,7 +31,7 @@ public class InterfazAdmin extends JFrame {
 		Clientes.setIcon(Clienteimagen);
 		ProveedorImagen = new ImageIcon ("Icon/Proveedor.png");
 		Proveedores.setIcon(ProveedorImagen);
-		ProductoImagen = new ImageIcon ("Icon/Producto.png");
+		ProductoImagen = new ImageIcon ("Icon/Productos.png");
 		Productos.setIcon(ProductoImagen);
 		PedidosImagen = new ImageIcon ("Icon/Pedidos.png");
 		Pedidos.setIcon(PedidosImagen);
