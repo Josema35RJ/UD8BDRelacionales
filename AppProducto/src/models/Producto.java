@@ -26,7 +26,6 @@ public class Producto {
 		Id_Proveedor = id_Proveedor;
 	}
 
-
 	public String getId_Producto() {
 		return Id_Producto;
 	}
@@ -95,7 +94,6 @@ public class Producto {
 	public String getCategoria() {
 		return Categoria;
 	}
-
 	public void setCategoria(String categoria) {
 		this.Categoria = categoria;
 	}

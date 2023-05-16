@@ -22,12 +22,12 @@ public class ObjectService {
 	private final String tablaUsuario = "Usuario";
 	private final String tablaCompra = "Compra";
 
-	public void saveProducto(Connection conexion, Producto product, Usuario user, Proveedor p) throws SQLException {
+	public void saveProducto(Connection conexion, Producto product, Usuario user, String p, int x) throws SQLException {
 		try {
 			PreparedStatement consulta;
-			if (product.getId_Producto() == null) {
+			if (x==0) {
 				consulta = conexion
-						.prepareStatement("INSERT INTO " + this.tablaProducto + "(nombre, Imagen, Descripcion, Categoria, Precio, Cant_Stock, Id_Usuario, Id_Proveedor) VALUES(?, ?, ?, ?, ?, ?, ? ,? ,?)");
+						.prepareStatement("INSERT INTO Producto (Id_Producto,nombre, Imagen, Descripcion, Categoria, Precio, Cant_Stock, Id_Usuario, Id_Proveedor) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
 				consulta.setString(1, product.getId_Producto());
 				consulta.setString(2, product.getNombre());
 				consulta.setString(3, product.getImagen());
@@ -36,19 +36,18 @@ public class ObjectService {
 				consulta.setFloat(6, product.getPrecio());
 				consulta.setInt(7, product.getCant_Stock());
 				consulta.setString(8, user.getId_Usuario());
-				consulta.setString(9, p.getId_Proveedor());
+				consulta.setString(9, p);
 			} else {
 				consulta = conexion
-						.prepareStatement("UPDATE " + this.tablaProducto + " SET nombre = ?, Imagen = ?, Descripcion = ?, Categoria = ? ,Precio =?, Cant_Stock = ?, Id_Usuario = ?, Id_Proveedor = ? WHERE id_producto = ?");
-				consulta.setString(1, product.getId_Producto());
-				consulta.setString(2, product.getNombre());
-				consulta.setString(3, product.getImagen());
-				consulta.setString(4, product.getDescripcion());
-				consulta.setString(5, product.getCategoria());
-				consulta.setFloat(6, product.getPrecio());
-				consulta.setInt(7, product.getCant_Stock());
-				consulta.setString(8, user.getId_Usuario());
-				consulta.setString(9, p.getId_Proveedor());
+						.prepareStatement("UPDATE " + this.tablaProducto + " SET Id_Producto = Id_Producto, nombre = ?, Imagen = ?, Descripcion = ?, Categoria = ? ,Precio =?, Cant_Stock = ?, Id_Usuario = ?, Id_Proveedor = ? WHERE id_producto = " + product.getId_Producto());
+				consulta.setString(1, product.getNombre());
+				consulta.setString(2, product.getImagen());
+				consulta.setString(3, product.getDescripcion());
+				consulta.setString(4, product.getCategoria());
+				consulta.setFloat(5, product.getPrecio());
+				consulta.setInt(6, product.getCant_Stock());
+				consulta.setString(7, user.getId_Usuario());
+				consulta.setString(8, p);
 			}
 			consulta.executeUpdate();
 		} catch (SQLException ex) {

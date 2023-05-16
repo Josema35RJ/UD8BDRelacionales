@@ -1,9 +1,14 @@
 package views;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -11,14 +16,12 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
-import models.Producto;
+
 import models.Usuario;
 import services.Conexion;
 import services.ObjectService;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class InterfazClientesAdmin extends JFrame {
 
@@ -40,7 +43,7 @@ public class InterfazClientesAdmin extends JFrame {
 		ActivarDesactivar = new JButton("ActivarDesactivar");
 		ActivarDesactivar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String id = (String) (model.getValueAt(table.getSelectedRow(),0 ));
+				String id = (String) (model.getValueAt(table.getSelectedRow(), 0));
 				for (Usuario u : ListaUsuarios) {
 					if (u.getId_Usuario().equals(id)) {
 						if (u.isActivo()) {
@@ -48,9 +51,8 @@ public class InterfazClientesAdmin extends JFrame {
 						} else {
 							u.setActivo(true);
 						}
-						System.out.println(u);
 						try {
-							os.saveUsuario(Conexion.obtener(), u,1);
+							os.saveUsuario(Conexion.obtener(), u, 1);
 						} catch (ClassNotFoundException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -59,14 +61,16 @@ public class InterfazClientesAdmin extends JFrame {
 							e1.printStackTrace();
 						}
 					}
-					try {
-						Conexion.cerrar();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
 				}
-
+				try {
+					for(int x = 0; x <= table.getRowCount(); x++)
+						model.removeRow(0);
+					LeerBase();
+					EscribirTabla();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -93,32 +97,26 @@ public class InterfazClientesAdmin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String id = (String) (model.getValueAt(table.getSelectedRow(), 0));
 				Iterator<Usuario> it = ListaUsuarios.iterator();
-				Usuario u = it.next();
 				while (it.hasNext()) {
+					Usuario u = it.next();
 					if (u.getId_Usuario().equals(id)) {
 						if (JOptionPane.showConfirmDialog(InterfazClientesAdmin.this,
 								"Esta Seguro de Eliminar al Cliente") == 0) {
 							it.remove();
-							model.removeRow(table.getSelectedRow());
 						}
 						try {
 							os.removeUsuario(Conexion.obtener(), u);
+							model.removeRow(table.getSelectedRow());
 						} catch (ClassNotFoundException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
-							e1.printStackTrace();
+							JOptionPane.showMessageDialog(InterfazClientesAdmin.this, "El Cliente Tiene Compras No se Puede Borrar");
+						}catch (NoSuchElementException ex) {
+							
 						}
-						u = it.next();
 					}
-					u = it.next();
-				}
-				try {
-					Conexion.cerrar();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -130,23 +128,21 @@ public class InterfazClientesAdmin extends JFrame {
 				for (Usuario u : ListaUsuarios) {
 					if (u.getId_Usuario().equals(id)) {
 						u.setContrasena((String) (model.getValueAt(table.getSelectedRow(), 5)));
-						try {
-							os.saveUsuario(Conexion.obtener(), u,1);
-						} catch (ClassNotFoundException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+						if (JOptionPane.showConfirmDialog(InterfazClientesAdmin.this,
+								"Esta Seguro de Cambiarle la Clave?") == 0) {
+							try {
+								os.saveUsuario(Conexion.obtener(), u, 1);
+							} catch (ClassNotFoundException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						}
+						
 					}
-					
-				}
-				try {
-					Conexion.cerrar();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+
 				}
 			}
 		});
@@ -208,10 +204,6 @@ public class InterfazClientesAdmin extends JFrame {
 				model.addRow(Fila);
 			}
 		}
-	}
-
-	private static void EscribirBase() {
-
 	}
 
 	private static void LeerBase() throws ClassNotFoundException {
