@@ -99,7 +99,6 @@ public class InterfazCliente extends JFrame {
 					e1.printStackTrace();
 				}
 			}else if(o==botonCerrar) {
-				//clase buscar productos
 				InterfazLogin il=new InterfazLogin();
 				il.setVisible(true);
 				dispose();

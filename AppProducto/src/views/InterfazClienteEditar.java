@@ -81,9 +81,10 @@ public class InterfazClienteEditar extends JFrame {
 								u.setContrasena(Contrasena.getText());
 								cambio=true;
 							}
-							if(cambio) 
+							if(cambio) {
 								JOptionPane.showMessageDialog(InterfazClienteEditar.this, "¡Datos actualizados con exito!");
-							oc.saveUsuario(Conexion.obtener(), u, 1);
+								oc.saveUsuario(Conexion.obtener(), u, 1);
+						}
 						}
 					}
 				} catch (ClassNotFoundException e1) {

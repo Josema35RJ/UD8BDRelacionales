@@ -27,7 +27,7 @@ public class ObjectService {
 			PreparedStatement consulta;
 			if (x==0) {
 				consulta = conexion
-						.prepareStatement("INSERT INTO Producto (Id_Producto,nombre, Imagen, Descripcion, Categoria, Precio, Cant_Stock, Id_Usuario, Id_Proveedor) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+						.prepareStatement("INSERT INTO Producto (Id_Producto,nombre, Imagen, Descripcion, Categoria, Precio, Cant_Stock, Id_Proveedor) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
 				consulta.setString(1, product.getId_Producto());
 				consulta.setString(2, product.getNombre());
 				consulta.setString(3, product.getImagen());
@@ -35,19 +35,17 @@ public class ObjectService {
 				consulta.setString(5, product.getCategoria());
 				consulta.setFloat(6, product.getPrecio());
 				consulta.setInt(7, product.getCant_Stock());
-				consulta.setString(8, user.getId_Usuario());
-				consulta.setString(9, p);
+				consulta.setString(8, p);
 			} else {
 				consulta = conexion
-						.prepareStatement("UPDATE " + this.tablaProducto + " SET Id_Producto = Id_Producto, nombre = ?, Imagen = ?, Descripcion = ?, Categoria = ? ,Precio =?, Cant_Stock = ?, Id_Usuario = ?, Id_Proveedor = ? WHERE id_producto = " + product.getId_Producto());
+						.prepareStatement("UPDATE " + this.tablaProducto + " SET Id_Producto = Id_Producto, nombre = ?, Imagen = ?, Descripcion = ?, Categoria = ? ,Precio =?, Cant_Stock = ?, Id_Proveedor = ? WHERE id_producto = " + product.getId_Producto());
 				consulta.setString(1, product.getNombre());
 				consulta.setString(2, product.getImagen());
 				consulta.setString(3, product.getDescripcion());
 				consulta.setString(4, product.getCategoria());
 				consulta.setFloat(5, product.getPrecio());
 				consulta.setInt(6, product.getCant_Stock());
-				consulta.setString(7, user.getId_Usuario());
-				consulta.setString(8, p);
+				consulta.setString(7, p);
 			}
 			consulta.executeUpdate();
 		} catch (SQLException ex) {
@@ -59,14 +57,14 @@ public class ObjectService {
 		Producto product = null;
 		try {
 			PreparedStatement consulta = conexion
-					.prepareStatement("SELECT nombre,imagen,descripcion,categoria,precio,cant_stock,id_usuario, id_proveedor" + " FROM "
+					.prepareStatement("SELECT nombre,imagen,descripcion,categoria,precio,cant_stock, id_proveedor" + " FROM "
 							+ this.tablaProducto + " WHERE id_Producto = ?");
 			consulta.setString(1, Id_Producto);
 			ResultSet resultado = consulta.executeQuery();
 			while (resultado.next()) {
 				product = new Producto(Id_Producto, resultado.getString("Nombre"), resultado.getString("Imagen"),
 						resultado.getString("Descripcion"),resultado.getString("Categoria"), resultado.getFloat("Precio"),
-						resultado.getInt("Cant_Stock"), resultado.getString("Id_Usuario"), resultado.getString("Id_Proveedor"));
+						resultado.getInt("Cant_Stock"), resultado.getString("Id_Proveedor"));
 			}
 		} catch (SQLException ex) {
 			throw new SQLException(ex);
@@ -89,13 +87,13 @@ public class ObjectService {
 		List<Producto> ListaProductos = new ArrayList<>();
 		try {
 			PreparedStatement consulta = conexion
-					.prepareStatement("SELECT Id_Producto,Nombre,Imagen,Descripcion,Categoria,Precio,Cant_Stock,Id_Usuario, Id_Proveedor "
+					.prepareStatement("SELECT Id_Producto,Nombre,Imagen,Descripcion,Categoria,Precio,Cant_Stock, Id_Proveedor "
 							+ " FROM " + this.tablaProducto);
 			ResultSet resultado = consulta.executeQuery();
 			while (resultado.next()) {
 				ListaProductos.add(new Producto(resultado.getString("Id_Producto"), resultado.getString("Nombre"),
 						resultado.getString("Imagen"), resultado.getString("Descripcion"),resultado.getString("Categoria"), resultado.getFloat("Precio"),
-						resultado.getInt("Cant_Stock"), resultado.getString("Id_Usuario"), resultado.getString("Id_Proveedor")));
+						resultado.getInt("Cant_Stock"), resultado.getString("Id_Proveedor")));
 			}
 		} catch (SQLException ex) {
 			throw new SQLException(ex);
@@ -194,7 +192,6 @@ public class ObjectService {
 				consulta.setBoolean(3, usuario.isEs_Admin());
 				consulta.setBoolean(4, usuario.isActivo());
 				consulta.setString(5, usuario.getContrasena());
-				JOptionPane.showMessageDialog(null, "¡Datos actualizados con exito!");
 			}
 			consulta.executeUpdate();
 		} catch (SQLException ex) {

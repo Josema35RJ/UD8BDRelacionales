@@ -5,7 +5,6 @@ public class Producto {
 	private String Id_Producto, Nombre, Imagen, Descripcion,Categoria;
 	private float Precio;
 	private int Cant_Stock;
-	private String Id_Usuario;
 	private String Id_Proveedor;
 	
 	public Producto() {
@@ -13,7 +12,7 @@ public class Producto {
 	}
 
 	public Producto(String id_Producto, String nombre, String imagen, String descripcion, String categoria,
-			float precio, int cant_Stock, String id_Usuario, String id_Proveedor) {
+			float precio, int cant_Stock, String id_Proveedor) {
 		super();
 		Id_Producto = id_Producto;
 		Nombre = nombre;
@@ -22,7 +21,6 @@ public class Producto {
 		this.Categoria = categoria;
 		Precio = precio;
 		Cant_Stock = cant_Stock;
-		Id_Usuario = id_Usuario;
 		Id_Proveedor = id_Proveedor;
 	}
 
@@ -74,14 +72,6 @@ public class Producto {
 		Cant_Stock = cant_Stock;
 	}
 
-	public String getId_Usuario() {
-		return Id_Usuario;
-	}
-
-	public void setId_Usuario(String id_Usuario) {
-		Id_Usuario = id_Usuario;
-	}
-
 	
 	public String getId_Proveedor() {
 		return Id_Proveedor;
@@ -101,10 +91,8 @@ public class Producto {
 	@Override
 	public String toString() {
 		return "Producto [Id_Producto=" + Id_Producto + ", Nombre=" + Nombre + ", Imagen=" + Imagen + ", Descripcion="
-				+ Descripcion + ", categoria=" + Categoria + ", Precio=" + Precio + ", Cant_Stock=" + Cant_Stock
-				+ ", Id_Usuario=" + Id_Usuario + ", Id_Proveedor=" + Id_Proveedor + "]";
+				+ Descripcion + ", Categoria=" + Categoria + ", Precio=" + Precio + ", Cant_Stock=" + Cant_Stock
+				+ ", Id_Proveedor=" + Id_Proveedor + "]";
 	}
-
-	
 	
 }

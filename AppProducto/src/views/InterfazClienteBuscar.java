@@ -3,6 +3,8 @@ package views;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +16,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
 import models.Producto;
@@ -27,7 +33,7 @@ import javax.swing.JSpinner;
 
 public class InterfazClienteBuscar extends JFrame {
 
-	private JTable table;
+	private static JTable table;
 	private static DefaultTableModel model;
 	private static JComboBox FiltroCategoria;
 	private JButton botonCarrito;
@@ -42,7 +48,7 @@ public class InterfazClienteBuscar extends JFrame {
 	public InterfazClienteBuscar() throws ClassNotFoundException, SQLException {
 		super("Buscar producto");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(420, 220);
+		setSize(527, 467);
 		setLocationRelativeTo(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -55,6 +61,7 @@ public class InterfazClienteBuscar extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					for(int i=0;i<model.getRowCount()+1;i++) {
+						if(table.getRowCount()>0)
 						model.removeRow(0);
 					}
 				
@@ -74,7 +81,7 @@ public class InterfazClienteBuscar extends JFrame {
 		botonCarrito = new JButton();
 		botonCarrito.setIcon(imagenCarro);
 		
-		botonVolver = new JButton("Volver Atras");
+		botonVolver = new JButton("Volver");
 		botonVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				InterfazCliente ic=new InterfazCliente();
@@ -87,10 +94,9 @@ public class InterfazClienteBuscar extends JFrame {
 		botonAnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					
 					for (Producto p : oc.getAllProducts(Conexion.obtener())) {
-						if(p.getId_Producto().equals(model.getValueAt(table.getSelectedRow(), 0).toString())) {
-							
+						if(p.getNombre().equals(model.getValueAt(table.getSelectedRow(), 0).toString())) {
+							System.out.println(carrito);
 							carrito.add(p);
 						}
 					}
@@ -105,63 +111,120 @@ public class InterfazClienteBuscar extends JFrame {
 		});
 		
 		cantidad = new JSpinner();
-		cantidad.setModel(spinerModel);
 		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(149)
-							.addComponent(FiltroCategoria, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(cantidad, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
-							.addComponent(botonCarrito)))
+					.addGap(149)
+					.addComponent(FiltroCategoria, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(26)
+					.addComponent(cantidad, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+					.addComponent(botonCarrito)
 					.addContainerGap())
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(43)
+					.addGap(61)
 					.addComponent(botonVolver, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
 					.addComponent(botonAnadir)
-					.addGap(43))
+					.addGap(81))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(8)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(FiltroCategoria, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(botonCarrito)
-						.addComponent(cantidad, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(botonCarrito)
+							.addGap(26))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(FiltroCategoria, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(cantidad, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(botonAnadir, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-						.addComponent(botonVolver, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(14, Short.MAX_VALUE))
+						.addComponent(botonVolver, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(botonAnadir, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
 		);
 
-
+		
 		table = new JTable();
 		model = new DefaultTableModel();
+		
 		table.setModel(model);
-
+		
 		scrollPane.setViewportView(table);
 		getContentPane().setLayout(groupLayout);
 		
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
 		model.addColumn("Nombre");
-		model.addColumn("Imagen");
 		model.addColumn("Descripcion");
 		model.addColumn("Precio");
 
 		EscribirTabla();
+		
+		table.addMouseListener(new MouseListener() {
 
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					setSpinner();
+					cantidad.setModel(spinerModel);
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+
+			@Override
+			public void mouseExited(MouseEvent e) {}
+			
+		});
+		cantidad.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				try {
+					for (Producto p : oc.getAllProducts(Conexion.obtener())) {
+						if(p.getNombre().equals(model.getValueAt(table.getSelectedRow(), 0).toString())) {
+							if(Integer.valueOf(String.valueOf(cantidad.getValue()))>p.getCant_Stock())
+								cantidad.setValue(4);
+						}
+					}
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+			
+		});
+		
 		for (int c = 0; c < table.getColumnCount(); c++) { 
             Class<?> col_class = table.getColumnClass(c); 
             table.setDefaultEditor(col_class, null);
@@ -171,7 +234,7 @@ public class InterfazClienteBuscar extends JFrame {
 	}
 	private void setSpinner() throws ClassNotFoundException, SQLException {
 		for (Producto p : oc.getAllProducts(Conexion.obtener())) {
-			if(p.getId_Producto().equals(model.getValueAt(table.getSelectedRow(), 0).toString())) {
+			if(p.getNombre().equals(model.getValueAt(table.getSelectedRow(), 0).toString())) {
 				spinerModel.setMinimum(0);
 				spinerModel.setMaximum(p.getCant_Stock());
 			}
@@ -184,12 +247,13 @@ public class InterfazClienteBuscar extends JFrame {
 			if(FiltroCategoria.getSelectedItem().toString().equals(a.getCategoria())) {
 				Object[] Fila = new Object[4];
 				Fila[0] = a.getNombre();
-				Fila[1] = a.getImagen();
-				Fila[2] = a.getDescripcion();
-				Fila[3] = a.getPrecio();
+				Fila[1] = a.getDescripcion();
+				Fila[2] = a.getPrecio();
 				model.addRow(Fila);
 				listaP=oc.getAllProducts(Conexion.obtener());
 			}
 		}
+		table.getColumnModel().getColumn(0).setMaxWidth(165);
+		table.getColumnModel().getColumn(2).setMaxWidth(45);
 	}
 }

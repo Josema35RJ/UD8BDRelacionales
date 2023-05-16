@@ -101,7 +101,7 @@ public class InterfazProductosAdmin extends JFrame {
 
 		lblCategoria = new JLabel("CATEGORIA");
 
-		lblClave = new JLabel("CLAVE");
+		lblClave = new JLabel("ID_Usuario");
 
 		lblPrecio = new JLabel("PRECIO");
 
@@ -121,7 +121,8 @@ public class InterfazProductosAdmin extends JFrame {
 	    int siguiente = 0;
 	    for(File r : Rutas)
 			try {
-				RutasImagenes[siguiente++]=r.getCanonicalPath().replace("C:\\Users\\Jose Manuel\\git\\UD8BDRelacionales\\AppProducto\\", " ").strip();
+				String[] Ruta= r.getCanonicalPath().split("AppProducto");
+				RutasImagenes[siguiente++]=Ruta[1].substring(1, Ruta[1].length()).strip();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
