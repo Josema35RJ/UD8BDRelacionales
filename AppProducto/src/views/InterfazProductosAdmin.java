@@ -58,7 +58,7 @@ public class InterfazProductosAdmin extends JFrame {
 		setLocationRelativeTo(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-
+		
 		Insertar = new JButton("Create");
 
 		Id_Producto = new JTextField();
