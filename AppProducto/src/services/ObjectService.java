@@ -77,7 +77,7 @@ public class ObjectService {
 	public void removeProducto(Connection conexion, Producto product) throws SQLException {
 		try {
 			PreparedStatement consulta = conexion
-					.prepareStatement("DELETE FROM " + this.tablaProducto + " WHERE idProducto = ?");
+					.prepareStatement("DELETE FROM " + this.tablaProducto + " WHERE id_Producto = ?");
 			consulta.setString(1, product.getId_Producto());
 			consulta.executeUpdate();
 		} catch (SQLException ex) {

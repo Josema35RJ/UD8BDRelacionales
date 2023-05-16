@@ -29,6 +29,9 @@ import models.Producto;
 import models.Proveedor;
 import services.Conexion;
 import services.ObjectService;
+import java.awt.Window.Type;
+import java.awt.Color;
+import java.awt.Font;
 
 public class InterfazProductosAdmin extends JFrame {
 
@@ -48,6 +51,8 @@ public class InterfazProductosAdmin extends JFrame {
 
 	public InterfazProductosAdmin() {
 		super("Menu Productos");
+		setFont(new Font("Arial", Font.PLAIN, 12));
+		setForeground(Color.GRAY);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(940, 507);
 		setLocationRelativeTo(null);
@@ -136,10 +141,14 @@ public class InterfazProductosAdmin extends JFrame {
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 565, GroupLayout.PREFERRED_SIZE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(112)
+							.addComponent(InsertarFoto, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(30)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(Foto, GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+									.addComponent(Foto, GroupLayout.PREFERRED_SIZE, 289, GroupLayout.PREFERRED_SIZE)
 									.addContainerGap())
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(Ver_Imagen, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
@@ -150,18 +159,14 @@ public class InterfazProductosAdmin extends JFrame {
 											.addGap(22))
 										.addGroup(groupLayout.createSequentialGroup()
 											.addGap(18)
-											.addComponent(ListaImagenes, GroupLayout.PREFERRED_SIZE, 155, GroupLayout.PREFERRED_SIZE)
-											.addContainerGap())))))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(112)
-							.addComponent(InsertarFoto, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())))
+											.addComponent(ListaImagenes, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE)
+											.addContainerGap())))))))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(49)
+					.addGap(31)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(Id_Producto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(ID))
-					.addGap(14)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(Nombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNombre, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE))
@@ -171,26 +176,25 @@ public class InterfazProductosAdmin extends JFrame {
 						.addComponent(Descripcion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(Categoria, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-							.addGap(25)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(Clave, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblPrecio, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
-							.addGap(18)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(Precio, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblClave))
-							.addGap(18)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(Cant_Stock, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lbCant_Stock))
-							.addGap(10)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(lbId_Proveedor, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(Categoria, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblCategoria, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(74, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(Clave, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblPrecio, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(Precio, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblClave))
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(Cant_Stock, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lbCant_Stock))
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(lbId_Proveedor, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(107, Short.MAX_VALUE))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(203)
 					.addComponent(Actualizar)
@@ -222,26 +226,38 @@ public class InterfazProductosAdmin extends JFrame {
 							.addComponent(InsertarFoto, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)))
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(ID)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(Id_Producto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblDescripcion)
+								.addComponent(lblCategoria))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(Descripcion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(Categoria, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(lblNombre)
-							.addComponent(lblDescripcion)
-							.addComponent(lblCategoria))
-						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblPrecio)
-							.addComponent(lblClave)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(Nombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblPrecio)
+								.addComponent(lblClave))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(Clave, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(Precio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(lbCant_Stock)
-							.addComponent(lbId_Proveedor)))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(Id_Producto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(Descripcion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(Nombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(Clave, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(Categoria, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(Precio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(Cant_Stock, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(Cant_Stock, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lbId_Proveedor)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(Eliminar)
@@ -335,6 +351,7 @@ public class InterfazProductosAdmin extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				try {
 				Producto pupdate = null;
 				String id = (String) (model.getValueAt(table.getSelectedRow(), 0));
 				for (Producto p : ListaProductos) {
@@ -343,11 +360,10 @@ public class InterfazProductosAdmin extends JFrame {
 							p.setNombre((String) (model.getValueAt(table.getSelectedRow(), 1)));
 							pupdate = p;
 						}
-						if (!p.getImagen().equals((String) (model.getValueAt(table.getSelectedRow(), 2)))) {
-							p.setImagen((String) (model.getValueAt(table.getSelectedRow(), 2)));
+						if (!p.getImagen().equals(ListaImagenes.getSelectedItem().toString())) {
+							p.setImagen(ListaImagenes.getSelectedItem().toString());
 							pupdate = p;
 						}
-
 						if (!p.getDescripcion().equals((String) (model.getValueAt(table.getSelectedRow(), 3)))) {
 							p.setDescripcion((String) (model.getValueAt(table.getSelectedRow(), 3)));
 							pupdate = p;
@@ -389,6 +405,9 @@ public class InterfazProductosAdmin extends JFrame {
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				}
+				}catch(ArrayIndexOutOfBoundsException ex) {
+					JOptionPane.showMessageDialog(InterfazProductosAdmin.this, "No Hay Ningun Producto Seleccionado");
 				}
 			}
 		});
