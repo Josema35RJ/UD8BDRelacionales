@@ -108,8 +108,4 @@ public class InterfazVerPedidos extends JFrame {
 			}
 		}
 	}
-
-	private static void EscribirBase() {
-
-	}
 }

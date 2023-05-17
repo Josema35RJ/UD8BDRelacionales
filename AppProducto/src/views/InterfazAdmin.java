@@ -126,6 +126,14 @@ public class InterfazAdmin extends JFrame {
 			}
 		});
 		
+		Pedidos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				InterfazSolicitarPedidos ivp = new InterfazSolicitarPedidos();
+				ivp.setLocationRelativeTo(null);
+				ivp.setVisible(true);
+			}
+		});
+		
 		CerrarSesion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

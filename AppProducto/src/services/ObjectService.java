@@ -246,24 +246,26 @@ public class ObjectService {
 	}
 	
 	//Compra
-	public void saveCompra(Connection conexion, Compra compra) throws SQLException {
+	public void saveCompra(Connection conexion, Compra compra, int x) throws SQLException {
 		try {
 			PreparedStatement consulta;
-			if (compra.getId_Compra()== null) {
+			if (x== 0) {
 				consulta = conexion
-						.prepareStatement("INSERT INTO " + this.tablaCompra + "(fecha, hora,Id_Usuario,Id_Producto, Cantidad_pedida) VALUES(?, ?)");
-				consulta.setDate(1, compra.getFecha());
-				consulta.setTime(2, compra.getHora());
-				consulta.setString(3, compra.getId_UsuarioC());
-				consulta.setString(4, compra.getId_Producto());
-
+						.prepareStatement("INSERT INTO " + this.tablaCompra + "(id_compra, fecha, hora,Id_UsuarioC,Id_Producto, Cantidad_pedida) VALUES(?,?,?,?,?,?)");
+				consulta.setString(1, compra.getId_Compra());
+				consulta.setDate(2, compra.getFecha());
+				consulta.setTime(3, compra.getHora());
+				consulta.setString(4, compra.getId_UsuarioC());
+				consulta.setString(5, compra.getId_Producto());
+				consulta.setInt(6, compra.getCantidad_pedida());
 			} else {
 				consulta = conexion.prepareStatement(
-						"UPDATE " + this.tablaCompra + " SET fecha = ?, hora = ?, Id_Usuario = ?, Id_Producto WHERE Id_Compra = ?");
+						"UPDATE " + this.tablaCompra + " SET fecha = ?, hora = ?, Id_UsuarioC = ?, Id_Producto = ?, Cantidad_pedida = ? WHERE Id_Compra = "+compra.getId_Compra());
 				consulta.setDate(1, compra.getFecha());
 				consulta.setTime(2, compra.getHora());
 				consulta.setString(3, compra.getId_UsuarioC());
 				consulta.setString(4, compra.getId_Producto());
+				consulta.setInt(5, compra.getCantidad_pedida());
 			}
 			consulta.executeUpdate();
 		} catch (SQLException ex) {
