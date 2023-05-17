@@ -1,13 +1,15 @@
 package views;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -15,9 +17,11 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
@@ -29,7 +33,6 @@ import javax.swing.table.DefaultTableModel;
 import models.Producto;
 import services.Conexion;
 import services.ObjectService;
-import javax.swing.JSpinner;
 
 public class InterfazClienteBuscar extends JFrame {
 
@@ -41,8 +44,9 @@ public class InterfazClienteBuscar extends JFrame {
 	private JButton botonAnadir;
 	private static ObjectService oc=new ObjectService();
 	private static List<Producto> listaP=new ArrayList<>();
-	protected static List<Producto> carrito=new ArrayList<>();
+	protected static HashMap<String,Integer> carrito=new HashMap<>();
 	private JSpinner cantidad;
+	private JFormattedTextField textField;
 	private SpinnerNumberModel spinerModel=new SpinnerNumberModel ();
 
 	public InterfazClienteBuscar() throws ClassNotFoundException, SQLException {
@@ -96,8 +100,18 @@ public class InterfazClienteBuscar extends JFrame {
 				try {
 					for (Producto p : oc.getAllProducts(Conexion.obtener())) {
 						if(p.getNombre().equals(model.getValueAt(table.getSelectedRow(), 0).toString())) {
+							int cant=Integer.valueOf(String.valueOf(cantidad.getValue()));
+							
+							if(!carrito.containsKey(p.getNombre()))
+								carrito.put(p.getNombre(), cant);
+							else {
+								carrito.put(p.getNombre(),carrito.get(p.getNombre())+cant);
+								if(carrito.get(p.getNombre())>=p.getCant_Stock()) {
+									carrito.put(p.getNombre(),p.getCant_Stock());
+									JOptionPane.showMessageDialog(InterfazClienteBuscar.this, "Se ha añadido todo el stock disponible");
+								}
+							}
 							System.out.println(carrito);
-							carrito.add(p);
 						}
 					}
 				} catch (ClassNotFoundException e1) {
@@ -170,7 +184,10 @@ public class InterfazClienteBuscar extends JFrame {
 		model.addColumn("Nombre");
 		model.addColumn("Descripcion");
 		model.addColumn("Precio");
-
+		
+		//textField = ((JSpinner.DefaultEditor) cantidad.getEditor()).getTextField();
+        //textField.setEditable(false);
+		
 		EscribirTabla();
 		
 		table.addMouseListener(new MouseListener() {
@@ -235,8 +252,13 @@ public class InterfazClienteBuscar extends JFrame {
 	private void setSpinner() throws ClassNotFoundException, SQLException {
 		for (Producto p : oc.getAllProducts(Conexion.obtener())) {
 			if(p.getNombre().equals(model.getValueAt(table.getSelectedRow(), 0).toString())) {
-				spinerModel.setMinimum(0);
-				spinerModel.setMaximum(p.getCant_Stock());
+				if(carrito.containsKey(p.getNombre())) {
+					spinerModel.setMinimum(0);
+					spinerModel.setMaximum(Integer.valueOf(String.valueOf(p.getCant_Stock()))-carrito.get(p.getNombre()));
+				}else {
+					spinerModel.setMinimum(0);
+					spinerModel.setMaximum(Integer.valueOf(String.valueOf(p.getCant_Stock())));
+				}
 			}
 		}
 	}
