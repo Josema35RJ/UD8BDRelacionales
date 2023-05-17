@@ -35,7 +35,7 @@ public class InterfazProveedoresAdmin extends JFrame {
 	private JTable table;
 	private JButton Insertar, Eliminar, Cambiar, Actualizar, Atras;
 	private JTextField Nombre, Direccion;
-	private static DefaultTableModel model;
+	private static JtableBloquearCeldasClientes model;
 	private JTextField Clave;
 	private static InterfazLogin il;
 	private JTextField Id_Proveedor;
@@ -171,7 +171,7 @@ public class InterfazProveedoresAdmin extends JFrame {
 			e1.printStackTrace();
 		}
 		table = new JTable();
-		model = new DefaultTableModel();
+		model = new JtableBloquearCeldasClientes();
 		table.setModel(model);
 
 		scrollPane.setViewportView(table);

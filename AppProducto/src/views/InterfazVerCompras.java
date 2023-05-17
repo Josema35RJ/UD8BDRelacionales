@@ -28,7 +28,7 @@ public class InterfazVerCompras extends JFrame {
 	private static ObjectService os = new ObjectService();
 	private JTable table;
 	private JButton Atras;
-	private static DefaultTableModel model;
+	private static JtableBloquearCeldasListadoPedidosAdmin model;
 	private static InterfazLogin il;
 
 	public InterfazVerCompras() {
@@ -40,7 +40,7 @@ public class InterfazVerCompras extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		Atras = new JButton("Atras");
 		table = new JTable();
-		model = new DefaultTableModel();
+		model = new JtableBloquearCeldasListadoPedidosAdmin();
 		table.setModel(model);
 
 		scrollPane.setViewportView(table);

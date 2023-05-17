@@ -28,7 +28,7 @@ public class InterfazClientesAdmin extends JFrame {
 	private static ObjectService os = new ObjectService();
 	private static List<Usuario> ListaUsuarios = new ArrayList<>();
 	private JTable table;
-	private static DefaultTableModel model;
+	private static JtableBloquearCeldasClientes model;
 	private static InterfazLogin il;
 	private JButton ActivarDesactivar, Atras, Borrar, ReestablecerClave, VerCompras;
 	protected static String id;
@@ -91,7 +91,7 @@ public class InterfazClientesAdmin extends JFrame {
 			e1.printStackTrace();
 		}
 		table = new JTable();
-		model = new DefaultTableModel();
+		model = new JtableBloquearCeldasClientes();
 		table.setModel(model);
 
 		scrollPane.setViewportView(table);

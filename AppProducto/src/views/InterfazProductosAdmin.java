@@ -41,7 +41,7 @@ public class InterfazProductosAdmin extends JFrame {
 	private JTable table;
 	private JButton Insertar, Eliminar, Cambiar, Actualizar, Atras, Ver_Imagen;
 	private JTextField Id_Producto, Nombre, Descripcion, Precio, Cant_Stock, Id_Proveedor, Categoria;
-	private static DefaultTableModel model;
+	private static JtableBloquearCeldasProductos model;
 	private static InterfazLogin il;
 	private JLabel lblNombre, lblDescripcion, lblCategoria, lblPrecio, ID_1, lbCant_Stock, lbId_Proveedor;
 	private JComboBox ListaImagenes;
@@ -263,7 +263,7 @@ public class InterfazProductosAdmin extends JFrame {
 			e1.printStackTrace();
 		}
 		table = new JTable();
-		model = new DefaultTableModel();
+		model = new JtableBloquearCeldasProductos();
 		table.setModel(model);
 
 		scrollPane.setViewportView(table);
