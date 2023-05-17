@@ -178,7 +178,7 @@ public class ObjectService {
 			PreparedStatement consulta;
 			if (x==0) {
 				consulta = conexion
-						.prepareStatement("INSERT INTO " + this.tablaUsuario + "(nombre, direccion,es_admin,activo,contrasena,) VALUES(?, ?)");
+						.prepareStatement("INSERT INTO Usuario (id_usuario,nombre, direccion,es_admin,activo,contrasena) VALUES(?,?,?,?,?,?)");
 				consulta.setString(1, usuario.getId_Usuario());
 				consulta.setString(2, usuario.getNombre());
 				consulta.setString(3, usuario.getDireccion());

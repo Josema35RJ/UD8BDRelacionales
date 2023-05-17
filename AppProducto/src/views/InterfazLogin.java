@@ -27,6 +27,7 @@ public class InterfazLogin extends JFrame {
 	private JButton Entrar, Cancelar;
 	protected static String idproveedorreg;
 	protected static Usuario User;
+	private JTextField txtanNoTienes;
 	
 	public InterfazLogin () {
 		super("Login");
@@ -40,15 +41,28 @@ public class InterfazLogin extends JFrame {
 		Id_Usuariotext = new JPasswordField(20);
 		Entrar = new JButton ("Entrar");
 		Cancelar = new JButton ("Cancelar");
+		
+		JButton btnNewButton = new JButton("Regístrate");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				InterfazRegistrar ir=new InterfazRegistrar();
+			}
+		});
+		
+		txtanNoTienes = new JTextField();
+		txtanNoTienes.setText("¿Eres nuevo?");
+		txtanNoTienes.setEditable(false);
+		txtanNoTienes.setColumns(10);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(121)
+							.addGap(141)
 							.addComponent(Entrar)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGap(18)
 							.addComponent(Cancelar))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(54)
@@ -58,13 +72,22 @@ public class InterfazLogin extends JFrame {
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(Nombretext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(Id_Usuariotext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap(122, Short.MAX_VALUE))
+								.addComponent(Id_Usuariotext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(93)
+							.addComponent(txtanNoTienes, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(btnNewButton)))
+					.addContainerGap(113, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(46)
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnNewButton)
+						.addComponent(txtanNoTienes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(15)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(Nombre)
 						.addComponent(Nombretext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -72,7 +95,7 @@ public class InterfazLogin extends JFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(Id_Usuario)
 						.addComponent(Id_Usuariotext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(Cancelar)
 						.addComponent(Entrar))
@@ -90,23 +113,20 @@ public class InterfazLogin extends JFrame {
 						for(Usuario u:os.getAllUsuarios(Conexion.obtener())) {
 							if(u.getNombre().equals(Nombretext.getText()) && u.getContrasena().equals(String.valueOf(Id_Usuariotext.getPassword()))) {
 								entra=true;
-								if(u.isEs_Admin()) {
+								if(u.isEs_Admin() && u.isActivo()) {
 									//interfaz admin
 									User = u;
 									dispose();
 									InterfazAdmin ia = new InterfazAdmin ();
 									ia.setLocationRelativeTo(null);
 									ia.setVisible(true);
+								}else if(u.isActivo()==false){
+									JOptionPane.showMessageDialog(InterfazLogin.this, "NO PUEDES ACCEDER YA QUES ESTÁS INACTIVO","ERROR",JOptionPane.ERROR_MESSAGE);
 								}else {
 									InterfazCliente ic=new InterfazCliente();
 									ic.setVisible(true);
 									dispose();
 									User = u;
-									//interfaz cliente
-									//poder editar perfil
-									//comprar producto
-									//historico de compras
-									//buscar producto por catgorias
 								}
 							}
 						}
@@ -150,5 +170,4 @@ public class InterfazLogin extends JFrame {
 		
 		setVisible(true);
 	}
-
 }
