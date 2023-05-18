@@ -108,23 +108,25 @@ public class InterfazClientesAdmin extends JFrame {
 						if (JOptionPane.showConfirmDialog(InterfazClientesAdmin.this,
 								"Esta Seguro de Eliminar al Cliente") == 0) {
 							it.remove();
+							try {
+									os.removeUsuario(Conexion.obtener(), u);
+									model.removeRow(table.getSelectedRow());
+									JOptionPane.showMessageDialog(InterfazClientesAdmin.this, "Cliente Eliminado");
+								} catch (ClassNotFoundException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									JOptionPane.showMessageDialog(InterfazClientesAdmin.this, "El Cliente Tiene Compras No se Puede Borrar");
+								}catch (NoSuchElementException ex) {
+									
+								}
 						}
-						try {
-							os.removeUsuario(Conexion.obtener(), u);
-							model.removeRow(table.getSelectedRow());
-						} catch (ClassNotFoundException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							JOptionPane.showMessageDialog(InterfazClientesAdmin.this, "El Cliente Tiene Compras No se Puede Borrar");
-						}catch (NoSuchElementException ex) {
-							
-						}
+						
 					}
 				}
 				}catch(ArrayIndexOutOfBoundsException ex) {
-					JOptionPane.showMessageDialog(InterfazClientesAdmin.this, "Seleccionado A un Cliente");
+					JOptionPane.showMessageDialog(InterfazClientesAdmin.this, "Selecciona A un Cliente");
 				}
 			}
 		});
