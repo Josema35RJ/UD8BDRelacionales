@@ -30,6 +30,7 @@ public class InterfazVerPedidos extends JFrame {
 	private JButton Atras;
 	private static JtableBloquearCeldasListadoPedidosAdmin model;
 	private static InterfazLogin il;
+	private JButton btnNewButton;
 
 	public InterfazVerPedidos() {
 		super("Listado Compras Admin");
@@ -60,26 +61,46 @@ public class InterfazVerPedidos extends JFrame {
 			}
          });
          getContentPane().add(Atras);
+         
+         btnNewButton = new JButton("Ver gráfica");
+         btnNewButton.addActionListener(new ActionListener() {
+         	public void actionPerformed(ActionEvent e) {
+         		graficocircularcompras gc=new graficocircularcompras();
+         		try {
+					gc.mostrargrafico();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+         	}
+         });
          GroupLayout groupLayout = new GroupLayout(getContentPane());
          groupLayout.setHorizontalGroup(
          	groupLayout.createParallelGroup(Alignment.LEADING)
          		.addGroup(groupLayout.createSequentialGroup()
-         			.addContainerGap(80, Short.MAX_VALUE)
-         			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-         				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+         			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+         			.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+         				.addGroup(groupLayout.createSequentialGroup()
+         					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
+         					.addGap(123)
          					.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-         					.addGap(79))
-         				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+         					.addGap(71))
+         				.addGroup(groupLayout.createSequentialGroup()
          					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 731, GroupLayout.PREFERRED_SIZE)
          					.addContainerGap())))
          );
          groupLayout.setVerticalGroup(
-         	groupLayout.createParallelGroup(Alignment.LEADING)
-         		.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+         	groupLayout.createParallelGroup(Alignment.TRAILING)
+         		.addGroup(groupLayout.createSequentialGroup()
          			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
          			.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 273, GroupLayout.PREFERRED_SIZE)
-         			.addGap(18)
-         			.addComponent(Atras)
+         			.addGap(10)
+         			.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+         				.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+         				.addComponent(Atras))
          			.addGap(74))
          );
          getContentPane().setLayout(groupLayout);

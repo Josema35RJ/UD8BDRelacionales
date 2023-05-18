@@ -129,10 +129,26 @@ public class InterfazProductosAdmin extends JFrame {
 		InsertarFoto = new JButton("");
 		ImageIcon IconInsertarImage = new ImageIcon ("Icon/InsertarImagen.png");
 		InsertarFoto.setIcon(IconInsertarImage);
+		
+		JButton btnNewButton = new JButton("Ver gráfica");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				graficocircularproductos gp=new graficocircularproductos();
+				try {
+					gp.mostrargrafico();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 565, GroupLayout.PREFERRED_SIZE)
@@ -151,14 +167,14 @@ public class InterfazProductosAdmin extends JFrame {
 									.addComponent(Ver_Imagen, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 										.addGroup(groupLayout.createSequentialGroup()
-											.addPreferredGap(ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
 											.addComponent(ID_1, GroupLayout.PREFERRED_SIZE, 11, GroupLayout.PREFERRED_SIZE)
 											.addGap(22))
 										.addGroup(groupLayout.createSequentialGroup()
 											.addGap(18)
 											.addComponent(ListaImagenes, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE)
 											.addContainerGap())))))))
-				.addGroup(groupLayout.createSequentialGroup()
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 					.addGap(229)
 					.addComponent(Actualizar)
 					.addGap(18)
@@ -169,8 +185,10 @@ public class InterfazProductosAdmin extends JFrame {
 					.addComponent(Eliminar)
 					.addGap(16)
 					.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(292, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addPreferredGap(ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 211, GroupLayout.PREFERRED_SIZE)
+					.addGap(44))
+				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(92)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(Id_Producto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -198,7 +216,7 @@ public class InterfazProductosAdmin extends JFrame {
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lbId_Proveedor, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(lbId_Proveedor, GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -253,8 +271,9 @@ public class InterfazProductosAdmin extends JFrame {
 						.addComponent(Atras)
 						.addComponent(Cambiar)
 						.addComponent(Actualizar)
-						.addComponent(Insertar))
-					.addContainerGap(21, Short.MAX_VALUE))
+						.addComponent(Insertar)
+						.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(28, Short.MAX_VALUE))
 		);
 		try {
 			LeerBase();

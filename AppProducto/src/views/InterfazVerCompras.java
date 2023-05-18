@@ -64,23 +64,23 @@ public class InterfazVerCompras extends JFrame {
          groupLayout.setHorizontalGroup(
          	groupLayout.createParallelGroup(Alignment.LEADING)
          		.addGroup(groupLayout.createSequentialGroup()
-         			.addContainerGap(80, Short.MAX_VALUE)
-         			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-         				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+         			.addContainerGap(10, Short.MAX_VALUE)
+         			.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+         				.addGroup(groupLayout.createSequentialGroup()
          					.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
          					.addGap(79))
-         				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+         				.addGroup(groupLayout.createSequentialGroup()
          					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 731, GroupLayout.PREFERRED_SIZE)
          					.addContainerGap())))
          );
          groupLayout.setVerticalGroup(
-         	groupLayout.createParallelGroup(Alignment.LEADING)
-         		.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+         	groupLayout.createParallelGroup(Alignment.TRAILING)
+         		.addGroup(groupLayout.createSequentialGroup()
          			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
          			.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 273, GroupLayout.PREFERRED_SIZE)
          			.addGap(18)
          			.addComponent(Atras)
-         			.addGap(74))
+         			.addGap(78))
          );
          getContentPane().setLayout(groupLayout);
 		try {
