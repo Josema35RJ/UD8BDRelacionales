@@ -1,5 +1,10 @@
 package views;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Date;
 import java.util.Iterator;
 
 import javax.swing.GroupLayout;
@@ -9,29 +14,25 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
+import models.Compra;
 import models.Producto;
 import services.Conexion;
 import services.ObjectService;
 
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.sql.SQLException;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
-
 public class InterfazClienteCarrito extends JFrame {
 
 	private JTable table;
-	private static JtableBloquearCeldasCarrito model;
+	private static DefaultTableModel model;
 	private JButton botonVolver;
 	private JButton botonPagar;
 	private static ObjectService oc=new ObjectService();
 	private static JTextField precioTotal;
-	private static double pt=0;
+	protected static double pt=0;
+	private static Object[] Fila = new Object[3];
 
 	public InterfazClienteCarrito() {
 		super("Carrito");
@@ -47,6 +48,7 @@ public class InterfazClienteCarrito extends JFrame {
 				try {
 					InterfazClienteBuscar icb=new InterfazClienteBuscar();
 					icb.setVisible(true);
+					pt=0;
 					dispose();
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
@@ -60,6 +62,56 @@ public class InterfazClienteCarrito extends JFrame {
 		});
 		
 		botonPagar = new JButton("Realizar Pago");
+		botonPagar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Date currentDate = new Date(System.currentTimeMillis());
+		        
+		        Time time = new Time(System.currentTimeMillis());
+		        
+		        
+				Iterator<String> it=InterfazClienteBuscar.carrito.keySet().iterator();
+				while(it.hasNext()) {
+					String id_producto = null;
+					String key=it.next();
+					double precio_Total=0;
+					try {
+						for (Producto p : oc.getAllProducts(Conexion.obtener())) {
+							System.out.println(InterfazClienteBuscar.carrito.keySet());
+							System.out.println("["+p.getNombre()+"]");
+							if(key.equals(p.getNombre())) {
+								id_producto=p.getId_Producto();
+								precio_Total=p.getPrecio()*InterfazClienteBuscar.carrito.get(key);
+								p.setCant_Stock(p.getCant_Stock()-Integer.valueOf(String.valueOf(Fila[1])));
+								oc.saveProducto(Conexion.obtener(), p, InterfazLogin.User, p.getId_Proveedor(), 1);
+							}
+						}
+					} catch (ClassNotFoundException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					} catch (SQLException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+					
+					
+					Compra c=new Compra(String.valueOf(ultimocompra()),currentDate,time,InterfazLogin.User.getId_Usuario(),
+							id_producto,InterfazClienteBuscar.carrito.get(key),precio_Total);
+					
+					
+					try {
+						oc.saveCompra(Conexion.obtener(),c , 0);
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				
+				}
+				JOptionPane.showMessageDialog(InterfazClienteCarrito.this, "Pedido realizado");
+			}
+		});
 		
 		precioTotal = new JTextField();
 		precioTotal.setEditable(false);
@@ -97,41 +149,10 @@ public class InterfazClienteCarrito extends JFrame {
 
 
 		table = new JTable();
-		model = new JtableBloquearCeldasCarrito();
-		table.setModel(model);
-		table.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				try {
-					for (Producto p : oc.getAllProducts(Conexion.obtener())) {
-						if(String.valueOf(model.getValueAt(table.getSelectedRow(), 0)).equals(p.getNombre())){
-							System.out.println(Integer.valueOf(String.valueOf(model.getValueAt(table.getSelectedRow(), table.getSelectedColumn()))));
-							System.out.println(p.getCant_Stock());
-							if(Integer.valueOf(String.valueOf(model.getValueAt(table.getSelectedRow(), table.getSelectedColumn())))>p.getCant_Stock()){
-								JOptionPane.showMessageDialog(InterfazClienteCarrito.this, "Cantidad en stock superada");
-								//table.setEditingRow(table.getSelectedRow());
-							}
-						}
-					}
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-			@Override
-			public void mousePressed(MouseEvent e) {}
-			@Override
-			public void mouseReleased(MouseEvent e) {}
-			@Override
-			public void mouseEntered(MouseEvent e) {}
-			@Override
-			public void mouseExited(MouseEvent e) {}
-		});
+		model = new DefaultTableModel();
 		
+		table.setModel(model);
+		table.setEnabled(false);
 		
 		scrollPane.setViewportView(table);
 		getContentPane().setLayout(groupLayout);
@@ -146,7 +167,7 @@ public class InterfazClienteCarrito extends JFrame {
 
 	private static void EscribirTabla() {
 		Iterator<String> it=InterfazClienteBuscar.carrito.keySet().iterator();
-		Object[] Fila = new Object[3];
+		
 		while(it.hasNext()) {
 			String key=it.next();
 			
@@ -172,6 +193,23 @@ public class InterfazClienteCarrito extends JFrame {
 			}
 			
 		}
-		precioTotal.setText(String.valueOf(pt));
+		precioTotal.setText(String.format("%.2f", pt).replace(",", "."));
+	}
+	private int ultimocompra() {
+		ObjectService os = new ObjectService();
+		Compra c = null;
+		int idmayor = 0;
+		try {
+			for (Compra x : os.getAllCompra(Conexion.obtener())) {
+				c = x;
+				if (Integer.valueOf(c.getId_Compra()) > idmayor) {
+					idmayor = Integer.valueOf(c.getId_Compra());
+				}
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return idmayor+1;
 	}
 }

@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import models.Compra;
+import models.Producto;
 import services.Conexion;
 import services.ObjectService;
 
@@ -79,8 +80,9 @@ public class InterfazClienteHistorial extends JFrame {
 		model.addColumn("Id_Compra");
 		model.addColumn("Fecha");
 		model.addColumn("Hora");
-		model.addColumn("Id_Producto");
+		model.addColumn("Producto");
 		model.addColumn("Cantidad_pedida");
+		model.addColumn("Precio");
 		
 		table.setEnabled(false);
 		
@@ -89,17 +91,27 @@ public class InterfazClienteHistorial extends JFrame {
 
 	}
 	private static void EscribirTabla() throws ClassNotFoundException, SQLException {
-        for (Compra c :oc.getAllCompra(Conexion.obtener())) {
-        	if(InterfazLogin.User.getId_Usuario().equals(c.getId_UsuarioC())) {
-	            Object[] Fila = new Object[model.getColumnCount()];
-	            Fila[0] = c.getId_Compra();
-	            Fila[1] = c.getFecha();
-	            Fila[2] = c.getHora();
-	            Fila[3] = c.getId_Producto();
-	            Fila[4] = c.getCantidad_pedida();
-	            model.addRow(Fila);
+		Object[] Fila = new Object[model.getColumnCount()];
+		for (Compra c :oc.getAllCompra(Conexion.obtener())) {
+        	for(Producto p:oc.getAllProducts(Conexion.obtener())) {
+        		
+	        	if(InterfazLogin.User.getId_Usuario().equals(c.getId_UsuarioC())) {
+		            
+		            Fila[0] = c.getId_Compra();
+		            Fila[1] = c.getFecha();
+		            Fila[2] = c.getHora();
+		            Fila[4] = c.getCantidad_pedida();
+		            Fila[5] = c.getPrecio_Total();
+		            if(c.getId_Producto().equals(p.getId_Producto())) {
+		        		Fila[3] = p.getNombre();
+		        		model.addRow(Fila);
+		        	}
+		            	
+	        		}
         	}
+        	
         }
+		
     }
 
 }

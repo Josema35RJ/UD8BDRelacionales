@@ -101,6 +101,8 @@ public class InterfazCliente extends JFrame {
 			}else if(o==botonCerrar) {
 				InterfazLogin il=new InterfazLogin();
 				il.setVisible(true);
+				InterfazClienteBuscar.carrito.clear();
+				InterfazClienteCarrito.pt=0;
 				dispose();
 			}
 		}
