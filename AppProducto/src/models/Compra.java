@@ -9,13 +9,14 @@ public class Compra {
 	private Time hora;
 	private String Id_UsuarioC,Id_Producto;
 	private int Cantidad_pedida;
+	private double Precio_Total;
 	
 	public Compra() {
 		super();
 	}
 	
 	public Compra(String id_Compra, Date fecha, Time hora, String id_UsuarioC, String id_Producto,
-			int cantidad_pedida) {
+			int cantidad_pedida, double Precio_Total) {
 		super();
 		Id_Compra = id_Compra;
 		this.fecha = fecha;
@@ -23,8 +24,8 @@ public class Compra {
 		Id_UsuarioC = id_UsuarioC;
 		Id_Producto = id_Producto;
 		Cantidad_pedida = cantidad_pedida;
+		this.Precio_Total = Precio_Total;
 	}
-
 
 	public String getId_Compra() {
 		return Id_Compra;
@@ -74,13 +75,21 @@ public class Compra {
 	public void setCantidad_pedida(int cantidad_pedida) {
 		Cantidad_pedida = cantidad_pedida;
 	}
+	
+	public double getPrecio_Total() {
+		return Precio_Total;
+	}
+
+	public void setPrecio_Total(double precio_Total) {
+		Precio_Total = precio_Total;
+	}
+
 
 	@Override
 	public String toString() {
 		return "Compra [Id_Compra=" + Id_Compra + ", fecha=" + fecha + ", hora=" + hora + ", Id_UsuarioC=" + Id_UsuarioC
-				+ ", Id_Producto=" + Id_Producto + ", Cantidad_pedida=" + Cantidad_pedida + "]";
+				+ ", Id_Producto=" + Id_Producto + ", Cantidad_pedida=" + Cantidad_pedida + ", Precio_Total="
+				+ Precio_Total + "]";
 	}
-
-	
 	
 }

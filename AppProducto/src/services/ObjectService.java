@@ -251,21 +251,23 @@ public class ObjectService {
 			PreparedStatement consulta;
 			if (x== 0) {
 				consulta = conexion
-						.prepareStatement("INSERT INTO " + this.tablaCompra + "(id_compra, fecha, hora,Id_UsuarioC,Id_Producto, Cantidad_pedida) VALUES(?,?,?,?,?,?)");
+						.prepareStatement("INSERT INTO " + this.tablaCompra + "(id_compra, fecha, hora,Id_UsuarioC,Id_Producto, Cantidad_pedida, Precio_Total) VALUES(?,?,?,?,?,?,?)");
 				consulta.setString(1, compra.getId_Compra());
 				consulta.setDate(2, compra.getFecha());
 				consulta.setTime(3, compra.getHora());
 				consulta.setString(4, compra.getId_UsuarioC());
 				consulta.setString(5, compra.getId_Producto());
 				consulta.setInt(6, compra.getCantidad_pedida());
+				consulta.setDouble(7, compra.getPrecio_Total());
 			} else {
 				consulta = conexion.prepareStatement(
-						"UPDATE " + this.tablaCompra + " SET fecha = ?, hora = ?, Id_UsuarioC = ?, Id_Producto = ?, Cantidad_pedida = ? WHERE Id_Compra = "+compra.getId_Compra());
+						"UPDATE " + this.tablaCompra + " SET fecha = ?, hora = ?, Id_UsuarioC = ?, Id_Producto = ?, Cantidad_pedida = ?, Precio_Total = ? WHERE Id_Compra = "+compra.getId_Compra());
 				consulta.setDate(1, compra.getFecha());
 				consulta.setTime(2, compra.getHora());
 				consulta.setString(3, compra.getId_UsuarioC());
 				consulta.setString(4, compra.getId_Producto());
 				consulta.setInt(5, compra.getCantidad_pedida());
+				consulta.setDouble(7, compra.getPrecio_Total());
 			}
 			consulta.executeUpdate();
 		} catch (SQLException ex) {
@@ -277,13 +279,13 @@ public class ObjectService {
 		Compra compra = null;
 		try {
 			PreparedStatement consulta = conexion
-					.prepareStatement("SELECT Id_Compra, fecha, hora, Id_Usuario, Id_Producto, Cantidad_pedida" + " FROM "
+					.prepareStatement("SELECT Id_Compra, fecha, hora, Id_Usuario, Id_Producto, Cantidad_pedida, Precio_Total" + " FROM "
 							+ this.tablaCompra + " WHERE Id_Compra = ?");
 			consulta.setString(1, Id_Compra);
 			ResultSet resultado = consulta.executeQuery();
 			while (resultado.next()) {
 				compra = new Compra(Id_Compra, resultado.getDate("Fecha"),
-						resultado.getTime("Hora"), resultado.getString("Id_Usuario"), resultado.getString("Id_Producto"), resultado.getInt("Cantidad_pedida"));
+						resultado.getTime("Hora"), resultado.getString("Id_Usuario"), resultado.getString("Id_Producto"), resultado.getInt("Cantidad_pedida"), resultado.getDouble("Precio_Total"));
 			}
 		} catch (SQLException ex) {
 			throw new SQLException(ex);
@@ -306,12 +308,12 @@ public class ObjectService {
 		List<Compra> ListaCompras = new ArrayList<>();
 		try {
 			PreparedStatement consulta = conexion
-					.prepareStatement("SELECT Id_Compra, fecha, hora, Id_UsuarioC, Id_Producto, Cantidad_pedida"
+					.prepareStatement("SELECT Id_Compra, fecha, hora, Id_UsuarioC, Id_Producto, Cantidad_pedida, Precio_Total"
 							+ " FROM " + this.tablaCompra);
 			ResultSet resultado = consulta.executeQuery();
 			while (resultado.next()) {
 				ListaCompras.add(new Compra(resultado.getString("Id_Compra"), resultado.getDate("Fecha"), resultado.getTime("Hora")
-						,resultado.getString("Id_UsuarioC"), resultado.getString("Id_Producto"), resultado.getInt("Cantidad_pedida")));
+						,resultado.getString("Id_UsuarioC"), resultado.getString("Id_Producto"), resultado.getInt("Cantidad_pedida"), resultado.getDouble("Precio_Total")));
 			}
 		} catch (SQLException ex) {
 			throw new SQLException(ex);

@@ -83,13 +83,6 @@ public class InterfazClienteBuscar extends JFrame {
 		});
 		ImageIcon imagenCarro=new ImageIcon("Icon/CarritoCliente.png");
 		botonCarrito = new JButton();
-		botonCarrito.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				InterfazClienteCarrito icc=new InterfazClienteCarrito();
-				icc.setVisible(true);
-				dispose();
-			}
-		});
 		botonCarrito.setIcon(imagenCarro);
 		
 		botonVolver = new JButton("Volver");
@@ -108,15 +101,14 @@ public class InterfazClienteBuscar extends JFrame {
 					for (Producto p : oc.getAllProducts(Conexion.obtener())) {
 						if(p.getNombre().equals(model.getValueAt(table.getSelectedRow(), 0).toString())) {
 							int cant=Integer.valueOf(String.valueOf(cantidad.getValue()));
-							if(Integer.valueOf(String.valueOf(cantidad.getValue()))>0) {
-								if(!carrito.containsKey(p.getNombre()))
-									carrito.put(p.getNombre(), cant);
-								else {
-									carrito.put(p.getNombre(),carrito.get(p.getNombre())+cant);
-									if(carrito.get(p.getNombre())>=p.getCant_Stock()) {
-										carrito.put(p.getNombre(),p.getCant_Stock());
-										JOptionPane.showMessageDialog(InterfazClienteBuscar.this, "Se ha añadido todo el stock disponible");
-									}
+							
+							if(!carrito.containsKey(p.getNombre()))
+								carrito.put(p.getNombre(), cant);
+							else {
+								carrito.put(p.getNombre(),carrito.get(p.getNombre())+cant);
+								if(carrito.get(p.getNombre())>=p.getCant_Stock()) {
+									carrito.put(p.getNombre(),p.getCant_Stock());
+									JOptionPane.showMessageDialog(InterfazClienteBuscar.this, "Se ha añadido todo el stock disponible");
 								}
 							}
 							System.out.println(carrito);

@@ -50,6 +50,7 @@ public class InterfazVerCompras extends JFrame {
 		model.addColumn("Hora");
 		model.addColumn("Id_UsuarioC");
 		model.addColumn("Id_Producto");
+		model.addColumn("Precio");
 		model.addColumn("Cantidad_pedida");
 
          Atras.addActionListener(new ActionListener () {
@@ -64,23 +65,23 @@ public class InterfazVerCompras extends JFrame {
          groupLayout.setHorizontalGroup(
          	groupLayout.createParallelGroup(Alignment.LEADING)
          		.addGroup(groupLayout.createSequentialGroup()
-         			.addContainerGap(10, Short.MAX_VALUE)
-         			.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-         				.addGroup(groupLayout.createSequentialGroup()
+         			.addContainerGap(80, Short.MAX_VALUE)
+         			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+         				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
          					.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
          					.addGap(79))
-         				.addGroup(groupLayout.createSequentialGroup()
+         				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
          					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 731, GroupLayout.PREFERRED_SIZE)
          					.addContainerGap())))
          );
          groupLayout.setVerticalGroup(
-         	groupLayout.createParallelGroup(Alignment.TRAILING)
-         		.addGroup(groupLayout.createSequentialGroup()
+         	groupLayout.createParallelGroup(Alignment.LEADING)
+         		.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
          			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
          			.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 273, GroupLayout.PREFERRED_SIZE)
          			.addGap(18)
          			.addComponent(Atras)
-         			.addGap(78))
+         			.addGap(74))
          );
          getContentPane().setLayout(groupLayout);
 		try {
@@ -103,7 +104,8 @@ public class InterfazVerCompras extends JFrame {
 			Fila[2] = c.getHora();
 			Fila[3] = c.getId_UsuarioC();
 			Fila[4] = c.getId_Producto();
-			Fila[5] = c.getCantidad_pedida();
+			Fila[5] = c.getPrecio_Total();
+			Fila[6] = c.getCantidad_pedida();
 			model.addRow(Fila);
 			}
 		}

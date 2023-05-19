@@ -3,13 +3,16 @@ package views;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -68,13 +71,14 @@ public class InterfazSolicitarPedidos extends JFrame {
 		table = new JTable();
 		model = new JtableBloquearCeldas();
 		table.setModel(model);
-		
+
 		scrollPane.setViewportView(table);
 
 		model.addColumn("Fecha");
 		model.addColumn("Hora");
 		model.addColumn("Id_Producto");
 		model.addColumn("Cantidad_pedida");
+		model.addColumn("Precio_Total");
 
 		try {
 			EscribirTabla();
@@ -108,8 +112,10 @@ public class InterfazSolicitarPedidos extends JFrame {
 					long millisecondsT = utilDate.getTime();
 					Time sqlDateT = new java.sql.Time(millisecondsT);
 					int cantidad_stock = Integer.valueOf(String.valueOf(model.getValueAt(0, 3)));
+					double p_total=Double.parseDouble(String.valueOf(model.getValueAt(0, 4)).replace(",", "."));
 					Compra c = new Compra(stringid, sqlDate, sqlDateT, il.User.getId_Usuario(),
-							model.getValueAt(0, 2).toString(), cantidad_stock);
+							model.getValueAt(0, 2).toString(), cantidad_stock,
+							p_total);
 					boolean encontrado = false;
 					try {
 						for (Producto x : os.getAllProducts(Conexion.obtener())) {
@@ -158,6 +164,39 @@ public class InterfazSolicitarPedidos extends JFrame {
 								.addComponent(btnRegistrar, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
 						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		getContentPane().setLayout(groupLayout);
+
+		table.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				try {
+					EscribirTabla();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+
+		});
 	}
 
 	private static void EscribirTabla() throws ClassNotFoundException, SQLException {
@@ -167,21 +206,65 @@ public class InterfazSolicitarPedidos extends JFrame {
 		SimpleDateFormat hora = new SimpleDateFormat("HH:mm:ss");
 		String hour = hora.format(fecha.getCalendar().getTime());
 		Object[] Fila = new Object[model.getColumnCount()];
+
 		if (fecha2.get(Calendar.MONTH) < 10) {
 			Fila[0] = fecha2.get(Calendar.YEAR) + "-0" + fecha2.get(Calendar.MONTH) + "-"
 					+ fecha2.get(Calendar.DAY_OF_MONTH);
 			Fila[1] = hour;
-			Fila[2] = 0;
-			Fila[3] = 0;
+			if(model.getRowCount()==0) {
+				Fila[2] = 0;
+				Fila[3] = 0;
+				}else {
+					Fila[2] = model.getValueAt(0, 2).toString();
+					Fila[3] = model.getValueAt(0, 3).toString();	
+				}
+			double precio_total = 0;
+			if (model.getRowCount() > 0) {
+				for (Producto p : os.getAllProducts(Conexion.obtener())) {
+					if (Double.valueOf(model.getValueAt(0, 2).toString()) != 0
+							&& Double.valueOf(model.getValueAt(0, 3).toString()) != 0) {
+						if (p.getId_Producto().equals(model.getValueAt(0, 2).toString())) {
+							precio_total = p.getPrecio() * Double.valueOf(model.getValueAt(0, 3).toString());
+						}
+					}
+				}
+				Fila[4] =  String.format("%.2f", precio_total);
+			}
+			if(model.getRowCount()>1) 
+			model.removeRow(1);
+			if(model.getRowCount()==1)
+				model.removeRow(0);
 			model.addRow(Fila);
 		} else {
 			Fila[0] = fecha2.get(Calendar.YEAR) + "-0" + fecha2.get(Calendar.MONTH) + "-"
 					+ fecha2.get(Calendar.DAY_OF_MONTH);
 			Fila[1] = hour;
+			if(model.getRowCount()==0) {
 			Fila[2] = 0;
 			Fila[3] = 0;
-			model.addRow(Fila);
+			}else {
+				Fila[2] = model.getValueAt(0, 2).toString();
+				Fila[3] = model.getValueAt(0, 3).toString();	
+			}
+			double precio_total = 0;
+			if (model.getRowCount() > 0) {
+				for (Producto p : os.getAllProducts(Conexion.obtener())) {
+					if (Double.valueOf(model.getValueAt(0, 2).toString()) != 0
+							&& Double.valueOf(model.getValueAt(0, 3).toString()) != 0) {
+						if (p.getId_Producto().equals(model.getValueAt(0, 2).toString())) {
+							precio_total = p.getPrecio() * Double.valueOf(model.getValueAt(0, 3).toString());
+						}
+						Fila[4] = String.format("%.2f", precio_total);
+					}
+				}
+			}
+
 		}
+		if(model.getRowCount()>1) 
+			model.removeRow(1);
+			if(model.getRowCount()==1)
+				model.removeRow(0);
+		model.addRow(Fila);
 	}
 
 	private int ultimocompra() {
