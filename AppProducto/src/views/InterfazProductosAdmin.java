@@ -1,7 +1,5 @@
 package views;
 
-
-
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,8 +43,8 @@ public class InterfazProductosAdmin extends JFrame {
 	private static InterfazLogin il;
 	private JLabel lblNombre, lblDescripcion, lblCategoria, lblPrecio, ID_1, lbCant_Stock, lbId_Proveedor;
 	private JComboBox ListaImagenes;
-	private String[]RutasImagenes ;
-	private static ImageIcon Ver ;
+	private String[] RutasImagenes;
+	private static ImageIcon Ver;
 	private static Icon icon;
 	private JButton InsertarFoto;
 
@@ -59,7 +57,7 @@ public class InterfazProductosAdmin extends JFrame {
 		setLocationRelativeTo(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		
+
 		Insertar = new JButton("Create");
 
 		Id_Producto = new JTextField();
@@ -106,184 +104,196 @@ public class InterfazProductosAdmin extends JFrame {
 		lbCant_Stock = new JLabel("Cant_Stock");
 
 		lbId_Proveedor = new JLabel("Id_Proveedor");
-		
+
 		JLabel Foto = new JLabel("");
-		
-	    Ver_Imagen = new JButton("Imagen");
-		
-	    File f = new File ("IconProducts");
-	    File[] Rutas =f.listFiles();
-	    RutasImagenes = new String[Rutas.length];
-	    int siguiente = 0;
-	    for(File r : Rutas)
+
+		Ver_Imagen = new JButton("Imagen");
+
+		File f = new File("IconProducts");
+		File[] Rutas = f.listFiles();
+		RutasImagenes = new String[Rutas.length];
+		int siguiente = 0;
+		for (File r : Rutas)
 			try {
-				String[] Ruta= r.getCanonicalPath().split("AppProducto");
-				RutasImagenes[siguiente++]=Ruta[1].substring(1, Ruta[1].length()).strip();
+				String[] Ruta = r.getCanonicalPath().split("AppProducto");
+				RutasImagenes[siguiente++] = Ruta[1].substring(1, Ruta[1].length()).strip();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 		ListaImagenes = new JComboBox(RutasImagenes);
-		
+
 		InsertarFoto = new JButton("");
-		ImageIcon IconInsertarImage = new ImageIcon ("Icon/InsertarImagen.png");
+		ImageIcon IconInsertarImage = new ImageIcon("Icon/InsertarImagen.png");
 		InsertarFoto.setIcon(IconInsertarImage);
-		
-	    VerGrafica = new JButton("VerGrafica");
-		VerGrafica.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				graficocircularproductos gp = new graficocircularproductos();
-				try {
-					gp.mostrargrafico();
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
+
+		VerGrafica = new JButton("VerGrafica");
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 565, GroupLayout.PREFERRED_SIZE)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(30)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(Foto, GroupLayout.PREFERRED_SIZE, 289, GroupLayout.PREFERRED_SIZE)
-											.addContainerGap())
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(Ver_Imagen, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addGroup(groupLayout.createSequentialGroup()
-													.addPreferredGap(ComponentPlacement.RELATED, 223, Short.MAX_VALUE)
-													.addComponent(ID_1, GroupLayout.PREFERRED_SIZE, 11, GroupLayout.PREFERRED_SIZE)
-													.addGap(22))
-												.addGroup(groupLayout.createSequentialGroup()
-													.addGap(18)
-													.addComponent(ListaImagenes, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE)
-													.addContainerGap())))))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(112)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(VerGrafica, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
-										.addComponent(InsertarFoto, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE))
-									.addGap(100))))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(137)
-									.addComponent(Actualizar)
-									.addGap(18)
-									.addComponent(Insertar)
-									.addGap(10)
-									.addComponent(Cambiar)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(Eliminar)
-									.addGap(16)
-									.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(ID)
-											.addGap(85)
-											.addComponent(lblNombre, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(Id_Producto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(Nombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(lblDescripcion)
-											.addGap(27))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(Descripcion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.UNRELATED)))
-									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(lblCategoria, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
-											.addGap(23)
-											.addComponent(lblPrecio, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-											.addGap(42))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(Categoria, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(Precio, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.RELATED)))
-									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(lbCant_Stock)
-											.addGap(35)
-											.addComponent(lbId_Proveedor, GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(Cant_Stock, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-											.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-											.addGap(19)))))
-							.addContainerGap(269, GroupLayout.PREFERRED_SIZE))))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 565,
+												GroupLayout.PREFERRED_SIZE)
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
+												groupLayout.createSequentialGroup().addGap(30).addGroup(groupLayout
+														.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
+																.createSequentialGroup()
+																.addComponent(Foto, GroupLayout.PREFERRED_SIZE, 289,
+																		GroupLayout.PREFERRED_SIZE)
+																.addContainerGap())
+														.addGroup(groupLayout.createSequentialGroup()
+																.addComponent(Ver_Imagen, GroupLayout.PREFERRED_SIZE,
+																		79, GroupLayout.PREFERRED_SIZE)
+																.addGroup(groupLayout
+																		.createParallelGroup(Alignment.LEADING)
+																		.addGroup(groupLayout.createSequentialGroup()
+																				.addPreferredGap(
+																						ComponentPlacement.RELATED, 223,
+																						Short.MAX_VALUE)
+																				.addComponent(ID_1,
+																						GroupLayout.PREFERRED_SIZE, 11,
+																						GroupLayout.PREFERRED_SIZE)
+																				.addGap(22))
+																		.addGroup(groupLayout.createSequentialGroup()
+																				.addGap(18)
+																				.addComponent(ListaImagenes,
+																						GroupLayout.PREFERRED_SIZE, 188,
+																						GroupLayout.PREFERRED_SIZE)
+																				.addContainerGap())))))
+												.addGroup(groupLayout.createSequentialGroup().addGap(112)
+														.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+																.addComponent(VerGrafica, GroupLayout.PREFERRED_SIZE,
+																		145, GroupLayout.PREFERRED_SIZE)
+																.addComponent(InsertarFoto, GroupLayout.PREFERRED_SIZE,
+																		79, GroupLayout.PREFERRED_SIZE))
+														.addGap(100))))
+								.addGroup(groupLayout.createSequentialGroup().addGroup(
+										groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
+												.createSequentialGroup().addGap(137).addComponent(Actualizar).addGap(18)
+												.addComponent(Insertar).addGap(10).addComponent(Cambiar)
+												.addPreferredGap(ComponentPlacement.RELATED).addComponent(Eliminar)
+												.addGap(16).addComponent(Atras, GroupLayout.PREFERRED_SIZE, 79,
+														GroupLayout.PREFERRED_SIZE))
+												.addGroup(groupLayout
+														.createSequentialGroup().addGroup(groupLayout
+																.createParallelGroup(Alignment.LEADING)
+																.addGroup(groupLayout
+																		.createSequentialGroup().addComponent(ID)
+																		.addGap(85).addComponent(lblNombre,
+																				GroupLayout.PREFERRED_SIZE, 52,
+																				GroupLayout.PREFERRED_SIZE))
+																.addGroup(groupLayout.createSequentialGroup()
+																		.addComponent(Id_Producto,
+																				GroupLayout.PREFERRED_SIZE,
+																				GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(ComponentPlacement.RELATED)
+																		.addComponent(
+																				Nombre, GroupLayout.PREFERRED_SIZE,
+																				GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.PREFERRED_SIZE)))
+														.addPreferredGap(ComponentPlacement.RELATED)
+														.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+																.addGroup(groupLayout
+																		.createSequentialGroup()
+																		.addComponent(lblDescripcion).addGap(27))
+																.addGroup(groupLayout.createSequentialGroup()
+																		.addComponent(
+																				Descripcion, GroupLayout.PREFERRED_SIZE,
+																				GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(ComponentPlacement.UNRELATED)))
+														.addGroup(groupLayout
+																.createParallelGroup(Alignment.TRAILING)
+																.addGroup(groupLayout
+																		.createSequentialGroup()
+																		.addComponent(lblCategoria,
+																				GroupLayout.PREFERRED_SIZE, 71,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGap(23)
+																		.addComponent(lblPrecio,
+																				GroupLayout.PREFERRED_SIZE, 48,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGap(42))
+																.addGroup(groupLayout.createSequentialGroup()
+																		.addComponent(Categoria,
+																				GroupLayout.PREFERRED_SIZE, 86,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(ComponentPlacement.RELATED)
+																		.addComponent(
+																				Precio, GroupLayout.PREFERRED_SIZE, 86,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(ComponentPlacement.RELATED)))
+														.addGroup(groupLayout
+																.createParallelGroup(Alignment.TRAILING)
+																.addGroup(groupLayout.createSequentialGroup()
+																		.addComponent(lbCant_Stock).addGap(
+																				35)
+																		.addComponent(lbId_Proveedor,
+																				GroupLayout.DEFAULT_SIZE, 107,
+																				Short.MAX_VALUE))
+																.addGroup(groupLayout.createSequentialGroup()
+																		.addComponent(Cant_Stock,
+																				GroupLayout.PREFERRED_SIZE, 86,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(ComponentPlacement.RELATED,
+																				GroupLayout.DEFAULT_SIZE,
+																				Short.MAX_VALUE)
+																		.addComponent(Id_Proveedor,
+																				GroupLayout.PREFERRED_SIZE, 86,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addGap(19)))))
+										.addContainerGap(269, GroupLayout.PREFERRED_SIZE)))));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
+				.createSequentialGroup().addContainerGap()
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 349, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(Foto, GroupLayout.PREFERRED_SIZE, 233, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(ID_1)
-							.addGap(26)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(Ver_Imagen)
-								.addComponent(ListaImagenes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(InsertarFoto, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblNombre)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(Foto, GroupLayout.PREFERRED_SIZE, 233, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED).addComponent(ID_1).addGap(26)
+								.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(Ver_Imagen)
+										.addComponent(ListaImagenes, GroupLayout.PREFERRED_SIZE,
+												GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addPreferredGap(ComponentPlacement.RELATED).addComponent(InsertarFoto,
+										GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)))
+				.addPreferredGap(ComponentPlacement.UNRELATED)
+				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
+						.createSequentialGroup().addComponent(lblNombre)
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(Id_Producto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addComponent(Id_Producto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(Nombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+										.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(Nombre,
+												GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE))))
 						.addComponent(ID, Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lbId_Proveedor)
-								.addComponent(lbCant_Stock)
-								.addComponent(lblPrecio)
-								.addComponent(lblCategoria)
-								.addComponent(lblDescripcion))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(Cant_Stock, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(Precio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(Categoria, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(Descripcion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(Eliminar)
-						.addComponent(Atras)
-						.addComponent(Cambiar)
-						.addComponent(Actualizar)
-						.addComponent(Insertar)
+								.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lbId_Proveedor).addComponent(lbCant_Stock).addComponent(lblPrecio)
+										.addComponent(lblCategoria).addComponent(lblDescripcion))
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE,
+												GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(Cant_Stock, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(Precio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(Categoria, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(Descripcion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE))))
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(Eliminar).addComponent(Atras)
+						.addComponent(Cambiar).addComponent(Actualizar).addComponent(Insertar)
 						.addComponent(VerGrafica, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(18, Short.MAX_VALUE))
-		);
+				.addContainerGap(18, Short.MAX_VALUE)));
 		try {
 			LeerBase();
 		} catch (ClassNotFoundException e1) {
@@ -321,27 +331,29 @@ public class InterfazProductosAdmin extends JFrame {
 				Fila[4] = Precio.getText();
 				Fila[5] = Cant_Stock.getText();
 				Fila[6] = Precio.getText();
-				
-                if(Id_Producto.getText().length()>0 && Nombre.getText().length()>0 && ListaImagenes.getSelectedItem().toString().length()>0 && Descripcion.getText().length()>0 
-                		&& Categoria.getText().length()>0 && Precio.getText().length()>0 && Cant_Stock.getText().length()>0 
-                		&& Id_Proveedor.getText().length()>0 ) {
-                	p = new Producto(Id_Producto.getText(), Nombre.getText(), ListaImagenes.getSelectedItem().toString(), Descripcion.getText(),
-    						Categoria.getText(), Float.valueOf(Precio.getText()), Integer.valueOf(Cant_Stock.getText()),
-    						 String.valueOf(Id_Proveedor.getText()));
-                	try {
-    					for (Proveedor pro : os.getAllProveedor(Conexion.obtener())) {
-    						if (p.getId_Proveedor().equals(Id_Proveedor.getText()))
-    							os.saveProducto(Conexion.obtener(), p, il.User, Id_Proveedor.getText(), 0);
-    							model.addRow(Fila);
-    					}
-    				} catch (ClassNotFoundException e1) {
-    					// TODO Auto-generated catch block
-    				} catch (SQLException e1) {
-    					// TODO Auto-generated catch block
-    				}
-                }else {
-                	JOptionPane.showMessageDialog(InterfazProductosAdmin.this, "Rellena Todos Los Campos");
-                }
+
+				if (Id_Producto.getText().length() > 0 && Nombre.getText().length() > 0
+						&& ListaImagenes.getSelectedItem().toString().length() > 0 && Descripcion.getText().length() > 0
+						&& Categoria.getText().length() > 0 && Precio.getText().length() > 0
+						&& Cant_Stock.getText().length() > 0 && Id_Proveedor.getText().length() > 0) {
+					p = new Producto(Id_Producto.getText(), Nombre.getText(),
+							ListaImagenes.getSelectedItem().toString(), Descripcion.getText(), Categoria.getText(),
+							Float.valueOf(Precio.getText()), Integer.valueOf(Cant_Stock.getText()),
+							String.valueOf(Id_Proveedor.getText()));
+					try {
+						for (Proveedor pro : os.getAllProveedor(Conexion.obtener())) {
+							if (p.getId_Proveedor().equals(Id_Proveedor.getText()))
+								os.saveProducto(Conexion.obtener(), p, il.User, Id_Proveedor.getText(), 0);
+							model.addRow(Fila);
+						}
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+					}
+				} else {
+					JOptionPane.showMessageDialog(InterfazProductosAdmin.this, "Rellena Todos Los Campos");
+				}
 			}
 		});
 
@@ -357,23 +369,24 @@ public class InterfazProductosAdmin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
-				while (it.hasNext()) {
-					Producto p = it.next();
-					if (p.getId_Producto().equals(model.getValueAt(table.getSelectedRow(), 0).toString()))
-						it.remove();
-					    model.removeRow(table.getSelectedRow());
-					    try {
-							os.removeProducto(Conexion.obtener(), p);
-						} catch (ClassNotFoundException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-				}
+					while (it.hasNext()) {
+						Producto p = it.next();
+						if (p.getId_Producto().equals(model.getValueAt(table.getSelectedRow(), 0).toString()))
+							try {
+								it.remove();
+								model.removeRow(table.getSelectedRow());
+								os.removeProducto(Conexion.obtener(), p);
+							} catch (ClassNotFoundException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								JOptionPane.showMessageDialog(InterfazProductosAdmin.this,
+										"Se han realizado Compras del Producto,\n Debido a esto no se puede Borrar");
+							}
+					}
 
-				}catch (ArrayIndexOutOfBoundsException ex) {
+				} catch (ArrayIndexOutOfBoundsException ex) {
 					JOptionPane.showMessageDialog(InterfazProductosAdmin.this, "Selecciona Algun Producto");
 				}
 			}
@@ -384,10 +397,10 @@ public class InterfazProductosAdmin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				Producto pupdate = null;
-				String id = null ;
+				String id = null;
 				try {
-				id = (String) (model.getValueAt(table.getSelectedRow(), 0));
-				}catch(ArrayIndexOutOfBoundsException ex) {
+					id = (String) (model.getValueAt(table.getSelectedRow(), 0));
+				} catch (ArrayIndexOutOfBoundsException ex) {
 					JOptionPane.showMessageDialog(InterfazProductosAdmin.this, "No Hay Ningun Producto Seleccionado");
 				}
 				for (Producto p : ListaProductos) {
@@ -410,20 +423,25 @@ public class InterfazProductosAdmin extends JFrame {
 						}
 						try {
 							if (!(String.valueOf(p.getPrecio()).equals(model.getValueAt(table.getSelectedRow(), 5)))) {
-								p.setPrecio(Float.valueOf(String.valueOf((float) model.getValueAt(table.getSelectedRow(), 5))));
+								p.setPrecio(Float
+										.valueOf(String.valueOf((float) model.getValueAt(table.getSelectedRow(), 5))));
 								pupdate = p;
 							}
-							if (!(String.valueOf(p.getCant_Stock()).equals(model.getValueAt(table.getSelectedRow(), 6)))) {
-								p.setCant_Stock(Integer.valueOf(String.valueOf((int) model.getValueAt(table.getSelectedRow(), 6))));
+							if (!(String.valueOf(p.getCant_Stock())
+									.equals(model.getValueAt(table.getSelectedRow(), 6)))) {
+								p.setCant_Stock(Integer
+										.valueOf(String.valueOf((int) model.getValueAt(table.getSelectedRow(), 6))));
 								pupdate = p;
 							}
 						} catch (ClassCastException ex) {
 							if (!(String.valueOf(p.getPrecio()).equals(model.getValueAt(table.getSelectedRow(), 5)))) {
-								p.setPrecio(Float.valueOf(String.valueOf( model.getValueAt(table.getSelectedRow(), 5))));
+								p.setPrecio(Float.valueOf(String.valueOf(model.getValueAt(table.getSelectedRow(), 5))));
 								pupdate = p;
 							}
-							if (!(String.valueOf(p.getCant_Stock()).equals(model.getValueAt(table.getSelectedRow(), 6)))) {
-								p.setCant_Stock(Integer.valueOf(String.valueOf( model.getValueAt(table.getSelectedRow(), 6))));
+							if (!(String.valueOf(p.getCant_Stock())
+									.equals(model.getValueAt(table.getSelectedRow(), 6)))) {
+								p.setCant_Stock(
+										Integer.valueOf(String.valueOf(model.getValueAt(table.getSelectedRow(), 6))));
 								pupdate = p;
 							}
 						}
@@ -433,15 +451,15 @@ public class InterfazProductosAdmin extends JFrame {
 						}
 					}
 				}
-					try {
-						os.saveProducto(Conexion.obtener(), pupdate, il.User, pupdate.getId_Proveedor(), 1);
-					} catch (ClassNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+				try {
+					os.saveProducto(Conexion.obtener(), pupdate, il.User, pupdate.getId_Proveedor(), 1);
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -464,25 +482,43 @@ public class InterfazProductosAdmin extends JFrame {
 		Ver_Imagen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-				Ver = new ImageIcon (model.getValueAt(table.getSelectedRow(), 2).toString());
-				icon = new ImageIcon(Ver.getImage().getScaledInstance(Foto.getWidth(), Foto.getHeight(), Image.SCALE_DEFAULT));
-				Foto.setIcon(icon);
-				}catch (ArrayIndexOutOfBoundsException ex) {
-					JOptionPane.showMessageDialog(InterfazProductosAdmin.this, "Ningun Producto Seleccionado para Imagen");
+					Ver = new ImageIcon(model.getValueAt(table.getSelectedRow(), 2).toString());
+					icon = new ImageIcon(
+							Ver.getImage().getScaledInstance(Foto.getWidth(), Foto.getHeight(), Image.SCALE_DEFAULT));
+					Foto.setIcon(icon);
+				} catch (ArrayIndexOutOfBoundsException ex) {
+					JOptionPane.showMessageDialog(InterfazProductosAdmin.this,
+							"Ningun Producto Seleccionado para Imagen");
 				}
 			}
 		});
-		
+
 		ListaImagenes.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-			    Ver = new ImageIcon (ListaImagenes.getSelectedItem().toString());
-			    icon = new ImageIcon(Ver.getImage().getScaledInstance(Foto.getWidth(), Foto.getHeight(), Image.SCALE_DEFAULT));
+				Ver = new ImageIcon(ListaImagenes.getSelectedItem().toString());
+				icon = new ImageIcon(
+						Ver.getImage().getScaledInstance(Foto.getWidth(), Foto.getHeight(), Image.SCALE_DEFAULT));
 				Foto.setIcon(icon);
 			}
 		});
-		
+
+		VerGrafica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				graficocircularproductos gp = new graficocircularproductos();
+				try {
+					gp.mostrargrafico();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+
 		setVisible(true);
 	}
 

@@ -4,7 +4,6 @@ package views;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -18,7 +17,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.table.DefaultTableModel;
 
 import models.Usuario;
 import services.Conexion;
@@ -34,6 +32,7 @@ public class InterfazClientesAdmin extends JFrame {
 	private JButton ActivarDesactivar, Atras, Borrar, ReestablecerClave, VerCompras;
 	protected static String id;
 	private JButton Ver_Grafica;
+	private JButton Ver_Grafica_1;
 
 	public InterfazClientesAdmin() {
 		super("Menu Clientes");
@@ -43,6 +42,87 @@ public class InterfazClientesAdmin extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 
 		ActivarDesactivar = new JButton("ActivarDesactivar");
+		Atras = new JButton("Atras");
+		Borrar = new JButton("Borrar");
+		ReestablecerClave = new JButton("ReestablecerClave");
+		VerCompras = new JButton("VerCompras");
+		Ver_Grafica = new JButton("Ver Grafica");
+		
+		try {
+			LeerBase();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		table = new JTable();
+		model = new JtableBloquearCeldasClientes();
+		table.setModel(model);
+
+		scrollPane.setViewportView(table);
+		
+		Ver_Grafica_1 = new JButton("Ver Grafica");
+		
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap(10, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 731, GroupLayout.PREFERRED_SIZE)
+							.addGap(7))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addGap(10)
+							.addComponent(ActivarDesactivar)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(Borrar)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(ReestablecerClave)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(VerCompras)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(Atras)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(Ver_Grafica_1, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+								.addComponent(Ver_Grafica, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
+							.addGap(69)))
+					.addGap(7))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(11)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 171, GroupLayout.PREFERRED_SIZE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(95)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(Borrar)
+								.addComponent(ReestablecerClave)
+								.addComponent(VerCompras)
+								.addComponent(Atras)
+								.addComponent(ActivarDesactivar)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(11)
+							.addComponent(Ver_Grafica_1, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+							.addGap(5)
+							.addComponent(Ver_Grafica, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+					.addGap(34))
+		);
+
+		getContentPane().setLayout(groupLayout);
+
+		model.addColumn("Id_Usuario");
+		model.addColumn("Nombre");
+		model.addColumn("Direccion");
+		model.addColumn("Es_Admin");
+		model.addColumn("Activo");
+		model.addColumn("Clave");
+
+		EscribirTabla();
+		Iterator<Usuario> it = ListaUsuarios.iterator();
+		
 		ActivarDesactivar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -79,26 +159,13 @@ public class InterfazClientesAdmin extends JFrame {
 				}
 			}
 		});
-
-		Atras = new JButton("Atras");
+		
 		Atras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		try {
-			LeerBase();
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		table = new JTable();
-		model = new JtableBloquearCeldasClientes();
-		table.setModel(model);
-
-		scrollPane.setViewportView(table);
-
-		Borrar = new JButton("Borrar");
+		
 		Borrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -132,8 +199,7 @@ public class InterfazClientesAdmin extends JFrame {
 				}
 			}
 		});
-
-		ReestablecerClave = new JButton("ReestablecerClave");
+		
 		ReestablecerClave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -162,8 +228,7 @@ public class InterfazClientesAdmin extends JFrame {
 				}
 			}
 		});
-
-		VerCompras = new JButton("VerCompras");
+		
 		VerCompras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -177,7 +242,6 @@ public class InterfazClientesAdmin extends JFrame {
 			}
 		});
 		
-		Ver_Grafica = new JButton("Ver Grafica");
 		Ver_Grafica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				graficocircularcompras gp = new graficocircularcompras ();
@@ -192,63 +256,25 @@ public class InterfazClientesAdmin extends JFrame {
 				}
 			}
 		});
+		
+		Ver_Grafica_1.addActionListener(new ActionListener() {
 
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(10, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(10)
-							.addComponent(ActivarDesactivar)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(Borrar)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(ReestablecerClave)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(VerCompras)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(Atras)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(Ver_Grafica, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-							.addGap(69))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 731, GroupLayout.PREFERRED_SIZE)
-							.addGap(7)))
-					.addGap(7))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(11)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 171, GroupLayout.PREFERRED_SIZE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(95)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(Borrar)
-								.addComponent(ReestablecerClave)
-								.addComponent(VerCompras)
-								.addComponent(Atras)
-								.addComponent(ActivarDesactivar)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(67)
-							.addComponent(Ver_Grafica, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-					.addGap(34))
-		);
-
-		getContentPane().setLayout(groupLayout);
-
-		model.addColumn("Id_Usuario");
-		model.addColumn("Nombre");
-		model.addColumn("Direccion");
-		model.addColumn("Es_Admin");
-		model.addColumn("Activo");
-		model.addColumn("Clave");
-
-		EscribirTabla();
-		Iterator<Usuario> it = ListaUsuarios.iterator();
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				graficocirculargastomedio gm = new graficocirculargastomedio ();
+				try {
+					gm.mostrargrafico();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
+		});
 	}
 
 	private static void EscribirTabla() {
