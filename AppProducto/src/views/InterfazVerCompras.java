@@ -110,8 +110,4 @@ public class InterfazVerCompras extends JFrame {
 			}
 		}
 	}
-
-	private static void EscribirBase() {
-
-	}
 }

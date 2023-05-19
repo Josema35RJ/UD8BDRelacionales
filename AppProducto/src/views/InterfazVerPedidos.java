@@ -1,12 +1,12 @@
 package views;
 
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -16,7 +16,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
-
 import models.Compra;
 import models.Producto;
 import models.Proveedor;
@@ -59,6 +58,7 @@ public class InterfazVerPedidos extends JFrame {
 				dispose();
 			}
          });
+         
          getContentPane().add(Atras);
          GroupLayout groupLayout = new GroupLayout(getContentPane());
          groupLayout.setHorizontalGroup(

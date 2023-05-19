@@ -1,5 +1,7 @@
 package views;
 
+
+
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +12,6 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.Icon;
@@ -25,7 +26,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
-
 import models.Producto;
 import models.Proveedor;
 import services.Conexion;
@@ -39,7 +39,7 @@ public class InterfazProductosAdmin extends JFrame {
 	private static ObjectService os = new ObjectService();
 	private static List<Producto> ListaProductos = new ArrayList<>();
 	private JTable table;
-	private JButton Insertar, Eliminar, Cambiar, Actualizar, Atras, Ver_Imagen;
+	private JButton Insertar, Eliminar, Cambiar, Actualizar, Atras, Ver_Imagen, VerGrafica;
 	private JTextField Id_Producto, Nombre, Descripcion, Precio, Cant_Stock, Id_Proveedor, Categoria;
 	private static JtableBloquearCeldasProductos model;
 	private static InterfazLogin il;
@@ -129,77 +129,108 @@ public class InterfazProductosAdmin extends JFrame {
 		InsertarFoto = new JButton("");
 		ImageIcon IconInsertarImage = new ImageIcon ("Icon/InsertarImagen.png");
 		InsertarFoto.setIcon(IconInsertarImage);
+		
+	    VerGrafica = new JButton("VerGrafica");
+		VerGrafica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				graficocircularproductos gp = new graficocircularproductos();
+				try {
+					gp.mostrargrafico();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 565, GroupLayout.PREFERRED_SIZE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(112)
-							.addComponent(InsertarFoto, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(30)
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 565, GroupLayout.PREFERRED_SIZE)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(Foto, GroupLayout.PREFERRED_SIZE, 289, GroupLayout.PREFERRED_SIZE)
-									.addContainerGap())
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(Ver_Imagen, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
+									.addGap(30)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 										.addGroup(groupLayout.createSequentialGroup()
-											.addPreferredGap(ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
-											.addComponent(ID_1, GroupLayout.PREFERRED_SIZE, 11, GroupLayout.PREFERRED_SIZE)
-											.addGap(22))
+											.addComponent(Foto, GroupLayout.PREFERRED_SIZE, 289, GroupLayout.PREFERRED_SIZE)
+											.addContainerGap())
 										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(18)
-											.addComponent(ListaImagenes, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE)
-											.addContainerGap())))))))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(229)
-					.addComponent(Actualizar)
-					.addGap(18)
-					.addComponent(Insertar)
-					.addGap(10)
-					.addComponent(Cambiar)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(Eliminar)
-					.addGap(16)
-					.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(292, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addGap(92)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(Id_Producto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(ID))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(Nombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNombre, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblDescripcion)
-						.addComponent(Descripcion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(Categoria, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblCategoria, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(Precio, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblPrecio, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(Cant_Stock, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lbCant_Stock))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lbId_Proveedor, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addContainerGap())
+											.addComponent(Ver_Imagen, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
+											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+												.addGroup(groupLayout.createSequentialGroup()
+													.addPreferredGap(ComponentPlacement.RELATED, 223, Short.MAX_VALUE)
+													.addComponent(ID_1, GroupLayout.PREFERRED_SIZE, 11, GroupLayout.PREFERRED_SIZE)
+													.addGap(22))
+												.addGroup(groupLayout.createSequentialGroup()
+													.addGap(18)
+													.addComponent(ListaImagenes, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE)
+													.addContainerGap())))))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(112)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(VerGrafica, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
+										.addComponent(InsertarFoto, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE))
+									.addGap(100))))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(137)
+									.addComponent(Actualizar)
+									.addGap(18)
+									.addComponent(Insertar)
+									.addGap(10)
+									.addComponent(Cambiar)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(Eliminar)
+									.addGap(16)
+									.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(ID)
+											.addGap(85)
+											.addComponent(lblNombre, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(Id_Producto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(Nombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(lblDescripcion)
+											.addGap(27))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(Descripcion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(ComponentPlacement.UNRELATED)))
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(lblCategoria, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
+											.addGap(23)
+											.addComponent(lblPrecio, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+											.addGap(42))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(Categoria, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(Precio, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(ComponentPlacement.RELATED)))
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(lbCant_Stock)
+											.addGap(35)
+											.addComponent(lbId_Proveedor, GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(Cant_Stock, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+											.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+											.addGap(19)))))
+							.addContainerGap(269, GroupLayout.PREFERRED_SIZE))))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -217,44 +248,41 @@ public class InterfazProductosAdmin extends JFrame {
 								.addComponent(ListaImagenes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(InsertarFoto, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(ID)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(Id_Producto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblDescripcion)
-								.addComponent(lblCategoria))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(Descripcion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(Categoria, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(lblNombre)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(Nombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(Id_Producto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(Nombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+						.addComponent(ID, Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lbId_Proveedor)
 								.addComponent(lbCant_Stock)
-								.addComponent(lblPrecio))
+								.addComponent(lblPrecio)
+								.addComponent(lblCategoria)
+								.addComponent(lblDescripcion))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(Cant_Stock, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(Precio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lbId_Proveedor)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(Id_Proveedor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+								.addComponent(Precio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(Categoria, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(Descripcion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(Eliminar)
 						.addComponent(Atras)
 						.addComponent(Cambiar)
 						.addComponent(Actualizar)
-						.addComponent(Insertar))
-					.addContainerGap(21, Short.MAX_VALUE))
+						.addComponent(Insertar)
+						.addComponent(VerGrafica, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(18, Short.MAX_VALUE))
 		);
 		try {
 			LeerBase();
@@ -332,9 +360,17 @@ public class InterfazProductosAdmin extends JFrame {
 				while (it.hasNext()) {
 					Producto p = it.next();
 					if (p.getId_Producto().equals(model.getValueAt(table.getSelectedRow(), 0).toString()))
-
 						it.remove();
-					model.removeRow(table.getSelectedRow());
+					    model.removeRow(table.getSelectedRow());
+					    try {
+							os.removeProducto(Conexion.obtener(), p);
+						} catch (ClassNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 				}
 
 				}catch (ArrayIndexOutOfBoundsException ex) {

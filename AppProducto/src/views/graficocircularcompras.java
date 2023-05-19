@@ -33,7 +33,6 @@ public class graficocircularcompras {
 						mapa.put(x.getCategoria(),1);
 				}
 			}
-			
 		}
 		
 		Iterator<String> it=mapa.keySet().iterator();
