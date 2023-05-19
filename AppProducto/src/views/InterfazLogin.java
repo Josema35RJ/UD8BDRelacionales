@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,31 +25,34 @@ public class InterfazLogin extends JFrame {
 	private JLabel Nombre, Id_Usuario;
 	private JTextField Nombretext;
 	private JPasswordField Id_Usuariotext;
-	private JButton Entrar, Cancelar;
+	private JButton Entrar, Cancelar, Registrar;
 	protected static String idproveedorreg;
 	protected static Usuario User;
 	private JTextField txtanNoTienes;
+	private ImageIcon ImageEntrar, ImageCancelar, ImageInsertar;
 	
 	public InterfazLogin () {
 		super("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(420,220);
+		setSize(420,250);
 		setLocationRelativeTo(null);
 		
 		Nombre = new JLabel ("Nombre");
-		Id_Usuario = new JLabel ("Contrase\u00F1a");
+		Id_Usuario = new JLabel ("Clave");
 		Nombretext = new JTextField (20);
 		Id_Usuariotext = new JPasswordField(20);
-		Entrar = new JButton ("Entrar");
-		Cancelar = new JButton ("Cancelar");
 		
-		JButton btnNewButton = new JButton("Regístrate");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				InterfazRegistrar ir=new InterfazRegistrar();
-			}
-		});
+		Entrar = new JButton ("Entrar");
+		ImageEntrar = new ImageIcon ("Icon/Entrar.png");
+		Entrar.setIcon(ImageEntrar);
+		
+		Cancelar = new JButton ("Cancelar");
+		ImageCancelar = new ImageIcon ("Icon/Cancelar.png");
+		Cancelar.setIcon(ImageCancelar);
+		
+	    Registrar = new JButton("Registrate");
+		ImageInsertar = new ImageIcon ("Icon/InsertarUsuario.png");
+		Registrar.setIcon(ImageInsertar);
 		
 		txtanNoTienes = new JTextField();
 		txtanNoTienes.setText("¿Eres nuevo?");
@@ -60,9 +64,9 @@ public class InterfazLogin extends JFrame {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(141)
+							.addGap(95)
 							.addComponent(Entrar)
-							.addGap(18)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(Cancelar))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(54)
@@ -74,18 +78,18 @@ public class InterfazLogin extends JFrame {
 								.addComponent(Nombretext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(Id_Usuariotext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(93)
-							.addComponent(txtanNoTienes, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(btnNewButton)))
-					.addContainerGap(113, Short.MAX_VALUE))
+							.addGap(87)
+							.addComponent(txtanNoTienes, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(Registrar)))
+					.addContainerGap(131, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnNewButton)
+						.addComponent(Registrar)
 						.addComponent(txtanNoTienes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(15)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
@@ -95,7 +99,7 @@ public class InterfazLogin extends JFrame {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(Id_Usuario)
 						.addComponent(Id_Usuariotext, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(Cancelar)
 						.addComponent(Entrar))
@@ -121,7 +125,7 @@ public class InterfazLogin extends JFrame {
 									ia.setLocationRelativeTo(null);
 									ia.setVisible(true);
 								}else if(u.isActivo()==false){
-									JOptionPane.showMessageDialog(InterfazLogin.this, "NO PUEDES ACCEDER YA QUES ESTÁS INACTIVO","ERROR",JOptionPane.ERROR_MESSAGE);
+									JOptionPane.showMessageDialog(InterfazLogin.this, "NO PUEDES ACCEDER YA QUES ESTÃ�S INACTIVO","ERROR",JOptionPane.ERROR_MESSAGE);
 								}else {
 									InterfazCliente ic=new InterfazCliente();
 									ic.setVisible(true);
@@ -142,7 +146,7 @@ public class InterfazLogin extends JFrame {
 							}
 						}
 						if(!entra) {
-							JOptionPane.showMessageDialog(InterfazLogin.this, "Usuario o contraseña erroneos","Error",JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(InterfazLogin.this, "Usuario o contraseÃ±a erroneos","Error",JOptionPane.ERROR_MESSAGE);
 							Nombretext.setText("");
 							Id_Usuariotext.setText("");
 						}
@@ -165,6 +169,13 @@ public class InterfazLogin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				JOptionPane.showMessageDialog(InterfazLogin.this, "Cerrando Programa");
+			}
+		});
+		
+		Registrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				InterfazRegistrar ir=new InterfazRegistrar();
 			}
 		});
 		

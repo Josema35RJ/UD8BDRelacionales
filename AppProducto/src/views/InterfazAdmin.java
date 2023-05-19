@@ -42,6 +42,7 @@ public class InterfazAdmin extends JFrame {
 		Salir.setIcon(SalirImagen);
 		VolverImagen = new ImageIcon("Icon/Volver.png");
 		CerrarSesion.setIcon(VolverImagen);
+		
 		getContentPane().add(Pedidos);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)

@@ -38,7 +38,7 @@ public class InterfazSolicitarPedidos extends JFrame {
 	private JButton Atras;
 	private static JtableBloquearCeldas model;
 	private static InterfazLogin il;
-	private ImageIcon imagenRegistrar;
+	private ImageIcon imagenRegistrar, AtrasProveedores;
 	private Date utilDate = new Date();
 
 	/**
@@ -66,8 +66,8 @@ public class InterfazSolicitarPedidos extends JFrame {
 		setBounds(100, 100, 791, 206);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
 		JScrollPane scrollPane = new JScrollPane();
-		Atras = new JButton("Atrás");
 		table = new JTable();
 		model = new JtableBloquearCeldas();
 		table.setModel(model);
@@ -79,6 +79,10 @@ public class InterfazSolicitarPedidos extends JFrame {
 		model.addColumn("Id_Producto");
 		model.addColumn("Cantidad_pedida");
 		model.addColumn("Precio_Total");
+		
+		Atras = new JButton("Atras");
+		AtrasProveedores = new ImageIcon("Icon/Volver2.png");
+		Atras.setIcon(AtrasProveedores);
 
 		try {
 			EscribirTabla();
@@ -89,6 +93,7 @@ public class InterfazSolicitarPedidos extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		Atras.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -101,6 +106,7 @@ public class InterfazSolicitarPedidos extends JFrame {
 		JButton btnRegistrar = new JButton("Solicitar");
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
 				if (model.getValueAt(0, 2).equals("") || model.getValueAt(0, 3).equals("")) {
 					JOptionPane.showMessageDialog(InterfazSolicitarPedidos.this, "NO SE PUEDE INTRODUCIR VALORES NULOS",
 							"ERROR", JOptionPane.ERROR_MESSAGE);
@@ -132,37 +138,45 @@ public class InterfazSolicitarPedidos extends JFrame {
 							JOptionPane.showMessageDialog(InterfazSolicitarPedidos.this,
 									"PRODUCTO NO ENCONTRADO EN LA BASE DE DATOS");
 						}
+					} catch (NumberFormatException ex) {
+						JOptionPane.showMessageDialog(InterfazSolicitarPedidos.this, "Introduce Valores de Id y Cantidad");
 					} catch (ClassNotFoundException | SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
-
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(InterfazSolicitarPedidos.this, "Seleccione Pedido e Introduzca Valores de Id y Cantidad");
+				}
 			}
 		});
 		imagenRegistrar = new ImageIcon("Icon/Registrar.png");
 		btnRegistrar.setIcon(imagenRegistrar);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout
-				.setHorizontalGroup(
-						groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addGroup(groupLayout.createSequentialGroup().addGap(25)
-										.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 731,
-												GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(21, Short.MAX_VALUE))
-								.addGroup(groupLayout.createSequentialGroup().addContainerGap(302, Short.MAX_VALUE)
-										.addComponent(btnRegistrar, GroupLayout.PREFERRED_SIZE, 149,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(199)
-										.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-										.addGap(43)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(Atras)
-								.addComponent(btnRegistrar, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(25)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 731, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(19, Short.MAX_VALUE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap(300, Short.MAX_VALUE)
+					.addComponent(btnRegistrar, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+					.addGap(176)
+					.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+					.addGap(39))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnRegistrar, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+						.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
 		getContentPane().setLayout(groupLayout);
 
 		table.addMouseListener(new MouseListener() {
@@ -187,6 +201,8 @@ public class InterfazSolicitarPedidos extends JFrame {
 				// TODO Auto-generated method stub
 				try {
 					EscribirTabla();
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(InterfazSolicitarPedidos.this, "Introduce Valores de Id y Cantidad");
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

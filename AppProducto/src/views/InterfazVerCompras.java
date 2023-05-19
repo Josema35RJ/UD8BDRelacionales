@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,15 +31,16 @@ public class InterfazVerCompras extends JFrame {
 	private JButton Atras;
 	private static JtableBloquearCeldasListadoPedidosAdmin model;
 	private static InterfazLogin il;
+	private ImageIcon AtrasProveedores;
 
 	public InterfazVerCompras() {
 		super("Listado Compras");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(764, 373);
+		setSize(784, 386);
 		setLocationRelativeTo(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		Atras = new JButton("Atras");
+		
 		table = new JTable();
 		model = new JtableBloquearCeldasListadoPedidosAdmin();
 		table.setModel(model);
@@ -52,38 +54,45 @@ public class InterfazVerCompras extends JFrame {
 		model.addColumn("Id_Producto");
 		model.addColumn("Precio");
 		model.addColumn("Cantidad_pedida");
+		
+		Atras = new JButton("Atras");
+		AtrasProveedores = new ImageIcon("Icon/Volver2.png");
+		Atras.setIcon(AtrasProveedores);
 
-         Atras.addActionListener(new ActionListener () {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				dispose();
-			}
-         });
          getContentPane().add(Atras);
          GroupLayout groupLayout = new GroupLayout(getContentPane());
          groupLayout.setHorizontalGroup(
          	groupLayout.createParallelGroup(Alignment.LEADING)
          		.addGroup(groupLayout.createSequentialGroup()
-         			.addContainerGap(80, Short.MAX_VALUE)
+         			.addContainerGap(27, Short.MAX_VALUE)
          			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
          				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-         					.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-         					.addGap(79))
-         				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
          					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 731, GroupLayout.PREFERRED_SIZE)
-         					.addContainerGap())))
+         					.addContainerGap())
+         				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+         					.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
+         					.addGap(55))))
          );
          groupLayout.setVerticalGroup(
-         	groupLayout.createParallelGroup(Alignment.LEADING)
-         		.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+         	groupLayout.createParallelGroup(Alignment.TRAILING)
+         		.addGroup(groupLayout.createSequentialGroup()
          			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
          			.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 273, GroupLayout.PREFERRED_SIZE)
-         			.addGap(18)
-         			.addComponent(Atras)
-         			.addGap(74))
+         			.addPreferredGap(ComponentPlacement.UNRELATED)
+         			.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+         			.addGap(68))
          );
+         
          getContentPane().setLayout(groupLayout);
+         
+         Atras.addActionListener(new ActionListener () {
+ 			@Override
+ 			public void actionPerformed(ActionEvent e) {
+ 				// TODO Auto-generated method stub
+ 				dispose();
+ 			}
+          });
+         
 		try {
 			EscribirTabla();
 		} catch (ClassNotFoundException e) {

@@ -105,6 +105,9 @@ public class InterfazClienteBuscar extends JFrame {
 		botonAnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					if(Integer.valueOf(String.valueOf(cantidad.getValue()))<=0) {
+						JOptionPane.showMessageDialog(InterfazClienteBuscar.this, "Insertar Una Cantidad del Producto");
+					}{
 					for (Producto p : oc.getAllProducts(Conexion.obtener())) {
 						if(p.getNombre().equals(model.getValueAt(table.getSelectedRow(), 0).toString())) {
 							int cant=Integer.valueOf(String.valueOf(cantidad.getValue()));
@@ -119,9 +122,11 @@ public class InterfazClienteBuscar extends JFrame {
 									}
 								}
 							}
-							System.out.println(carrito);
 						}
 					}
+					}
+				} catch (ArrayIndexOutOfBoundsException ex) {
+					JOptionPane.showMessageDialog(InterfazClienteBuscar.this, "Selecciona Algun Producto");
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -225,7 +230,6 @@ public class InterfazClienteBuscar extends JFrame {
 			
 		});
 		cantidad.addChangeListener(new ChangeListener() {
-
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				try {
@@ -235,6 +239,8 @@ public class InterfazClienteBuscar extends JFrame {
 								cantidad.setValue(4);
 						}
 					}
+				} catch (ArrayIndexOutOfBoundsException ex) {
+					JOptionPane.showMessageDialog(InterfazClienteBuscar.this, "Selecciona Algun Producto Para Poder Ponerle Cantidad");
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

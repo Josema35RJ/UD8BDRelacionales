@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,20 +34,38 @@ public class InterfazClientesAdmin extends JFrame {
 	protected static String id;
 	private JButton Ver_Grafica;
 	private JButton Ver_Grafica_1;
+	private ImageIcon Activar_Desactivar, AtrasClientes, EliminarProveedores, VerGraficaImagen, VerComprasImagen, ReestablecerClaveImagen;
 
 	public InterfazClientesAdmin() {
 		super("Menu Clientes");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(764, 373);
+		setSize(855, 435);
 
 		JScrollPane scrollPane = new JScrollPane();
 
 		ActivarDesactivar = new JButton("ActivarDesactivar");
+		Activar_Desactivar = new ImageIcon("Icon/ActivarDesactivar.png");
+		ActivarDesactivar.setIcon(Activar_Desactivar);
+		
 		Atras = new JButton("Atras");
+		AtrasClientes = new ImageIcon("Icon/Volver.png");
+		Atras.setIcon(AtrasClientes);
+		
 		Borrar = new JButton("Borrar");
+		EliminarProveedores = new ImageIcon ("Icon/Eliminar2.png");
+		Borrar.setIcon(EliminarProveedores);
+		
 		ReestablecerClave = new JButton("ReestablecerClave");
+		ReestablecerClaveImagen = new ImageIcon ("Icon/CambiarClave.png");
+		ReestablecerClave.setIcon(ReestablecerClaveImagen);
+		
 		VerCompras = new JButton("VerCompras");
+		VerComprasImagen = new ImageIcon ("Icon/VerCarrito.png");
+		VerCompras.setIcon(VerComprasImagen);
+		
 		Ver_Grafica = new JButton("Ver Grafica");
+		VerGraficaImagen = new ImageIcon ("Icon/VerGrafico.png");
+		Ver_Grafica.setIcon(VerGraficaImagen);
 		
 		try {
 			LeerBase();
@@ -61,54 +80,57 @@ public class InterfazClientesAdmin extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		Ver_Grafica_1 = new JButton("Ver Grafica");
+		Ver_Grafica_1.setIcon(VerGraficaImagen);
 		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(10, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+					.addContainerGap()
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
+					.addGap(14))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(19)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 731, GroupLayout.PREFERRED_SIZE)
-							.addGap(7))
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addGap(10)
-							.addComponent(ActivarDesactivar)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(Borrar)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(ReestablecerClave)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(VerCompras)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(Atras)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(Ver_Grafica_1, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-								.addComponent(Ver_Grafica, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
-							.addGap(69)))
-					.addGap(7))
+							.addComponent(ActivarDesactivar, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE)
+							.addGap(50)
+							.addComponent(ReestablecerClave, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+							.addGap(35)
+							.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(122)
+							.addComponent(Borrar, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
+							.addGap(56)
+							.addComponent(VerCompras, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE)))
+					.addGap(48)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(Ver_Grafica_1, GroupLayout.PREFERRED_SIZE, 156, GroupLayout.PREFERRED_SIZE)
+						.addComponent(Ver_Grafica, GroupLayout.PREFERRED_SIZE, 156, GroupLayout.PREFERRED_SIZE))
+					.addGap(37))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(11)
+					.addContainerGap()
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 171, GroupLayout.PREFERRED_SIZE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+					.addGap(36)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(95)
+							.addComponent(Ver_Grafica_1, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(Ver_Grafica, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(Borrar)
-								.addComponent(ReestablecerClave)
-								.addComponent(VerCompras)
-								.addComponent(Atras)
-								.addComponent(ActivarDesactivar)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(11)
-							.addComponent(Ver_Grafica_1, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-							.addGap(5)
-							.addComponent(Ver_Grafica, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-					.addGap(34))
+								.addComponent(ReestablecerClave, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+								.addComponent(ActivarDesactivar, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(Atras, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(Borrar, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+								.addComponent(VerCompras, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE))
+							.addGap(51))))
 		);
 
 		getContentPane().setLayout(groupLayout);
@@ -145,6 +167,7 @@ public class InterfazClientesAdmin extends JFrame {
 						}
 					}
 				}
+				
 				try {
 					for(int x = 0; x <= table.getRowCount(); x++)
 						model.removeRow(0);
