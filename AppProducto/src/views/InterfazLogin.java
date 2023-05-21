@@ -138,6 +138,7 @@ public class InterfazLogin extends JFrame {
 							if(p.getNombre().equals(Nombretext.getText()) && p.getContrasena().equals(String.valueOf(Id_Usuariotext.getPassword()))) {
 								entra=true;
 								dispose();
+								idproveedorreg=p.getId_Proveedor();
 								InterfazProveedor ip=new InterfazProveedor();
 								ip.setLocationRelativeTo(null);
 								ip.setVisible(true);

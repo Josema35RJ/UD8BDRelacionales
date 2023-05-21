@@ -63,7 +63,7 @@ public class InterfazClientesAdmin extends JFrame {
 		VerComprasImagen = new ImageIcon ("Icon/VerCarrito.png");
 		VerCompras.setIcon(VerComprasImagen);
 		
-		Ver_Grafica = new JButton("Ver Grafica");
+		Ver_Grafica = new JButton("Ver Categorias");
 		VerGraficaImagen = new ImageIcon ("Icon/VerGrafico.png");
 		Ver_Grafica.setIcon(VerGraficaImagen);
 		
@@ -79,7 +79,7 @@ public class InterfazClientesAdmin extends JFrame {
 
 		scrollPane.setViewportView(table);
 		
-		Ver_Grafica_1 = new JButton("Ver Grafica");
+		Ver_Grafica_1 = new JButton("Ver Gastos");
 		Ver_Grafica_1.setIcon(VerGraficaImagen);
 		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());

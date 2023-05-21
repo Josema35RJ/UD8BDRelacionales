@@ -22,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 
 import models.Compra;
 import models.Producto;
+import models.Usuario;
 import services.Conexion;
 import services.ObjectService;
 
@@ -125,9 +126,14 @@ public class InterfazProveedor extends JFrame {
 						JOptionPane.QUESTION_MESSAGE);
 				try {
 					for (Compra c : os.getAllCompra(Conexion.obtener())) {
-						if (c.getId_UsuarioC().equalsIgnoreCase(idadmin)) {
-							compras.add(c);
+						for(Usuario u: os.getAllUsuarios(Conexion.obtener())) {
+							if(c.getId_UsuarioC().equals(u.getId_Usuario()) && u.isEs_Admin()) {
+								if (c.getId_UsuarioC().equals(idadmin)) {
+									compras.add(c);
+								}
+							}
 						}
+						
 					}
 					for (Producto p : os.getAllProducts(Conexion.obtener())) {
 						if (p.getId_Proveedor().equals(InterfazLogin.idproveedorreg)) {
@@ -141,13 +147,11 @@ public class InterfazProveedor extends JFrame {
 										+ o.getHora() + "\n" + " Nombre Producto --> " + pr.getNombre() + "\n"
 										+ " Precio Producto --> " + pr.getPrecio() + "\n" + " Cantidad solicitada -->"
 										+ o.getCantidad_pedida() + "\n" + " Precio Total --> "
-										+ (o.getCantidad_pedida() * pr.getPrecio()) + "â‚¬" + "\n"
+										+ (o.getCantidad_pedida() * pr.getPrecio()) + "€" + "\n"
 										+ "--------------------------------------" + "\n" + arealistado.getText());
 							}
 						}
 					}
-					productos.clear();
-					compras.clear();
 				} catch (ClassNotFoundException | SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
