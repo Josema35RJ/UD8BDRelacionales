@@ -55,6 +55,7 @@ public class InterfazProductosAdmin extends JFrame {
 	private JButton InsertarFoto;
 	private ImageIcon ActualizarImage, InsertarImage, EliminarImage, CambiarImage, AtrasImage, ImagenVer, GraficaVer, IconInsertarImage;
 	private File fileName;
+	private JLabel Foto;
 
 	public InterfazProductosAdmin() {
 		super("Menu Productos");
@@ -123,7 +124,7 @@ public class InterfazProductosAdmin extends JFrame {
 
 		lbId_Proveedor = new JLabel("Id_Proveedor");
 
-		JLabel Foto = new JLabel("");
+		Foto = new JLabel("");
 
 		Ver_Imagen = new JButton("");
 		ImagenVer = new ImageIcon ("Icon/VerFoto.png");
@@ -572,6 +573,10 @@ public class InterfazProductosAdmin extends JFrame {
 		}
 		try {
 			archivoOriginal.close();
+			Ver = new ImageIcon(copia.getAbsolutePath());
+			icon = new ImageIcon(
+					Ver.getImage().getScaledInstance(Foto.getWidth(), Foto.getHeight(), Image.SCALE_DEFAULT));
+			Foto.setIcon(icon);
 		} catch (Exception e) {
 			System.out.println(e);
 		}

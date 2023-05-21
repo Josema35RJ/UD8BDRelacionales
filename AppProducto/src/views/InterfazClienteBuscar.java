@@ -52,7 +52,6 @@ public class InterfazClienteBuscar extends JFrame {
 	private JLabel lbFoto;
 	private ImageIcon FotoProducto;
 	private Icon FotoProductoAjustada;
-	private boolean Compra = false;
 
 	public InterfazClienteBuscar() throws ClassNotFoundException, SQLException {
 		super("Buscar producto");
@@ -63,8 +62,8 @@ public class InterfazClienteBuscar extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 
 		FiltroCategoria = new JComboBox();
-		FiltroCategoria.setModel(new DefaultComboBoxModel(new String[] { "Hogar", "Deporte", "ElectrÃ³nica", "Comida",
-				"Libros", "Moda", "JardinerÃ­a", "Infantil", "Sanitario", "PerfumerÃ­a", "Motor" }));
+		FiltroCategoria.setModel(new DefaultComboBoxModel(new String[] { "Hogar", "Deporte", "Electronica", "Comida",
+				"Libros", "Moda", "Jardineria", "Infantil", "Sanitario", "Perfumeria", "Motor" }));
 		FiltroCategoria.addActionListener(new ActionListener() {
 
 			@Override
@@ -111,17 +110,15 @@ public class InterfazClienteBuscar extends JFrame {
 		botonAnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					// if(Integer.valueOf(String.valueOf(cantidad.getValue()))<=0) {
-					// JOptionPane.showMessageDialog(InterfazClienteBuscar.this, "Insertar Una
-					// Cantidad del Producto");
-					// }
+					if(Integer.valueOf(String.valueOf(cantidad.getValue()))<=0) {
+					 JOptionPane.showMessageDialog(InterfazClienteBuscar.this, "Insertar Una Cantidad del Producto");
+					}
 					{
 						for (Producto p : oc.getAllProducts(Conexion.obtener())) {
 							if (p.getNombre().equals(model.getValueAt(table.getSelectedRow(), 0).toString())) {
 								int cant = Integer.valueOf(String.valueOf(cantidad.getValue()));
 								System.out.println(cant);
 								if (cant > 0) {
-									System.out.println(cant);
 									if (!carrito.containsKey(p.getNombre())) {
 										if (cant == p.getCant_Stock()) {
 											carrito.put(p.getNombre(), cant);
@@ -133,6 +130,21 @@ public class InterfazClienteBuscar extends JFrame {
 												carrito.put(p.getNombre(), p.getCant_Stock());
 										} else {
 									     	carrito.put(p.getNombre(), cant);
+										}
+									}else {
+										if (cant+carrito.get(p.getNombre()) == p.getCant_Stock()) {
+											carrito.replace(p.getNombre(), p.getCant_Stock());
+											JOptionPane.showMessageDialog(InterfazClienteBuscar.this,
+													"Se ha insertado todo el stock disponible");
+										} else if (cant+carrito.get(p.getNombre()) > p.getCant_Stock()) {
+											if (JOptionPane.showConfirmDialog(InterfazClienteBuscar.this,
+													"Cantidad en Stock Excedida, quiere comprar el Stock Restante?") == 0)
+												if(carrito.get(p.getNombre())-p.getCant_Stock()<=cant) {
+													carrito.replace(p.getNombre(), (p.getCant_Stock()));
+												}										
+										} else {
+											cant+=carrito.get(p.getNombre());
+											carrito.replace(p.getNombre(), cant);
 										}
 									}
 								}
@@ -266,7 +278,7 @@ public class InterfazClienteBuscar extends JFrame {
 					for (Producto p : oc.getAllProducts(Conexion.obtener())) {
 						if (p.getNombre().equals(model.getValueAt(table.getSelectedRow(), 0).toString())) {
 							if (Integer.valueOf(String.valueOf(cantidad.getValue())) > p.getCant_Stock())
-								cantidad.setValue(4);
+								cantidad.setValue(Integer.valueOf(String.valueOf(cantidad.getValue())));
 						}
 					}
 				} catch (ArrayIndexOutOfBoundsException ex) {
@@ -297,11 +309,8 @@ public class InterfazClienteBuscar extends JFrame {
 			if (p.getNombre().equals(model.getValueAt(table.getSelectedRow(), 0).toString())) {
 				if (carrito.containsKey(p.getNombre())) {
 					spinerModel.setMinimum(0);
-					spinerModel.setMaximum(
-							Integer.valueOf(String.valueOf(p.getCant_Stock())) - carrito.get(p.getNombre()));
 				} else {
 					spinerModel.setMinimum(0);
-					spinerModel.setMaximum(Integer.valueOf(String.valueOf(p.getCant_Stock())));
 				}
 			}
 		}
@@ -311,12 +320,14 @@ public class InterfazClienteBuscar extends JFrame {
 		listaP.clear();
 		for (Producto a : oc.getAllProducts(Conexion.obtener())) {
 			if (FiltroCategoria.getSelectedItem().toString().equals(a.getCategoria())) {
-				Object[] Fila = new Object[4];
-				Fila[0] = a.getNombre();
-				Fila[1] = a.getDescripcion();
-				Fila[2] = a.getPrecio();
-				model.addRow(Fila);
-				listaP = oc.getAllProducts(Conexion.obtener());
+				if(a.getCant_Stock()>0) {
+					Object[] Fila = new Object[4];
+					Fila[0] = a.getNombre();
+					Fila[1] = a.getDescripcion();
+					Fila[2] = a.getPrecio();
+					model.addRow(Fila);
+					listaP = oc.getAllProducts(Conexion.obtener());
+				}
 			}
 		}
 		table.getColumnModel().getColumn(0).setMaxWidth(165);
