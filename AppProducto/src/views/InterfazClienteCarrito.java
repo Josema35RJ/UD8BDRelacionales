@@ -129,6 +129,8 @@ public class InterfazClienteCarrito extends JFrame {
 					}
 
 				}
+				InterfazClienteBuscar.carrito.clear();
+				
 			}
 		});
 
