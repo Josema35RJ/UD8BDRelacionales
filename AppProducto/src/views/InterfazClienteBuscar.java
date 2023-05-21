@@ -111,9 +111,10 @@ public class InterfazClienteBuscar extends JFrame {
 		botonAnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if(Integer.valueOf(String.valueOf(cantidad.getValue()))<=0) {
-						JOptionPane.showMessageDialog(InterfazClienteBuscar.this, "Insertar Una Cantidad del Producto");
-					}{
+					//if(Integer.valueOf(String.valueOf(cantidad.getValue()))<=0) {
+					//	JOptionPane.showMessageDialog(InterfazClienteBuscar.this, "Insertar Una Cantidad del Producto");
+					//}
+					{
 					for (Producto p : oc.getAllProducts(Conexion.obtener())) {
 						if(p.getNombre().equals(model.getValueAt(table.getSelectedRow(), 0).toString())) {
 							int cant=Integer.valueOf(String.valueOf(cantidad.getValue()));
@@ -122,9 +123,12 @@ public class InterfazClienteBuscar extends JFrame {
 									carrito.put(p.getNombre(), cant);
 								else {
 									carrito.put(p.getNombre(),carrito.get(p.getNombre())+cant);
-									if(carrito.get(p.getNombre())>=p.getCant_Stock()) {
+									if(carrito.get(p.getNombre())+cant==p.getCant_Stock()) {
 										carrito.put(p.getNombre(),p.getCant_Stock());
 										JOptionPane.showMessageDialog(InterfazClienteBuscar.this, "Se ha aÃ±adido todo el stock disponible");
+									}else if (carrito.get(p.getNombre())+cant>p.getCant_Stock()){
+										if(JOptionPane.showConfirmDialog(InterfazClienteBuscar.this, "Cantidad en Stock Excedida, quiere comprar el Stock Restante?")==0)
+										carrito.put(p.getNombre(),p.getCant_Stock());
 									}
 								}
 							}
