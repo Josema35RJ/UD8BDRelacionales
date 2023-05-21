@@ -137,8 +137,6 @@ public class InterfazLogin extends JFrame {
 						for (Proveedor p : os.getAllProveedor(Conexion.obtener())) {
 							if(p.getNombre().equals(Nombretext.getText()) && p.getContrasena().equals(String.valueOf(Id_Usuariotext.getPassword()))) {
 								entra=true;
-								idproveedorreg=p.getId_Proveedor();
-								JOptionPane.showMessageDialog(InterfazLogin.this, "Hola Proveedor "+p.getId_Proveedor(),"Bienvenido",JOptionPane.INFORMATION_MESSAGE);
 								dispose();
 								InterfazProveedor ip=new InterfazProveedor();
 								ip.setLocationRelativeTo(null);

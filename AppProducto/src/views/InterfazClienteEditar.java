@@ -51,7 +51,7 @@ public class InterfazClienteEditar extends JFrame {
 		lContrasena.setBounds(65, 123, 75, 33);
 		contentPane.add(lContrasena);
 		
-		JButton botonVolver = new JButton("Volver Atras");
+		JButton botonVolver = new JButton("Volver");
 		botonVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				InterfazCliente ic=new InterfazCliente();

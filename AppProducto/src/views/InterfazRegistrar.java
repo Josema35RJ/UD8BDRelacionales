@@ -1,5 +1,7 @@
 package views;
 
+
+
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -66,9 +68,10 @@ public class InterfazRegistrar extends JFrame {
 		setContentPane(contentPane);
 
 		textReg = new JTextField();
+		textReg.setHorizontalAlignment(SwingConstants.CENTER);
 		textReg.setEditable(false);
 		textReg.setFont(new Font("Wide Latin", Font.PLAIN, 21));
-		textReg.setText("REGÍSTRATE");
+		textReg.setText("REGISTRATE");
 		textReg.setColumns(10);
 
 		txtIntroduceNombre = new JTextField();

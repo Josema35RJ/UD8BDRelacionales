@@ -1,5 +1,8 @@
 package views;
 
+
+
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -7,18 +10,18 @@ import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -48,17 +51,20 @@ public class InterfazClienteBuscar extends JFrame {
 	private JSpinner cantidad;
 	private JFormattedTextField textField;
 	private SpinnerNumberModel spinerModel=new SpinnerNumberModel ();
+	private JLabel lbFoto;
+	private ImageIcon FotoProducto;
+	private Icon FotoProductoAjustada;
 
 	public InterfazClienteBuscar() throws ClassNotFoundException, SQLException {
 		super("Buscar producto");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(527, 467);
+		setSize(573, 520);
 		setLocationRelativeTo(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		
 		FiltroCategoria = new JComboBox();
-		FiltroCategoria.setModel(new DefaultComboBoxModel(new String[] {"Hogar", "Deporte", "Electrónica", "Comida", "Libros", "Moda", "Jardinería", "Infantil", "Sanitario", "Perfumería", "Motor"}));
+		FiltroCategoria.setModel(new DefaultComboBoxModel(new String[] {"Hogar", "Deporte", "ElectrÃ³nica", "Comida", "Libros", "Moda", "JardinerÃ­a", "Infantil", "Sanitario", "PerfumerÃ­a", "Motor"}));
 		FiltroCategoria.addActionListener(new ActionListener(){
 
 			@Override
@@ -101,7 +107,7 @@ public class InterfazClienteBuscar extends JFrame {
 			}
 		});
 		
-		botonAnadir = new JButton("Añadir al carrito");
+		botonAnadir = new JButton("Insertar al carrito");
 		botonAnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -118,7 +124,7 @@ public class InterfazClienteBuscar extends JFrame {
 									carrito.put(p.getNombre(),carrito.get(p.getNombre())+cant);
 									if(carrito.get(p.getNombre())>=p.getCant_Stock()) {
 										carrito.put(p.getNombre(),p.getCant_Stock());
-										JOptionPane.showMessageDialog(InterfazClienteBuscar.this, "Se ha añadido todo el stock disponible");
+										JOptionPane.showMessageDialog(InterfazClienteBuscar.this, "Se ha aÃ±adido todo el stock disponible");
 									}
 								}
 							}
@@ -139,6 +145,8 @@ public class InterfazClienteBuscar extends JFrame {
 		
 		cantidad = new JSpinner();
 		
+		lbFoto = new JLabel("");
+		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -147,19 +155,23 @@ public class InterfazClienteBuscar extends JFrame {
 					.addComponent(FiltroCategoria, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(26)
 					.addComponent(cantidad, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
 					.addComponent(botonCarrito)
 					.addContainerGap())
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(61)
 					.addComponent(botonVolver, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
 					.addComponent(botonAnadir)
-					.addGap(81))
+					.addGap(49))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
 					.addContainerGap())
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(167)
+					.addComponent(lbFoto, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(169, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -176,7 +188,9 @@ public class InterfazClienteBuscar extends JFrame {
 							.addGap(18)))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lbFoto, GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+					.addGap(11)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(botonVolver, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 						.addComponent(botonAnadir, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
@@ -205,6 +219,14 @@ public class InterfazClienteBuscar extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					for(Producto p : oc.getAllProducts(Conexion.obtener())) {
+						if(p.getNombre().equals(table.getValueAt(table.getSelectedRow(), 0))) {
+							FotoProducto = new ImageIcon (p.getImagen());
+							FotoProductoAjustada = new ImageIcon (FotoProducto.getImage().getScaledInstance(lbFoto.getWidth(), 
+									lbFoto.getHeight(), Image.SCALE_DEFAULT));
+							lbFoto.setIcon(FotoProductoAjustada);
+						}
+					}
 					setSpinner();
 					cantidad.setModel(spinerModel);
 				} catch (ClassNotFoundException e1) {
