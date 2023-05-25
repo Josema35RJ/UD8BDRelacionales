@@ -169,10 +169,10 @@ public class InterfazClientesAdmin extends JFrame {
 				}
 				
 				try {
-					for(int x = 0; x <= table.getRowCount(); x++)
-						model.removeRow(0);
 					LeerBase();
 					EscribirTabla();
+					for(int x = 0; x < table.getRowCount(); x++)
+						model.removeRow(0);
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

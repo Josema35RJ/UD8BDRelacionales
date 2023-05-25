@@ -3,6 +3,9 @@ package views;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,15 +128,24 @@ public class InterfazProveedor extends JFrame {
 				idadmin = JOptionPane.showInputDialog(null, "Introduzca id del admin", "Pregunta",
 						JOptionPane.QUESTION_MESSAGE);
 				try {
+					ComprasAdmin(Conexion.obtener());
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
 					for (Compra c : os.getAllCompra(Conexion.obtener())) {
-						for(Usuario u: os.getAllUsuarios(Conexion.obtener())) {
-							if(c.getId_UsuarioC().equals(u.getId_Usuario()) && u.isEs_Admin()) {
+						for (Usuario u : os.getAllUsuarios(Conexion.obtener())) {
+							if (c.getId_UsuarioC().equals(u.getId_Usuario()) && u.isEs_Admin()) {
 								if (c.getId_UsuarioC().equals(idadmin)) {
 									compras.add(c);
 								}
 							}
 						}
-						
+
 					}
 					for (Producto p : os.getAllProducts(Conexion.obtener())) {
 						if (p.getId_Proveedor().equals(InterfazLogin.idproveedorreg)) {
@@ -158,5 +170,31 @@ public class InterfazProveedor extends JFrame {
 				}
 			}
 		});
+	}
+
+	public void ComprasAdmin(Connection conexion) {
+
+		PreparedStatement consulta = null;
+		try {
+			consulta = conexion.prepareStatement("SELECT Id_Producto FROM Compra WHERE Id_UsuarioC=?");
+			consulta.setString(1, idadmin);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ResultSet resultado = null;
+		try {
+			resultado = consulta.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			System.out.println(resultado.getString(1));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
