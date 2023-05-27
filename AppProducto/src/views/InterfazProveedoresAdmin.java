@@ -363,7 +363,7 @@ public class InterfazProveedoresAdmin extends JFrame {
 			Fila[0] = p.getId_Proveedor();
 			Fila[1] = p.getNombre();
 			Fila[2] = p.getDireccion();
-			Fila[3] = p.getContrasena();
+			Fila[3] = "*******";
 			model.addRow(Fila);
 		}
 	}

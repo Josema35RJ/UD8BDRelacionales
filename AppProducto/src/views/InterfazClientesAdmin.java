@@ -309,7 +309,7 @@ public class InterfazClientesAdmin extends JFrame {
 				Fila[2] = u.getDireccion();
 				Fila[3] = u.isEs_Admin();
 				Fila[4] = u.isActivo();
-				Fila[5] = u.getContrasena();
+				Fila[5] = "*************";
 				model.addRow(Fila);
 			}
 		}

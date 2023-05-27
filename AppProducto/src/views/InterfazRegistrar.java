@@ -2,7 +2,6 @@ package views;
 
 
 
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
@@ -34,7 +34,7 @@ public class InterfazRegistrar extends JFrame {
 	private JButton btnRegistrar;
 	private JTextField textNombre;
 	private JTextField textDireccion;
-	private JTextField textContra;
+	private JPasswordField textContra;
 	private ImageIcon imagenvolver;
 	private ImageIcon imagenregistrar;
 
@@ -80,7 +80,7 @@ public class InterfazRegistrar extends JFrame {
 		textDireccion = new JTextField();
 		textDireccion.setColumns(10);
 
-		textContra = new JTextField();
+		textContra = new JPasswordField();
 		textContra.setColumns(10);
 		btnRegistrar = new JButton("Registrar");
 		btnRegistrar.setIcon(imagenregistrar);
